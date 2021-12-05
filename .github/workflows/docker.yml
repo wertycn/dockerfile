@@ -1,12 +1,11 @@
 name: build_docker_image
 on:
-  # 防止 Fork 乱用 actions 设置只能手动触发构建
   workflow_dispatch:
     inputs:
       tags:
-      description: '镜像tag,默认latest'
-      required: true
-      default: 'latest'		
+        description: '镜像tag,默认latest'
+        required: true
+        default: 'latest'		
   repository_dispatch:
     types: build_docker_image
 jobs:
