@@ -2,6 +2,11 @@ name: build_docker_image
 on:
   # 防止 Fork 乱用 actions 设置只能手动触发构建
   workflow_dispatch:
+     inputs:
+        tags:
+        description: '镜像tag,默认latest'
+        required: true
+        default: 'latest'		
   repository_dispatch:
     types: build_docker_image
 jobs:
@@ -10,6 +15,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@master
+      - name: Debug
+        run: echo "start build image debugicu/$GITHUB_REF:${{ github.event.inputs.tags }}"
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -22,7 +29,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-
+	    
       - name: 构建并推送到 Dockerhub 镜像仓库
         uses: docker/build-push-action@v2
         with:
@@ -31,4 +38,4 @@ jobs:
           platforms: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64
           push: true
           tags: |
-            debugicu/sonar-scanner-cli-debug:latest
+            debugicu/$GITHUB_REF:${{ github.event.inputs.tags }}
