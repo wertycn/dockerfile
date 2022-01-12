@@ -6,11 +6,20 @@
 
 ## 使用方式
 
+### 自动构建
+
 1. 拉取仓库到本地
 2. 基于master 分支切出新分支，分支名为需要编译的镜像名
 3. 修改Dockerfile 为自己需要的镜像
 4. 提交代码到远程，等待Github Action 自动构建（可点击Github Action Tab查看进度）
 5. 构建成功，使用镜像
+
+### 手动指定tag
+
+![](http://image.werty.cn/source_blog/freeApi/019fe21b72f325d9d63874a8b0affa0c.png)
+
+镜像名模板
+
 
 ```dockerfile
 debugicu/${BRANCH_NAME}:latest
@@ -18,4 +27,4 @@ debugicu/${BRANCH_NAME}:latest
 
 ## 注意事项
 
-1. `.github/workflows/docker.yml` 文件不能删除，该文件为github action 配置文件
+1. `.github/workflows/` 目录下文件不能删除，该文件为github action 配置文件
