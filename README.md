@@ -1,6 +1,6 @@
 # Docker Hub 镜像自动构建及上传工具
 
-[![image_auth_push](https://github.com/wertycn/dockerfile/actions/workflows/auto_push.yml/badge.svg)](https://github.com/wertycn/dockerfile/actions/workflows/auto_push.yml)[![custom_tag_push](https://github.com/wertycn/dockerfile/actions/workflows/custom_tag_push.yml/badge.svg)](https://github.com/wertycn/dockerfile/actions/workflows/custom_tag_push.yml)
+[![image_auth_push](https://github.com/wertycn/dockerfile/actions/workflows/auto_push.yml/badge.svg)](https://github.com/wertycn/dockerfile/actions/workflows/auto_push.yml)  [![custom_tag_push](https://github.com/wertycn/dockerfile/actions/workflows/custom_tag_push.yml/badge.svg)](https://github.com/wertycn/dockerfile/actions/workflows/custom_tag_push.yml)
 
 ## 功能介绍
 
