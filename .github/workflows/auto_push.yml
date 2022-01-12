@@ -1,4 +1,4 @@
-name: image_auth_push_dockerhub
+name: image_auth_push
 on: [push, pull_request]
 jobs:
   build-and-push:

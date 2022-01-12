@@ -1,4 +1,4 @@
-name: build_docker_image
+name: custom_tag_push
 on:
   workflow_dispatch:
     inputs:
@@ -7,7 +7,7 @@ on:
         required: true
         default: 'latest'		
   repository_dispatch:
-    types: build_docker_image
+    types: custom_tag_push
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
