@@ -1,6 +1,6 @@
 FROM alpine:latest
 ENV NODE_VERSION 14.5.0
-MAINTAINER sw
+MAINTAINER sw-r
 
 RUN apk add --no-cache curl gcc g++ python2 make linux-headers \
     && curl -fsSLO --compressed "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION.tar.xz" \
