@@ -11,5 +11,5 @@ RUN \
     JAVA_BUILD=9 && \
     curl --silent --location --retry 3 \
         https://builds.openlogic.com/downloadJDK/openlogic-openjdk/${JAVA_VERSION}+${JAVA_BUILD}/openlogic-openjdk-${JAVA_VERSION}+${JAVA_BUILD}-linux-x64-el.rpm \
-        -o /tmp/openjdk-${JAVA_VERSION}.rpm 
-RUN rpm -ivh /tmp/openjdk-${JAVA_VERSION}.rpm
+        -o /tmp/openjdk-${JAVA_VERSION}.rpm  &&\
+    rpm -ivh /tmp/openjdk-${JAVA_VERSION}.rpm
