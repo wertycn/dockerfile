@@ -1,4 +1,5 @@
 FROM centos:centos7
+
 ENV DEBIAN_FRONTEND=noninteractive \
     JAVA_HOME=/usr/lib/jvm/ 
 
