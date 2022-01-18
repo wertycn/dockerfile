@@ -12,10 +12,4 @@ RUN \
     curl --silent --location --retry 3 \
         https://builds.openlogic.com/downloadJDK/openlogic-openjdk/${JAVA_VERSION}+${JAVA_BUILD}/openlogic-openjdk-${JAVA_VERSION}+${JAVA_BUILD}-linux-x64-el.rpm \
         -o /tmp/openjdk-${JAVA_VERSION}.rpm 
-
-RUN \
-    mkdir -p /usr/lib/jvm && mv /tmp/openjdk-"${JAVA_VERSION}" "${JAVA_HOME}" && \
-    rm -rf /tmp/* /var/cache/yum/* /var/tmp/* && \
-    update-alternatives --install "/usr/bin/java" "java" "${JAVA_HOME}/bin/java" 1 && \
-    update-alternatives --install "/usr/bin/javac" "javac" "${JAVA_HOME}/bin/javac" 1 && \
-    update-alternatives --set java "${JAVA_HOME}/bin/java"
+RUN rpm -ivh /tmp/openjdk-${JAVA_VERSION}.rpm
