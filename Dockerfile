@@ -1,6 +1,6 @@
-FROM debian:7
-RUN apt-get update \
-	apt-get install curl
+FROM debian:7.11
+RUN apt-get update 
+RUN	apt-get install curl
 
 
 
