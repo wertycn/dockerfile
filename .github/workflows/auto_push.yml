@@ -18,7 +18,6 @@ jobs:
             构建分支: ${{ github.ref_name }}\n
             触发事件: ${{ github.event_name }}\n
             触发用户: ${{ github.actor }} \n
-            项目地址: <a href='${{ secrets.HOME_URL }}'>${{ secrets.HOME_NAME }}</a>\n
             "
       - name: 部署完成通知
         uses: wertycn/work-wechat-send-action@main
@@ -35,7 +34,6 @@ jobs:
             构建分支: ${{ github.ref_name }}\n
             触发事件: ${{ github.event_name }}\n
             触发用户: ${{ github.actor }} \n
-            项目地址: <a href='${{ secrets.HOME_URL }}'>${{ secrets.HOME_NAME }}</a>\n
             "
       - name: Checkout
         uses: actions/checkout@master
