@@ -4,6 +4,39 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     steps:
+      - name: 构建开始通知
+        uses: wertycn/work-wechat-send-action@main
+        with:
+          wechat_id: ${{ secrets.WECHAT_CROP_ID }} # 企业微信id
+          agent_secret: ${{ secrets.WECHAT_CROP_SECRET }} # 应用密钥
+          agent_id: ${{ secrets.WECHAT_AGENT_ID }} #应用id
+          to_user: '@all' # 消息接收人，多个使用竖线|分割,默认为空发送给所有人
+          msgtype: text
+          send_step: main # 消息发送时机 main 正常流程  post action 执行完成后发送
+          content: "自动构建开始通知\n\n
+            项目名称: ${{ github.repository }}\n
+            构建分支: ${{ github.ref_name }}\n
+            触发事件: ${{ github.event_name }}\n
+            触发用户: ${{ github.actor }} \n
+            项目地址: <a href='${{ secrets.HOME_URL }}'>${{ secrets.HOME_NAME }}</a>\n
+            "
+      - name: 部署完成通知
+        uses: wertycn/work-wechat-send-action@main
+        with:
+          wechat_id: ${{ secrets.WECHAT_CROP_ID }} # 企业微信id
+          agent_secret: ${{ secrets.WECHAT_CROP_SECRET }} # 应用密钥
+          agent_id: ${{ secrets.WECHAT_AGENT_ID }} #应用id
+          to_user: '@all' # 消息接收人，多个使用竖线|分割,默认为空发送给所有人
+          msgtype: text
+          send_step: post # 消息发送时机 main 正常流程  post action 执行完成后发送
+          content: "自动构建结束通知\n\n
+            执行结果: ${{ job.status }}\n
+            项目名称: ${{ github.repository }}\n
+            构建分支: ${{ github.ref_name }}\n
+            触发事件: ${{ github.event_name }}\n
+            触发用户: ${{ github.actor }} \n
+            项目地址: <a href='${{ secrets.HOME_URL }}'>${{ secrets.HOME_NAME }}</a>\n
+            "
       - name: Checkout
         uses: actions/checkout@master
       - name: Debug
@@ -25,6 +58,6 @@ jobs:
         with:
           context: .
           file: ./Dockerfile # Dockerfile 位置
-          platforms: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64
+          platforms: linux/amd64
           push: true
           tags: debugicu/${{ github.ref_name }}:latest
