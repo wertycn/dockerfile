@@ -1,42 +1,42 @@
-# Docker Hub ¾µÏñ×Ô¶¯¹¹½¨¼°ÉÏ´«¹¤¾ß
+# Docker Hub é•œåƒè‡ªåŠ¨æ„å»ºåŠä¸Šä¼ å·¥å…·
 
 [![image_auth_push](https://github.com/wertycn/dockerfile/actions/workflows/auto_push.yml/badge.svg)](https://github.com/wertycn/dockerfile/actions/workflows/auto_push.yml)  [![custom_tag_push](https://github.com/wertycn/dockerfile/actions/workflows/custom_tag_push.yml/badge.svg)](https://github.com/wertycn/dockerfile/actions/workflows/custom_tag_push.yml)
 
-## ¹¦ÄÜ½éÉÜ
+## åŠŸèƒ½ä»‹ç»
 
-»ùÓÚGithub Action ¹¦ÄÜÊµÏÖµÄ¾µÏñ×Ô¶¯¹¹½¨¼°ÉÏ´«¹¤¾ß£¬ÓÃÓÚ±àĞ´Dockerfile ÎÄ¼ş£¬´úÂëÌá½»ºó£¬×Ô¶¯¹¹½¨²¢ÉÏ´«µ½Docker Hub ²Ö¿â debugicuÓÃ»§ÏÂ
+åŸºäºGithub Action åŠŸèƒ½å®ç°çš„é•œåƒè‡ªåŠ¨æ„å»ºåŠä¸Šä¼ å·¥å…·ï¼Œç”¨äºç¼–å†™Dockerfile æ–‡ä»¶ï¼Œä»£ç æäº¤åï¼Œè‡ªåŠ¨æ„å»ºå¹¶ä¸Šä¼ åˆ°Docker Hub ä»“åº“ debugicuç”¨æˆ·ä¸‹
 
-## Ê¹ÓÃ·½Ê½
+## ä½¿ç”¨æ–¹å¼
 
-### ×Ô¶¯¹¹½¨
+### è‡ªåŠ¨æ„å»º
 
-1. À­È¡²Ö¿âµ½±¾µØ
+1. æ‹‰å–ä»“åº“åˆ°æœ¬åœ°
 
-2. »ùÓÚmaster ·ÖÖ§ÇĞ³öĞÂ·ÖÖ§£¬·ÖÖ§ÃûÎªĞèÒª±àÒëµÄ¾µÏñÃû
+2. åŸºäºmaster åˆ†æ”¯åˆ‡å‡ºæ–°åˆ†æ”¯ï¼Œåˆ†æ”¯åä¸ºéœ€è¦ç¼–è¯‘çš„é•œåƒå
 
-3. ĞŞ¸ÄDockerfile Îª×Ô¼ºĞèÒªµÄ¾µÏñ
+3. ä¿®æ”¹Dockerfile ä¸ºè‡ªå·±éœ€è¦çš„é•œåƒ
 
-4. Ìá½»´úÂëµ½Ô¶³Ì£¬µÈ´ıGithub Action ×Ô¶¯¹¹½¨£¨¿Éµã»÷Github Action Tab²é¿´½ø¶È£©
+4. æäº¤ä»£ç åˆ°è¿œç¨‹ï¼Œç­‰å¾…Github Action è‡ªåŠ¨æ„å»ºï¼ˆå¯ç‚¹å‡»Github Action TabæŸ¥çœ‹è¿›åº¦ï¼‰
 
    ![](http://image.werty.cn/source_blog/freeApi/a0ab7fbf785506cf561f9401627027be.png)
 
-5. ¹¹½¨³É¹¦£¬Ê¹ÓÃ¾µÏñ
+5. æ„å»ºæˆåŠŸï¼Œä½¿ç”¨é•œåƒ
 
    ![image-20220112130241171](http://image.werty.cn/source_blog/freeApi/bac9e713dcbd30db3272387bafcced2a.png)
 
-### ÊÖ¶¯Ö¸¶¨tag
+### æ‰‹åŠ¨æŒ‡å®štag
 
-Íê³É×Ô¶¯±àÒëºó£¬Ñ¡Ôñ`custom_tag_push` workflow£¬ µã»÷`Run workflow`ÏÂÀ­²Ëµ¥ ,ÊäÈëtagĞÅÏ¢£¬µã»÷Run°´Å¥¼´¿É
+å®Œæˆè‡ªåŠ¨ç¼–è¯‘åï¼Œé€‰æ‹©`custom_tag_push` workflowï¼Œ ç‚¹å‡»`Run workflow`ä¸‹æ‹‰èœå• ,è¾“å…¥tagä¿¡æ¯ï¼Œç‚¹å‡»RunæŒ‰é’®å³å¯
 
 ![](http://image.werty.cn/source_blog/freeApi/019fe21b72f325d9d63874a8b0affa0c.png)
 
-¾µÏñÃûÄ£°å
+é•œåƒåæ¨¡æ¿
 
 
 ```dockerfile
 debugicu/${BRANCH_NAME}:latest
 ```
 
-## ×¢ÒâÊÂÏî
+## æ³¨æ„äº‹é¡¹
 
-1. `.github/workflows/` Ä¿Â¼ÏÂÎÄ¼ş²»ÄÜÉ¾³ı£¬¸ÃÎÄ¼şÎªgithub action ÅäÖÃÎÄ¼ş
+1. `.github/workflows/` ç›®å½•ä¸‹æ–‡ä»¶ä¸èƒ½åˆ é™¤ï¼Œè¯¥æ–‡ä»¶ä¸ºgithub action é…ç½®æ–‡ä»¶
