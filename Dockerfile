@@ -8,6 +8,7 @@ RUN apt -y install curl
 RUN apt -y install net-tools
 RUN apt -y install telnet
 RUN apt -y install vim
+RUN apt -y install procps
 
 
 
