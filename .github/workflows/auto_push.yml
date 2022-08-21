@@ -8,6 +8,25 @@ jobs:
         uses: actions/checkout@master
       - name: Debug
         run: echo "start build image debugicu/$GITHUB_REF_NAME:${{ github.event.inputs.tags }}"
+        
+      - name: åˆ›å»ºNodeç¯å¢ƒ
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: è·å–npmç¼“å­˜ç›®å½•
+        id: npm-cache-dir
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
+      - name: ç¼“å­˜åˆ›å»º
+        uses: actions/cache@v3
+        id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: æ‰§è¡Œæ„å»º
+        run: npm i
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -20,11 +39,11 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: ¹¹½¨²¢ÍÆËÍµ½ Dockerhub ¾µÏñ²Ö¿â
+      - name: æ„å»ºå¹¶æ¨é€åˆ° Dockerhub é•œåƒä»“åº“
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./Dockerfile # Dockerfile Î»ÖÃ
+          file: ./Dockerfile # Dockerfile ä½ç½®
           platforms: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64
           push: true
           tags: debugicu/${{ github.ref_name }}:latest
