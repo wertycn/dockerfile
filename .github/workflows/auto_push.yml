@@ -8,26 +8,6 @@ jobs:
         uses: actions/checkout@master
       - name: Debug
         run: echo "start build image debugicu/$GITHUB_REF_NAME:${{ github.event.inputs.tags }}"
-        
-      - name: 创建Node环境
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - name: 获取npm缓存目录
-        id: npm-cache-dir
-        run: |
-          echo "::set-output name=dir::$(npm config get cache)"
-      - name: 缓存创建
-        uses: actions/cache@v3
-        id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
-        with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - name: 执行构建
-        run: npm i
-
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
 
