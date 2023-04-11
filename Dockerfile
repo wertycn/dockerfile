@@ -8,6 +8,8 @@ RUN echo ${TZ} >/etc/timezone
 # 创建www用户
 RUN addgroup -g 1000 -S www && adduser -s /sbin/nologin -S -D -u 1000 -G www www
 
+RUN echo $PHPIZE_DEPS
+
 # PHPIZE_DEPS包含gcc g++等编译辅助类库，完成后删除;pecl安装扩展。
 RUN apk add --no-cache $PHPIZE_DEPS \
     && apk add --no-cache libstdc++ libzip-dev vim\
