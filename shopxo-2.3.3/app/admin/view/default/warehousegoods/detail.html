@@ -1,0 +1,35 @@
+<!-- 继承公共的 form -->
+{{extend name="public/module/detail" /}}
+
+<!-- 重写数据模块 -->
+{{block name="detail_data"}}
+    <!-- 父级内容 -->
+    {__block__}
+
+    <!-- 规格 -->
+    <div class="am-panel am-panel-default">
+        <div class="am-panel-hd">{{:MyLang('warehousegoods.base_spec_inventory_title')}}</div>
+        <div class="am-panel-bd">
+            {{if !empty($spec)}}
+                <table class="am-table am-table-striped am-table-hover form-inventory-container">
+                    <thead>
+                        <tr>
+                            <th>{{:MyLang('spec_title')}}</th>
+                            <th>{{:MyLang('inventory_title')}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{foreach $spec as $v}}
+                            <tr>
+                                <td>{{$v.name}}</td>
+                                <td>{{if !empty($v['inventory'])}}{{$v.inventory}}{{/if}}</td>
+                            </tr>
+                        {{/foreach}}
+                    </tbody>
+                </table>
+            {{else /}}
+                {{include file="public/not_data" /}}
+            {{/if}}
+        </div>
+    </div>
+{{/block}}

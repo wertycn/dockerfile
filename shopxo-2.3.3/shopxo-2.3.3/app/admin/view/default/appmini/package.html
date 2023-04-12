@@ -1,0 +1,26 @@
+<!-- 继承公共的 form -->
+{{extend name="public/module/form" /}}
+
+<!-- 内容顶部 -->
+{{block name="form_content_top"}}
+    {{include file="appmini/nav" /}}
+{{/block}}
+
+<!-- 导航 -->
+{{block name="form_navigation"}}
+    {{include file="appmini/base_nav" /}}
+    <!-- 新版本小程序主题提示 -->
+    <div class="am-alert am-alert-warning am-radius">
+        <p class="am-text-sm">{{:MyLang('appmini.nav_theme_download_tips')}}</p>
+        <p class="am-margin-top-xs">
+            <a href="https://uniapp.shopxo.net/" target="_blank">{{:MyLang('appmini.nav_theme_download_name')}} <i class="am-icon-external-link"></i></a>
+        </p>
+    </div>
+{{/block}}
+
+<!-- 表单顶部操作栏 -->
+{{block name="form_operate_top"}}
+    <button type="button" class="am-btn am-btn-secondary am-btn-xs am-icon-refresh am-radius submit-ajax" data-url="{{:MyUrl('admin/appmini/created', ['nav_type'=>$nav_type])}}" data-view="reload" data-msg="{{:MyLang('appmini.package_generate_tips')}}"> {{:MyLang('generate_title')}}</button>
+    <!-- 父级内容 -->
+    {__block__}
+{{/block}}

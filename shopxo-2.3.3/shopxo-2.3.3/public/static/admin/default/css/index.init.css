@@ -1,0 +1,299 @@
+
+/**
+ * 基础
+ */
+html, body {
+    background: #f5f5f5;
+}
+.block-container, .block-combination-container-2 li {
+    width: 100%;
+    background: #fff !important;
+    padding: 10px;
+    border: 1px solid #eee;
+    border-radius: 3px;
+    overflow: hidden;;
+}
+.block-container, .block-combination-container-2 li {
+    position: relative;
+}
+.block-container {
+    margin-bottom: 20px;
+}
+
+.block-container .block-title, .block-combination-container-2 li .block-title {
+    margin-left: 10px;
+}
+.block-container .block-title .icon, .block-combination-container-2 li .block-title .icon {
+    background: #3f82fe;
+    display: block;
+    width: 5px;
+    height: 16px;
+    position: absolute;
+    left: 10px;
+    top: 13px;
+}
+.block-container .block-title .title, .block-combination-container-2 li .block-title .title {
+    color: #666;
+    font-size: 14px;
+    margin-left: 5px;
+}
+.right-operate .quick-time a {
+    margin-right: 8px;
+    color: #bde2f4;
+}
+.right-operate .quick-time a:hover {
+    color: #095f8a;
+}
+.right-operate .echarts-where input {
+    display: -webkit-inline-box !important;
+    width: 155px !important;
+    border-color: #eee;
+    color: #888;
+}
+.right-operate .echarts-where-submit {
+    color: #8cd8ff;
+    background-color: transparent;
+    border-color: #d0efff;
+}
+.right-operate .echarts-where-submit:hover {
+    color: #fff;
+    background-color: #3bb4f2;
+    border-color: #3bb4f2;
+}
+.right-operate .echarts-where .join {
+    color: #ccc;
+}
+.block-container .echarts-title{
+    height: 46px;
+}
+.block-combination-container-2 li .echarts-title {
+    height: 100px;
+}
+.block-combination-container-2 .right-operate {
+    float: none;
+}
+.block-combination-container-2 .right-operate .quick-time,
+.block-combination-container-2 .right-operate .echarts-where {
+    display: block;
+    margin-top: 5px;
+}
+.block-combination-container-2 .right-operate .quick-time {
+    margin-top: 10px;
+}
+.block-combination-container-2 .right-operate .echarts-where input {
+    width: calc(50% - 46px) !important;
+}
+.block-container .am-dropdown .am-selected-btn {
+    padding: 0.3em 1em 0.3em 0.3em;
+    border-radius: 3px;
+    margin-left: 5px;
+}
+@media only screen and (min-width: 641px) {
+    .block-combination-container-2 {
+        margin-bottom: 20px;
+    }
+    .block-combination-container-2 li {
+        width: calc(50% - 10px);
+    }
+    .block-combination-container-2 li:nth-child(1) {
+        float: left;
+        top: 0;
+        left: 0;
+    }
+    .block-combination-container-2 li:nth-child(2) {
+        float: right;
+        top: 0;
+        right: 0;
+    }
+}
+@media only screen and (max-width: 641px) {
+    .block-combination-container-2 li {
+        margin-bottom: 20px;
+    }
+}
+@media only screen and (max-width: 1000px) {
+    .block-container .echarts-title {
+        height: 100px;
+    }
+    .right-operate {
+        float: none;
+    }
+    .right-operate .quick-time,
+    .right-operate .echarts-where {
+        display: block;
+        margin-top: 5px;
+    }
+    .right-operate .quick-time {
+        margin-top: 10px;
+    }
+    .right-operate .echarts-where input {
+        width: calc(50% - 46px) !important;
+    }
+}
+
+
+/**
+ * 基础数据
+ */
+.shopxo-base li {
+    padding: 20px;
+}
+.shopxo-base li .li-content {
+    padding: 10px;
+    border-radius: 3px;
+    background: #00BCD4;
+    position: relative;
+}
+.shopxo-base li:nth-child(1) .li-content {
+    background: #00BCD4;
+}
+.shopxo-base li:nth-child(2) .li-content {
+    background: #FF9800;
+}
+.shopxo-base li:nth-child(3) .li-content {
+    background: #e63a75;
+}
+.shopxo-base li:nth-child(4) .li-content {
+    background: #9c40ac;
+}
+.shopxo-base li .name {
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0;
+    color: #fff;
+}
+.shopxo-base li .li-content .total {
+    margin: 0 0 5px 0;
+    color: #fff;
+    font-size: 26px;
+    font-weight: 700;
+}
+.shopxo-base li .li-content p, .shopxo-base li .li-content .item {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 100%;
+}
+.shopxo-base li .li-content .item {
+    color: #f0f0f0;
+    font-size: 12px;
+}
+.shopxo-base li .li-content .bg-icon {
+    font-size: 36px;
+    position: absolute;
+    top: calc(50% - 45px);
+    right: 10px;
+    color: rgba(255, 255, 255, 0.12);
+}
+@media only screen and (max-width: 641px) {
+    .shopxo-base li {
+        padding: 10px 5px;
+    }
+    .shopxo-base ul.am-avg-lg-4 li:nth-child(3),
+    .shopxo-base ul.am-avg-lg-4 li:nth-child(4) {
+        padding-top: 0;
+    }
+}
+
+/**
+ * 图表容器
+ */
+#echarts-order-profit,
+#echarts-order-trading,
+#echarts-goods-hot,
+#echarts-pay-type,
+#echarts-map-whole-country {
+    margin-top: 10px;
+    height: 400px;
+}
+
+/**
+ * 系统信息
+ */
+.dl-content {
+    margin: 10px 0 0 0;
+}
+.dl-content dt, .dl-content dd {
+    line-height: 22px;
+    min-height: 30px;
+}
+.dl-content dd:last-child {
+    border-bottom: 0;
+}
+
+/**
+ * 顶部基础
+ */
+.base-content-top {
+    margin-bottom: 10px;
+}
+.base-content-top .vip {
+    border-radius: 2px;
+    padding: 0 6px;
+    background: #e1e1e1;
+    color: #666;
+}
+.base-content-top .vip-active {
+    background: #ffe500;
+    color: #c97e10;
+}
+.base-content-top .ad-content:hover {
+    color: #f44336;
+}
+.inspect-upgrade-submit i {
+    background: #f00;
+    display: inline-block;
+    padding: 3px;
+    vertical-align: super;
+    margin-left: 2px;
+    border-radius: 15px;
+}
+@media only screen and (max-width: 641px) {
+    .base-content-top .left-content,
+    .base-content-top .right-content {
+        width: 100%;
+    }
+    .base-content-top .right-content {
+        margin-top: 10px;
+        border-top: 1px dashed #eee;
+        padding-top: 10px;
+    }
+    .base-content-top .left-content .ad-content,
+    .base-content-top .right-content .right-base {
+        float: right;
+    }
+}
+
+/**
+ * 更新信息展示
+ */
+#inspect-upgrade-popup .am-popup-bd {
+    padding-bottom: 50px;
+    overflow: auto;
+}
+#inspect-upgrade-popup .upgrade-title span {
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 16px;
+}
+#inspect-upgrade-popup .upgrade-title * {
+    vertical-align: middle;
+}
+#inspect-upgrade-popup .upgrade-content-item ul li {
+    line-height: 26px;
+    min-height: 26px;
+}
+#inspect-upgrade-popup .upgrade-bottom {
+    position: fixed;
+    left: 0;
+    bottom: 0px;
+    width: 100%;
+    height: 70px;
+    padding: 0 25px;
+}
+#inspect-upgrade-popup .upgrade-bottom-content {
+    background: #fff;
+    padding: 10px 20px 0 0;
+    height: 50px;
+    border-top: 1px solid #ececec;
+}

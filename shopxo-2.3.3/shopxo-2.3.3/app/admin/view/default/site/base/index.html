@@ -1,0 +1,197 @@
+{{include file="public/header" /}}
+
+<!-- right content start  -->
+<div class="content-right">
+    <!-- second nav start -->
+    {{include file="site/public/nav" /}}
+    <!-- second nav end -->
+
+	<div class="content">
+		<!-- form start -->
+		<form class="am-form form-validation" action="{{:MyUrl('admin/site/save')}}" method="POST" request-type="ajax-url" request-value="{{:MyUrl('admin/site/index')}}" enctype="multipart/form-data">
+			<!-- 基础配置 -->
+            <div class="am-panel am-panel-default">
+                <div class="am-panel-hd">
+                    <h3 class="am-panel-title">{{:MyLang('base_config_title')}}</h3>
+                </div>
+                <div class="am-panel-bd am-padding-vertical-xs">
+					<div class="am-form-group">
+						<label>{{$data.home_site_name.name}}</label>
+						<input type="text" name="{{$data.home_site_name.only_tag}}" minlength="1" placeholder="{{$data.home_site_name.name}}" data-validation-message="{{$data.home_site_name.error_tips}}" class="am-radius" {{if !empty($data)}}value="{{$data.home_site_name.value}}"{{/if}} required />
+					</div>
+					<div class="am-form-group">
+						<label class="am-block">{{$data.home_site_logo.name}}<span class="am-form-group-label-tips">{{$data.home_site_logo.describe}}</span></label>
+						<ul class="plug-file-upload-view home_site_logo-images-view" data-form-name="home_site_logo" data-max-number="1" data-delete="0" data-dialog-type="images">
+							{{if !empty($data['home_site_logo']['value'])}}
+								<li>
+									<input type="text" name="home_site_logo" value="{{$data.home_site_logo.value}}" />
+									<img src="{{:AttachmentPathViewHandle($data.home_site_logo.value)}}" />
+								</li>
+							{{/if}}
+						</ul>
+						<div class="plug-file-upload-submit" data-view-tag="ul.home_site_logo-images-view">+ {{:MyLang('site.choice_upload_logo_title')}}</div>
+					</div>
+
+					<div class="am-form-group">
+						<label class="am-block">{{$data.home_site_logo_wap.name}}<span class="am-form-group-label-tips">{{$data.home_site_logo_wap.describe}}</span></label>
+						<ul class="plug-file-upload-view home_site_logo_wap-images-view" data-form-name="home_site_logo_wap" data-max-number="1" data-delete="0" data-dialog-type="images">
+							{{if !empty($data['home_site_logo_wap']['value'])}}
+								<li>
+									<input type="text" name="home_site_logo_wap" value="{{$data.home_site_logo_wap.value}}" />
+									<img src="{{:AttachmentPathViewHandle($data.home_site_logo_wap.value)}}" />
+								</li>
+							{{/if}}
+						</ul>
+						<div class="plug-file-upload-submit" data-view-tag="ul.home_site_logo_wap-images-view">+ {{:MyLang('site.choice_upload_logo_title')}}</div>
+					</div>
+
+					<div class="am-form-group">
+						<label class="am-block">{{$data.home_site_logo_square.name}}<span class="am-form-group-label-tips">{{$data.home_site_logo_square.describe}}</span></label>
+						<ul class="plug-file-upload-view home_site_logo_square-images-view" data-form-name="home_site_logo_square" data-max-number="1" data-delete="0" data-dialog-type="images">
+							{{if !empty($data['home_site_logo_square']['value'])}}
+								<li>
+									<input type="text" name="home_site_logo_square" value="{{$data.home_site_logo_square.value}}" />
+									<img src="{{:AttachmentPathViewHandle($data.home_site_logo_square.value)}}" />
+								</li>
+							{{/if}}
+						</ul>
+						<div class="plug-file-upload-submit" data-view-tag="ul.home_site_logo_square-images-view">+ {{:MyLang('site.choice_upload_logo_title')}}</div>
+					</div>
+
+					<div class="am-form-group">
+						<label>{{$data.common_timezone.name}}<span class="am-form-group-label-tips">{{$data.common_timezone.describe}}</span></label>
+						<select name="{{$data.common_timezone.only_tag}}" class="am-radius chosen-select" data-placeholder="{{$data.common_timezone.name}}" data-validation-message="{{$data.common_timezone.error_tips}}" required>
+							{{foreach $site_timezone_list as $k=>$v}}
+								<option value="{{$k}}" {{if isset($data['common_timezone']['value']) and $data['common_timezone']['value'] eq $k}}selected{{/if}}>{{$v}}</option>
+							{{/foreach}}
+						</select>
+					</div>
+				</div>
+			</div>
+
+			<!-- 站点状态 -->
+            <div class="am-panel am-panel-default">
+                <div class="am-panel-hd">
+                    <h3 class="am-panel-title">{{:MyLang('site.base_item_site_status_title')}}</h3>
+                </div>
+                <div class="am-panel-bd am-padding-vertical-xs">
+					<div class="am-form-group">
+						<label>{{$data.home_site_state.name}}<span class="am-form-group-label-tips">{{$data.home_site_state.describe}}</span></label>
+						<select name="{{$data.home_site_state.only_tag}}" class="am-radius chosen-select" data-validation-message="{{$data.home_site_state.error_tips}}" required>
+							{{foreach $common_close_open_list as $v}}
+								<option value="{{$v.value}}" {{if isset($data['home_site_state']['value']) and $data['home_site_state']['value'] eq $v['value']}}selected{{/if}}>{{$v.name}}</option>
+							{{/foreach}}
+						</select>
+					</div>
+					<div class="am-form-group">
+						<label>{{$data.home_site_web_home_state.name}}<span class="am-form-group-label-tips">{{$data.home_site_web_home_state.describe}}</span></label>
+						<select name="{{$data.home_site_web_home_state.only_tag}}" class="am-radius chosen-select" data-validation-message="{{$data.home_site_web_home_state.error_tips}}" required>
+							{{foreach $common_close_open_list as $v}}
+								<option value="{{$v.value}}" {{if isset($data['home_site_web_home_state']['value']) and $data['home_site_web_home_state']['value'] eq $v['value']}}selected{{/if}}>{{$v.name}}</option>
+							{{/foreach}}
+						</select>
+					</div>
+					<div class="am-form-group">
+						<label>{{$data.home_site_web_pc_state.name}}<span class="am-form-group-label-tips">{{$data.home_site_web_pc_state.describe}}</span></label>
+						<select name="{{$data.home_site_web_pc_state.only_tag}}" class="am-radius chosen-select" data-validation-message="{{$data.home_site_web_pc_state.error_tips}}" required>
+							{{foreach $common_close_open_list as $v}}
+								<option value="{{$v.value}}" {{if isset($data['home_site_web_pc_state']['value']) and $data['home_site_web_pc_state']['value'] eq $v['value']}}selected{{/if}}>{{$v.name}}</option>
+							{{/foreach}}
+						</select>
+					</div>
+					<div class="am-form-group">
+						<label>{{$data.home_site_close_reason.name}}<span class="am-form-group-label-tips">{{$data.home_site_close_reason.describe}}</span></label>
+						<textarea rows="3" name="{{$data.home_site_close_reason.only_tag}}" class="am-radius" placeholder="{{$data.home_site_close_reason.name}}" data-validation-message="{{$data.home_site_close_reason.error_tips}}">{{if !empty($data)}}{{$data.home_site_close_reason.value}}{{/if}}</textarea>
+					</div>
+				</div>
+			</div>
+
+			<!-- 站点域名地址 -->
+            <div class="am-panel am-panel-default">
+                <div class="am-panel-hd">
+                    <h3 class="am-panel-title">{{:MyLang('site.base_item_site_domain_title')}}</h3>
+                </div>
+                <div class="am-panel-bd am-padding-vertical-xs">
+                	{{if is_array(MyLang('site.site_domain_tips_list'))}}
+	                    <div class="am-alert am-alert-warning am-margin-top-xs" data-am-alert>
+	                        <button type="button" class="am-close">&times;</button>
+	                        <p>{{:implode('</p><p>', MyLang('site.site_domain_tips_list'))}}</p>
+	                    </div>
+                    {{/if}}
+                    <div class="am-form-group">
+                        <label>{{$data.common_domain_host.name}}<span class="am-form-group-label-tips">{{$data.common_domain_host.describe}}</span></label>
+                        <input type="url" name="{{$data.common_domain_host.only_tag}}" placeholder="{{$data.common_domain_host.describe}}" data-validation-message="{{$data.common_domain_host.error_tips}}" class="am-radius" {{if !empty($data)}}value="{{$data.common_domain_host.value}}"{{/if}} />
+                    </div>
+                    <div class="am-form-group">
+                        <label>{{$data.common_cdn_attachment_host.name}}<span class="am-form-group-label-tips">{{$data.common_cdn_attachment_host.describe}}</span></label>
+                        <input type="url" name="{{$data.common_cdn_attachment_host.only_tag}}" placeholder="{{$data.common_cdn_attachment_host.describe}}" data-validation-message="{{$data.common_cdn_attachment_host.error_tips}}" class="am-radius" {{if !empty($data)}}value="{{$data.common_cdn_attachment_host.value}}"{{/if}} />
+                    </div>
+                    <div class="am-form-group">
+                        <label>{{$data.common_cdn_public_host.name}}<span class="am-form-group-label-tips">{{$data.common_cdn_public_host.describe}}</span></label>
+                        <input type="url" name="{{$data.common_cdn_public_host.only_tag}}" placeholder="{{$data.common_cdn_public_host.describe}}" data-validation-message="{{$data.common_cdn_public_host.error_tips}}" class="am-radius" {{if !empty($data)}}value="{{$data.common_cdn_public_host.value}}"{{/if}} />
+                    </div>
+                </div>
+            </div>
+
+			<!-- 备案信息 -->
+            <div class="am-panel am-panel-default">
+                <div class="am-panel-hd">
+                    <h3 class="am-panel-title">{{:MyLang('site.base_item_site_filing_title')}}</h3>
+                </div>
+                <div class="am-panel-bd am-padding-vertical-xs">
+                	<div class="am-form-group">
+		                <label>{{$data.home_site_icp.name}}<span class="am-form-group-label-tips">{{$data.home_site_icp.describe}}</span></label>
+		                <input type="text" name="{{$data.home_site_icp.only_tag}}" placeholder="{{$data.home_site_icp.describe}}" data-validation-message="{{$data.home_site_icp.error_tips}}" class="am-radius" {{if !empty($data)}}value="{{$data.home_site_icp.value}}"{{/if}} />
+		            </div>
+
+		            <div class="am-form-group">
+		                <label>{{$data.home_site_security_record_name.name}}<span class="am-form-group-label-tips">{{$data.home_site_security_record_name.describe}}</span></label>
+		                <input type="text" name="{{$data.home_site_security_record_name.only_tag}}" placeholder="{{$data.home_site_security_record_name.describe}}" data-validation-message="{{$data.home_site_security_record_name.error_tips}}" class="am-radius" {{if !empty($data)}}value="{{$data.home_site_security_record_name.value}}"{{/if}} />
+		            </div>
+		            <div class="am-form-group">
+		                <label>{{$data.home_site_security_record_url.name}}<span class="am-form-group-label-tips">{{$data.home_site_security_record_url.describe}}</span></label>
+		                <input type="text" name="{{$data.home_site_security_record_url.only_tag}}" placeholder="{{$data.home_site_security_record_url.describe}}" data-validation-message="{{$data.home_site_security_record_url.error_tips}}" class="am-radius" {{if !empty($data)}}value="{{$data.home_site_security_record_url.value}}"{{/if}} />
+		            </div>
+
+		            <div class="am-form-group">
+		                <label>{{$data.home_site_telecom_license.name}}<span class="am-form-group-label-tips">{{$data.home_site_telecom_license.describe}}</span></label>
+		                <input type="text" name="{{$data.home_site_telecom_license.only_tag}}" placeholder="{{$data.home_site_telecom_license.describe}}" data-validation-message="{{$data.home_site_telecom_license.error_tips}}" class="am-radius" {{if !empty($data)}}value="{{$data.home_site_telecom_license.value}}"{{/if}} />
+		            </div>
+
+		            <div class="am-form-group">
+		                <label>{{$data.home_site_company_license.name}}<span class="am-form-group-label-tips">{{$data.home_site_company_license.describe}}</span></label>
+		                <input type="text" name="{{$data.home_site_company_license.only_tag}}" placeholder="{{$data.home_site_company_license.describe}}" data-validation-message="{{$data.home_site_company_license.error_tips}}" class="am-radius" {{if !empty($data)}}value="{{$data.home_site_company_license.value}}"{{/if}} />
+		            </div>
+                </div>
+            </div>
+
+			<!-- 其它 -->
+            <div class="am-panel am-panel-default">
+                <div class="am-panel-hd">
+                    <h3 class="am-panel-title">{{:MyLang('site.base_item_site_other_title')}}</h3>
+                </div>
+                <div class="am-panel-bd am-padding-vertical-xs">
+					<div class="am-form-group">
+						<label>{{$data.home_static_cache_version.name}}<span class="am-form-group-label-tips">{{$data.home_static_cache_version.describe}}</span></label>
+						<input type="text" name="{{$data.home_static_cache_version.only_tag}}" placeholder="{{$data.home_static_cache_version.describe}}" data-validation-message="{{$data.home_static_cache_version.error_tips}}" class="am-radius" {{if !empty($data)}}value="{{$data.home_static_cache_version.value}}"{{/if}} />
+					</div>
+					<div class="am-form-group">
+						<label>{{$data.home_footer_info.name}}<span class="am-form-group-label-tips">{{$data.home_footer_info.describe}}</span></label>
+						<textarea rows="6" name="{{$data.home_footer_info.only_tag}}" class="am-radius" placeholder="{{$data.home_footer_info.name}}" data-validation-message="{{$data.home_footer_info.error_tips}}">{{if !empty($data)}}{{$data.home_footer_info.value}}{{/if}}</textarea>
+					</div>
+				</div>
+			</div>
+
+			<div class="am-form-group am-form-group-refreshing am-margin-top-lg am-padding-left-0">
+				<input type="hidden" name="nav_type" value="{{$nav_type}}" />
+				<button type="submit" class="am-btn am-btn-primary am-radius btn-loading-example am-btn-sm am-btn-block" data-am-loading="{loadingText:'{{:MyLang('processing_tips')}}'}">{{:MyLang('save_title')}}</button>
+			</div>
+		</form>
+        <!-- form end -->
+	</div>
+</div>
+<!-- right content end  -->
+
+<!-- footer start -->
+{{include file="public/footer" /}}
+<!-- footer end -->

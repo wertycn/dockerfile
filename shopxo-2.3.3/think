@@ -1,0 +1,12 @@
+#!/usr/bin/env php
+<?php
+namespace think;
+
+// 引入公共入口文件
+require __DIR__.'/public/core.php';
+
+// 加载基础文件
+require __DIR__ . '/vendor/autoload.php';
+
+// 应用初始化
+(new App())->console->run();

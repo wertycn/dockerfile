@@ -1,0 +1,53 @@
+<!-- 继承公共的 form -->
+{{extend name="public/module/form" /}}
+
+<!-- 扩展 -->
+{{block name="form_extend"}}
+    <!-- 处理窗口 -->
+    <div class="am-popup am-radius" id="my-popup-reply">
+        <div class="am-popup-inner">
+            <div class="am-popup-hd">
+                <h4 class="am-popup-title">{{:MyLang('reply_title')}}</h4>
+                <span data-am-modal-close class="am-close">&times;</span>
+            </div>
+            <div class="am-popup-bd">
+                <dl class="dl-content">
+                    <dt>{{:MyLang('common_service.goodscomments.form_item_goods_info_title')}}</dt>
+                    <dd class="goods-info">
+                        <div class="base am-nbfc">
+                            <a href="javascript:;" target="_blank">
+                                <img src="{{$attachment_host}}/static/common/images/user-img-sm.gif" class="am-img-thumbnail am-radius am-align-left am-margin-right-xs am-fl" width="60" height="60" />
+                            </a>
+                            <a class="am-text-top am-nowrap-initial title" href="javascript:;" target="_blank">...</a>
+                        </div>
+                        <p class="price">...</p>
+                    </dd>
+
+                    <dt>{{:MyLang('common_service.goodscomments.form_item_user_info_title')}}</dt>
+                    <dd class="user-info">
+                        <img src="{{$attachment_host}}/static/common/images/user-img-sm.gif" class="am-img-thumbnail am-radius am-align-left am-margin-right-xs am-margin-bottom-0" width="35" height="35" />
+                        <ul class="user-base">
+                            <li class="username">{{:MyLang('user_username_title')}}：<span>...</span></li>
+                            <li class="nickname">{{:MyLang('user_nickname_title')}}：<span>...</span></li>
+                            <li class="mobile">{{:MyLang('user_mobile_title')}}：<span>...</span></li>
+                            <li class="email">{{:MyLang('user_email_title')}}：<span>...</span></li>
+                        </ul>
+                    </dd>
+                    <dt>{{:MyLang('common_service.goodscomments.form_item_content')}}</dt>
+                    <dd class="content">...</dd>
+                </dl>
+
+                <form class="am-form form-validation-reply am-form-popup-fixed" action="{{:MyUrl('admin/goodscomments/reply')}}" method="POST" request-type="ajax-reload">
+                    <div class="am-form-group am-form-group-refreshing">
+                        <label>{{:MyLang('common_service.goodscomments.form_item_reply')}}</label>
+                        <textarea name="reply" rows="5" class="am-radius" placeholder="{{:MyLang('common_service.goodscomments.form_item_reply_content_message')}}" data-validation-message="{{:MyLang('common_service.goodscomments.form_item_reply_content_message')}}" minlength="1" maxlength="230" required></textarea>
+                    </div>
+                    <div class="am-form-popup-submit">
+                        <input type="hidden" name="id" value="" />
+                        <button type="submit" class="am-btn am-btn-primary am-radius am-btn-sm am-btn-block" data-am-loading="{loadingText:'{{:MyLang('processing_tips')}}'}">{{:MyLang('confirm_title')}}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{{/block}}

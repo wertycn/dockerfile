@@ -1,0 +1,15 @@
+/**
+ * 列表
+ */
+.am-gallery-item-bottom {
+    background: #e6e6e6;
+}
+.am-gallery-desc * {
+    font-size: 12px;
+}
+.am-gallery-item:hover {
+    border: 1px solid #f60;
+}
+.theme-active {
+    border: 3px solid #5eb95e !important;
+}

@@ -1,0 +1,78 @@
+<!-- 复制弹窗、仅复制操作失败的时候显示让用户手动复制 -->
+<div class="am-modal am-modal-no-btn" tabindex="-1" id="parameters-quick-copy-modal">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">
+            <a href="javascript: void(0)" class="am-close" data-am-modal-close>&times;</a>
+        </div>
+        <div class="am-modal-bd">
+            <div class="am-padding-sm">
+                <textarea rows="5" placeholder="{{:MyLang('common.form_goods_params_config_error_tips')}}"></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--表列表数据 -->
+<div class="parameters-container am-margin-top-sm">
+    <table class="am-table am-table-bordered am-table-centered am-table-striped am-table-hover am-margin-bottom-sm parameters-table table-thead-beautify am-margin-bottom-0" 
+        data-copy-success-tips="{{:MyLang('copy_success')}}" 
+        data-copy-no-tips="{{:MyLang('common.form_goods_params_copy_no_tips')}}" 
+        data-copy-error-tips="{{:MyLang('common.form_goods_params_copy_error_tips')}}" 
+        data-copy-empty-tips="{{:MyLang('config_empty_tips')}}" 
+        data-created-success-tips="{{:MyLang('created_success')}}" 
+        data-type-all-name="{{:MyLang('all_title')}}" 
+        data-type-base-name="{{:MyLang('base_title')}}" 
+        data-type-detail-name="{{:MyLang('detail_title')}}" 
+        data-type-message="{{:MyLang('common.form_goods_params_type_message')}}" 
+        data-params-name="{{:MyLang('common.form_goods_params_params_name')}}" 
+        data-params-message="{{:MyLang('common.form_goods_params_params_message')}}" 
+        data-value-name="{{:MyLang('common.form_goods_params_value_name')}}" 
+        data-value-message="{{:MyLang('common.form_goods_params_value_message')}}" 
+        data-move-top-name="{{:MyLang('moveup_title')}}" 
+        data-move-bottom-name="{{:MyLang('movedown_title')}}" 
+        data-remove-name="{{:MyLang('remove_title')}}" 
+        data-move-type-tips="{{:MyLang('common.form_goods_params_move_type_tips')}}" 
+        data-move-top-tips="{{:MyLang('common.form_goods_params_move_top_tips')}}" 
+        data-move-bottom-tips="{{:MyLang('common.form_goods_params_move_bottom_tips')}}" 
+    >
+        <thead>
+            <tr>
+                <th class="spec-quick-th-title">{{:MyLang('common.form_goods_params_thead_type_title')}}</th>
+                <th class="spec-quick-th-title">{{:MyLang('common.form_goods_params_thead_name_title')}}</th>
+                <th class="spec-quick-th-value">{{:MyLang('common.form_goods_params_thead_value_title')}}</th>
+                <th class="spec-quick-th-value">{{:MyLang('operate_title')}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{if !empty($parameters) and is_array($parameters)}}
+                {{foreach $parameters as $pv}}
+                    <tr>
+                        <td class="am-text-middle">
+                            <select name="parameters_type[]" class="am-radius chosen-select" data-validation-message="{{:MyLang('common.form_goods_params_type_message')}}">
+                                {{if !empty($common_goods_parameters_type_list)}}
+                                    {{foreach $common_goods_parameters_type_list as $v}}
+                                        <option value="{{$v.value}}" {{if $pv['type'] eq $v['value']}}selected{{/if}}>{{$v.name}}</option>
+                                    {{/foreach}}
+                                {{/if}}
+                            </select>
+                        </td>
+                        <td class="am-text-middle">
+                            <input type="text" name="parameters_name[]" placeholder="{{:MyLang('common.form_goods_params_params_name')}}" value="{{$pv.name}}" data-validation-message="{{:MyLang('common.form_goods_params_params_message')}}" maxlength="160" required />
+                        </td>
+                        <td class="am-text-middle">
+                            <input type="text" name="parameters_value[]" placeholder="{{:MyLang('common.form_goods_params_value_name')}}" value="{{$pv.value}}" maxlength="160" data-validation-message="{{:MyLang('common.form_goods_params_value_message')}}" />
+                        </td>
+                        <td class="am-text-middle">
+                            <a href="javascript:;" class="am-text-xs am-text-secondary am-margin-right-sm line-move" data-type="top">{{:MyLang('moveup_title')}}</a>
+                            <a href="javascript:;" class="am-text-xs am-text-secondary am-margin-right-sm line-move" data-type="bottom">{{:MyLang('movedown_title')}}</a>
+                            <a href="javascript:;" class="am-text-xs am-text-danger line-remove">{{:MyLang('remove_title')}}</a>
+                        </td>
+                    </tr>
+                {{/foreach}}
+            {{/if}}
+        </tbody>
+    </table>
+</div>
+<div class="am-margin-top-sm">
+    <span class="business-operations-submit parameters-line-add">+ {{:MyLang('common.form_goods_params_row_add_title')}}</span>
+</div>

@@ -1,0 +1,58 @@
+{{include file="public/header" /}}
+
+<!-- header top nav -->
+{{include file="public/header_top_nav" /}}
+
+<!-- search -->
+{{include file="public/nav_search" /}}
+
+<!-- header nav -->
+{{include file="public/header_nav" /}}
+
+<!-- goods category -->
+{{include file="public/goods_category" /}}
+
+<!-- content -->
+<div class="am-container user-main">
+    <!-- user menu start -->
+    {{include file="public/user_menu" /}}
+  	<!-- user menu end -->
+
+	<!-- content start -->
+	<div class="user-content">
+    	<div class="user-content-body">
+			{{foreach $safety_panel_list as $v}}
+				<section class="am-panel am-panel-default am-radius am-panel-{{if (empty($data[$v['type']]) and empty($v['msg'])) or ($v['type'] eq 'logout')}}danger{{else /}}default{{/if}}">
+					<header class="am-panel-hd">
+						<h3 class="am-panel-title">{{$v.title}}</h3>
+					</header>
+					<div class="am-panel-bd o-h">
+						<div class="am-fl panel-left">
+							{{if !empty($v.msg)}}
+								<p class="am-text-grey">{{$v.msg}}</p>
+							{{/if}}
+							{{if empty($data[$v['type']]) and !empty($v['tips'])}}
+								{{if !empty($v['no_msg'])}}
+									{{$v.no_msg}}
+								{{/if}}
+							{{else /}}
+								{{if !empty($v['ok_msg']) and !empty($data[$v['type']])}}
+									{{:str_replace('#accounts#', $data[$v['type']], $v['ok_msg'])}}
+								{{/if}}
+							{{/if}}
+							{{if !empty($v['tips'])}}
+								<p class="am-margin-top-xs am-text-grey">{{$v.tips}}</p>
+							{{/if}}
+						</div>
+						<a href="{{$v.url}}" class="am-btn am-btn-secondary am-radius am-btn-xs am-fr">{{if empty($v['submit_text'])}}{{if empty($data[$v['type']]) and empty($v['msg'])}}{{:MyLang('bind_title')}}{{else /}}{{:MyLang('modify_title')}}{{/if}}{{else /}}{{$v.submit_text}}{{/if}}</a>
+					</div>
+				</section>
+			{{/foreach}}
+		</div>
+	</div>
+	<!-- content end -->
+</div>
+
+<!-- footer start -->
+{{include file="public/footer" /}}
+<!-- footer end -->

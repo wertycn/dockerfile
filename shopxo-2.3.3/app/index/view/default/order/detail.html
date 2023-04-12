@@ -1,0 +1,671 @@
+{{include file="public/header" /}}
+
+<!-- header top nav -->
+{{include file="public/header_top_nav" /}}
+
+<!-- search -->
+{{include file="public/nav_search" /}}
+
+<!-- header nav -->
+{{include file="public/header_nav" /}}
+
+<!-- goods category -->
+{{include file="public/goods_category" /}}
+
+<!-- content -->
+<div class="am-container user-main">
+    <!-- user menu start -->
+    {{include file="public/user_menu" /}}
+    <!-- user menu end -->
+
+    <!-- content start -->
+    <div class="user-content">
+        <div class="user-content-body">
+            <!-- 用户订单详情状态环节顶部-开始 -->
+            {{if isset($shopxo_is_develop) and $shopxo_is_develop eq true}}
+                <div class="plugins-tag">
+                    <span>plugins_view_user_order_detail_progress_top</span>
+                </div>
+            {{/if}}
+            {{php}}
+                $hook_name = 'plugins_view_user_order_detail_progress_top';
+                $hook_data = MyEventTrigger($hook_name, ['hook_name'=>$hook_name, 'is_backend'=>false, 'data'=>$data]);
+                if(!empty($hook_data) && is_array($hook_data))
+                {
+                    foreach($hook_data as $hook)
+                    {
+                        if(is_string($hook) || is_int($hook))
+                        {
+                            echo htmlspecialchars_decode($hook);
+                        }
+                    }
+                }
+            {{/php}}
+            <!-- 用户订单详情状态环节顶部-结束 -->
+
+            <!-- 进度环节 -->
+            {{if !empty($step_data)}}
+                <ul class="progress progress-{{:count($step_data)}}">
+                    {{foreach $step_data as $k=>$v}}
+                        <li class="{{if $v['is_check'] eq 1}} steps-success{{/if}} {{if $v['is_current'] eq 1}} current{{/if}}">
+                            {{if $k gt 0}}
+                                <i class="step"></i>
+                            {{/if}}
+                            <p class="digital">
+                                {{if $v['is_check'] eq 1}}
+                                    <i class="am-icon-check"></i>
+                                {{else /}}
+                                    {{$k+1}}
+                                {{/if}}
+                            </p>
+                            <div class="base">
+                                <p class="title">{{$v.title}}</p>
+                                {{if !empty($v['time'])}}
+                                    <p class="date">{{$v.time}}</p>
+                                {{/if}}
+                            </div>
+                        </li>
+                    {{/foreach}}
+                </ul>
+            {{/if}}
+
+            <!-- 用户订单详情基础信息顶部-开始 -->
+            {{if isset($shopxo_is_develop) and $shopxo_is_develop eq true}}
+                <div class="plugins-tag">
+                    <span>plugins_view_user_order_detail_base_top</span>
+                </div>
+            {{/if}}
+            {{php}}
+                $hook_name = 'plugins_view_user_order_detail_base_top';
+                $hook_data = MyEventTrigger($hook_name, ['hook_name'=>$hook_name, 'is_backend'=>false, 'data'=>$data]);
+                if(!empty($hook_data) && is_array($hook_data))
+                {
+                    foreach($hook_data as $hook)
+                    {
+                        if(is_string($hook) || is_int($hook))
+                        {
+                            echo htmlspecialchars_decode($hook);
+                        }
+                    }
+                }
+            {{/php}}
+            <!-- 用户订单详情基础信息顶部-结束 -->
+
+            <!-- 基础信息 -->
+            <div class="order-base">
+                <div class="base-left">
+                    <div class="am-panel am-panel-default">
+                        <div class="am-panel-hd">{{:MyLang('order.order_base_title')}}</div>
+                        <div class="am-panel-bd">
+                            {{if !empty($data['warehouse_name'])}}
+                                <div class="items am-cf">
+                                    <div class="items-title am-fl">{{:MyLang('order.order_base_warehouse_title')}}</div>
+                                    <div class="items-detail am-fl">
+                                        <span class="warehouse-item-container">
+                                            {{if !empty($data['warehouse_icon'])}}
+                                                {{if IsUrl($data['warehouse_icon'])}}
+                                                    <img src="{{$data.warehouse_icon}}" alt="{{$data.warehouse_name}}" class="warehouse-icon" />
+                                                {{else /}}
+                                                    <i class="{{$data.warehouse_icon}}"></i>
+                                                {{/if}}
+                                            {{/if}}
+                                            {{if empty($data['warehouse_url'])}}
+                                                <strong class="warehouse-name">{{$data.warehouse_name}}</strong>
+                                            {{else /}}
+                                                <a href="{{$data.warehouse_url}}" target="_blank" class="text-deco-none">
+                                                    <strong class="warehouse-name">{{$data.warehouse_name}}</strong>
+                                                </a>
+                                            {{/if}}
+                                        </span>
+                                    </div>
+                                </div>
+                            {{/if}}
+                            <div class="items am-cf">
+                                <div class="items-title am-fl">{{:MyLang('order.order_base_model_title')}}</div>
+                                <div class="items-detail am-fl">{{$data.order_model_name}}</div>
+                            </div>
+                            <div class="items am-cf">
+                                <div class="items-title am-fl">{{:MyLang('order.order_base_order_no_title')}}</div>
+                                <div class="items-detail am-fl">{{$data.order_no}}</div>
+                            </div>
+                            {{if !empty($data.status_name)}}
+                                <div class="items am-cf">
+                                    <div class="items-title am-fl">{{:MyLang('order.order_base_status_title')}}</div>
+                                    <div class="items-detail am-fl">{{$data.status_name}}</div>
+                                </div>
+                            {{/if}}
+                            {{if !empty($data.pay_status_name)}}
+                                <div class="items am-cf">
+                                    <div class="items-title am-fl">{{:MyLang('order.order_base_pay_status_title')}}</div>
+                                    <div class="items-detail am-fl">{{$data.pay_status_name}}</div>
+                                </div>
+                            {{/if}}
+                            {{if !empty($data.payment_name)}}
+                                <div class="items am-cf">
+                                    <div class="items-title am-fl">{{:MyLang('order.order_base_payment_title')}}</div>
+                                    <div class="items-detail am-fl">
+                                        <span>{{$data.payment_name}}</span>
+                                        {{if !empty($data['is_under_line_text'])}}
+                                            <span class="am-badge am-badge-danger-plain am-radius">{{$data.is_under_line_text}}</span>
+                                        {{/if}}
+                                    </div>
+                                </div>
+                            {{/if}}
+                            {{if !empty($data.total_price)}}
+                                <div class="items am-cf">
+                                    <div class="items-title am-fl">{{:MyLang('order.order_base_total_price_title')}}</div>
+                                    <div class="items-detail am-fl">{{$data.total_price}}</div>
+                                </div>
+                            {{/if}}
+                            {{if !empty($data.buy_number_count)}}
+                                <div class="items am-cf">
+                                    <div class="items-title am-fl">{{:MyLang('order.order_base_buy_number_title')}}</div>
+                                    <div class="items-detail am-fl">{{$data.buy_number_count}}</div>
+                                </div>
+                            {{/if}}
+                            {{if !empty($data.returned_quantity)}}
+                                <div class="items am-cf">
+                                    <div class="items-title am-fl">{{:MyLang('order.order_base_returned_quantity_title')}}</div>
+                                    <div class="items-detail am-fl">{{$data.returned_quantity}}</div>
+                                </div>
+                            {{/if}}
+                            {{if !empty($data.user_note)}}
+                                <div class="items am-cf">
+                                    <div class="items-title am-fl">{{:MyLang('order.order_base_user_note_title')}}</div>
+                                    <div class="items-detail am-fl">{{$data.user_note}}</div>
+                                </div>
+                            {{/if}}
+                            {{if !empty($data.add_time)}}
+                                <div class="items am-cf">
+                                    <div class="items-title am-fl">{{:MyLang('order.order_base_add_time_title')}}</div>
+                                    <div class="items-detail am-fl">{{$data.add_time}}</div>
+                                </div>
+                            {{/if}}
+                            {{if !empty($data.confirm_time)}}
+                                <div class="items am-cf">
+                                    <div class="items-title am-fl">{{:MyLang('order.order_base_confirm_time_title')}}</div>
+                                    <div class="items-detail am-fl">{{$data.confirm_time}}</div>
+                                </div>
+                            {{/if}}
+                            {{if !empty($data.pay_time)}}
+                                <div class="items am-cf">
+                                    <div class="items-title am-fl">{{:MyLang('order.order_base_pay_time_title')}}</div>
+                                    <div class="items-detail am-fl">{{$data.pay_time}}</div>
+                                </div>
+                            {{/if}}
+                            {{if !empty($data.delivery_time)}}
+                                <div class="items am-cf">
+                                    <div class="items-title am-fl">{{:MyLang('order.order_base_delivery_time_title')}}</div>
+                                    <div class="items-detail am-fl">{{$data.delivery_time}}</div>
+                                </div>
+                            {{/if}}
+                            {{if !empty($data.collect_time)}}
+                                <div class="items am-cf">
+                                    <div class="items-title am-fl">{{:MyLang('order.order_base_collect_time_title')}}</div>
+                                    <div class="items-detail am-fl">{{$data.collect_time}}</div>
+                                </div>
+                            {{/if}}
+                            {{if !empty($data.user_is_comments_time)}}
+                                <div class="items am-cf">
+                                    <div class="items-title am-fl">{{:MyLang('order.order_base_user_comments_time_title')}}</div>
+                                    <div class="items-detail am-fl">{{$data.user_is_comments_time}}</div>
+                                </div>
+                            {{/if}}
+                            {{if in_array($data['status'], [5]) and !empty($data['cancel_time'])}}
+                                <div class="items am-cf">
+                                    <div class="items-title am-fl">{{:MyLang('order.order_base_cancel_time_title')}}</div>
+                                    <div class="items-detail am-fl">{{$data.cancel_time}}</div>
+                                </div>
+                            {{/if}}
+                            {{if in_array($data['status'], [6]) and !empty($data['close_time'])}}
+                                <div class="items am-cf">
+                                    <div class="items-title am-fl">{{:MyLang('order.order_base_close_time_title')}}</div>
+                                    <div class="items-detail am-fl">{{$data.close_time}}</div>
+                                </div>
+                            {{/if}}
+                        </div>
+                    </div>
+                </div>
+                <div class="base-right">
+                    <div class="status">
+                        {{if $data['status'] eq 4}}
+                            <i class="am-icon-check-circle icon-success am-fl"></i>
+                        {{else /}}
+                            <i class="am-icon-info-circle icon-tips am-fl"></i>
+                        {{/if}}
+                        <p class="status-name am-fl">{{$data.status_name}}</p>
+                    </div>
+                    <div class="operation">
+                        <!-- 0待确认, 1已确认/待支付, 2已支付/待发货, 3已发货/待收货, 4已完成, 5已取消, 6已关闭 -->
+                        {{if !empty($data['operate_data'])}}
+                            {{if $data['status'] neq 2}}
+                                <span>{{:MyLang('order.order_status_operate_first_tips')}}</span>
+                            {{/if}}
+                            {{if $data['operate_data']['is_cancel'] eq 1}}
+                                <button type="button" class="am-btn am-btn-warning am-btn-xs am-radius submit-ajax submit-cancel" data-url="{{:MyUrl('index/order/cancel')}}" data-id="{{$data.id}}" data-view="reload">
+                                    <i class="am-icon-paint-brush"></i>
+                                    <span>{{:MyLang('cancel_title')}}</span>
+                                </button>
+                            {{/if}}
+                            {{if $data['operate_data']['is_pay'] eq 1}}
+                                <button class="am-btn am-btn-primary am-btn-xs am-radius submit-pay" data-id="{{$data.id}}" data-payment-id="{{$data.payment_id}}">
+                                    <i class="am-icon-paypal"></i>
+                                    <span>{{:MyLang('payment_title')}}</span>
+                                </button>
+                            {{/if}}
+                            {{if $data['operate_data']['is_collect'] eq 1}}
+                                <button type="button" class="am-btn am-btn-secondary am-btn-xs am-radius submit-ajax submit-confirm" data-url="{{:MyUrl('index/order/collect')}}" data-id="{{$data.id}}" data-view="reload" data-msg="{{:MyLang('collect_confirm_tips')}}">
+                                    <i class="am-icon-check-circle-o"></i>
+                                    <span>{{:MyLang('collect_title')}}</span>
+                                </button>
+                            {{/if}}
+                            {{if $data['operate_data']['is_comments'] eq 1}}
+                                <a href="{{:MyUrl('index/order/comments', ['id'=>$data['id']])}}" target="_blank" class="am-btn am-btn-primary am-btn-xs am-radius">
+                                    <i class="am-icon-heart-o"></i>
+                                    <span>{{:MyLang('comment_title')}}</span>
+                                </a>
+                            {{/if}}
+                            {{if $data['operate_data']['is_delete'] eq 1}}
+                                <button type="button" class="am-btn am-btn-danger am-btn-xs am-radius submit-delete" data-url="{{:MyUrl('index/order/delete')}}" data-id="{{$data.id}}" data-view="jump" data-value="{{:MyUrl('index/order/index')}}">
+                                    <i class="am-icon-trash-o"></i>
+                                    <span>{{:MyLang('delete_title')}}</span>
+                                </button>
+                            {{/if}}
+                        {{/if}}
+
+                        <!-- 订单详情操作钩子 -->
+                        {{if isset($shopxo_is_develop) and $shopxo_is_develop eq true}}
+                            <div class="plugins-tag">
+                                <span>plugins_view_index_order_detail_operate</span>
+                            </div>
+                        {{/if}}
+                        {{php}}
+                            $hook_name = 'plugins_view_index_order_detail_operate';
+                            $hook_data = MyEventTrigger($hook_name, ['hook_name'=>$hook_name, 'is_backend'=>false, 'id'=>$data['id'], 'data'=>$data]);
+                            if(!empty($hook_data) && is_array($hook_data))
+                            {
+                                foreach($hook_data as $hook)
+                                {
+                                    if(is_string($hook) || is_int($hook))
+                                    {
+                                        echo htmlspecialchars_decode($hook);
+                                    }
+                                }
+                            }
+                        {{/php}}
+                    </div>
+
+                    <!-- 线下支付方式提示信息 -->
+                    {{if in_array($data['status'], [1]) and $data['is_under_line'] eq 1}}
+                        <div class="am-alert am-alert-warning">
+                            <p>{{:MyLang('order.order_under_line_tips', ['payment'=>'<strong class="am-text-success">'.$data['payment_name'].'</strong>'])}}</p>
+                        </div>
+                    {{/if}}
+
+                    <!-- 待发货提示信息 -->
+                    {{if in_array($data['status'], [2])}}
+                        <div class="am-alert">
+                            <p>{{:MyLang('order.order_delivery_tips')}}</p>
+                        </div>
+                    {{/if}}
+
+                    <!-- 快递信息 -->
+                    {{if $data['order_model'] eq 0 and in_array($data['status'], [3,4])}}
+                        <div class="logistics">
+                            <div class="items am-cf">
+                                <div class="items-title am-fl">{{:MyLang('order.order_base_express_title')}}</div>
+                                <div class="items-detail am-fl">
+                                    {{if !empty($data.express_name)}}{{$data.express_name}}{{/if}}
+                                </div>
+                            </div>
+                            {{if !empty($data['express_website_url'])}}
+                                <div class="items am-cf">
+                                    <div class="items-title am-fl">{{:MyLang('order.order_base_express_website_title')}}</div>
+                                    <div class="items-detail am-fl">
+                                        <a href="{{$data.express_website_url}}" target="_blank" class="am-text-primary">{{$data.express_website_url}}</a>
+                                    </div>
+                                </div>
+                            {{/if}}
+                            {{if !empty($data.express_number)}}
+                                <div class="items am-cf">
+                                    <div class="items-title am-fl">{{:MyLang('order.order_base_express_number_title')}}</div>
+                                    <div class="items-detail am-fl">{{$data.express_number}}</div>
+                                </div>
+                            {{/if}}
+                        </div>
+                    {{/if}}
+
+                    <!-- 自提模式下 - 取货码 -->
+                    {{if $data['order_model'] eq 2 and in_array($data['status'], [2,3]) and !empty($data['extraction_data'])}}
+                        <hr data-am-widget="divider" class="am-divider am-divider-dashed" />
+                        <div class="extraction-take-container">
+                            <p>
+                                <span>{{:MyLang('order.order_base_take_code_title')}}</span>
+                                {{if empty($data['extraction_data']['code'])}}
+                                    <span class="am-text-danger">{{:MyLang('order.order_base_take_code_no_exist_tips')}}</span>
+                                {{else /}}
+                                    <span class="am-badge am-badge-success am-radius">{{$data.extraction_data.code}}</span>
+                                {{/if}}
+                            </p>
+                            {{if !empty($data['extraction_data']['images'])}}
+                                <p class="am-margin-top-xs">
+                                    <img class="qrcode-images am-img-thumbnail" src="{{$data.extraction_data.images}}" alt="{{:MyLang('order.order_base_take_code_title')}}" width="150" height="150" />
+                                </p>
+                            {{/if}}
+                        </div>
+                    {{/if}}
+                </div>
+            </div>
+
+            <!-- 用户订单详情基础信息底部-开始 -->
+            {{if isset($shopxo_is_develop) and $shopxo_is_develop eq true}}
+                <div class="plugins-tag">
+                    <span>plugins_view_user_order_detail_base_bottom</span>
+                </div>
+            {{/if}}
+            {{php}}
+                $hook_name = 'plugins_view_user_order_detail_base_bottom';
+                $hook_data = MyEventTrigger($hook_name, ['hook_name'=>$hook_name, 'is_backend'=>false, 'data'=>$data]);
+                if(!empty($hook_data) && is_array($hook_data))
+                {
+                    foreach($hook_data as $hook)
+                    {
+                        if(is_string($hook) || is_int($hook))
+                        {
+                            echo htmlspecialchars_decode($hook);
+                        }
+                    }
+                }
+            {{/php}}
+            <!-- 用户订单详情基础信息底部-结束 -->
+
+            <!-- 地址 -->
+            {{if in_array($data['order_model'], [0, 2]) and !empty($data['address_data'])}}
+                <div class="am-panel am-panel-default business-panel">
+                    <div class="am-panel-hd">{{if $data.order_model eq 2}}取货地址{{else /}}收货地址{{/if}}</div>
+                    <div class="am-panel-bd">
+                        <div>
+                            {{if !empty($data['address_data']['alias'])}}
+                                <span class="am-badge am-badge-secondary-plain am-radius">{{$data.address_data.alias}}</span>
+                            {{/if}}
+                            <span>{{$data.address_data.name}}</span>
+                            <span class="am-margin-left-sm">{{$data.address_data.tel}}</span>
+                        </div>
+                        <div>
+                            <span>{{$data.address_data.province_name}} {{$data.address_data.city_name}} {{$data.address_data.county_name}} {{$data.address_data.address}}</span>
+                            {{if isset($data['address_data']['lng']) and isset($data['address_data']['lat']) and $data['address_data']['lng'] neq 0 and $data['address_data']['lat'] neq 0}}
+                                <button type="button" class="am-btn am-btn-success am-radius submit-map-popup" data-lng="{{$data.address_data.lng}}" data-lat="{{$data.address_data.lat}}">
+                                    <i class="am-icon-map-marker"></i>
+                                    <span>{{:MyLang('view_map_title')}}</span>
+                                </button>
+                            {{/if}}
+                        </div>
+                    </div>
+                </div>
+            {{/if}}
+
+            <!-- 用户订单详情地址信息底部-开始 -->
+            {{if isset($shopxo_is_develop) and $shopxo_is_develop eq true}}
+                <div class="plugins-tag">
+                    <span>plugins_view_user_order_detail_address_bottom</span>
+                </div>
+            {{/if}}
+            {{php}}
+                $hook_name = 'plugins_view_user_order_detail_address_bottom';
+                $hook_data = MyEventTrigger($hook_name, ['hook_name'=>$hook_name, 'is_backend'=>false, 'data'=>$data]);
+                if(!empty($hook_data) && is_array($hook_data))
+                {
+                    foreach($hook_data as $hook)
+                    {
+                        if(is_string($hook) || is_int($hook))
+                        {
+                            echo htmlspecialchars_decode($hook);
+                        }
+                    }
+                }
+            {{/php}}
+            <!-- 用户订单详情地址信息底部-结束 -->
+
+            <!-- 虚拟销售信息 -->
+            {{if $data['order_model'] eq 3 and $data['pay_status'] eq 1 and in_array($data['status'], [3,4])}}
+                <div class="am-panel am-panel-secondary business-panel fictitious-panel-container">
+                    <div class="am-panel-hd">{{$site_fictitious.title}}</div>
+                    <div class="am-panel-bd am-padding-horizontal-0 am-padding-top-xs am-padding-bottom-xs">
+                        {{if !empty($site_fictitious['tips'])}}
+                            <div class="am-alert am-alert-warning am-margin-top-xs am-margin-bottom-0 am-margin-horizontal-sm" data-am-alert>
+                                {{$site_fictitious.tips|raw}}
+                            </div>
+                        {{/if}}
+                        {{if !empty($data.items)}}
+                            <ul class="am-list am-margin-bottom-0">
+                                {{foreach $data.items as $goods}}
+                                    <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
+                                        <div class="am-u-sm-2 am-u-md-1 am-list-thumb">
+                                            <img src="{{$goods.images}}" alt="{{$goods.title}}" class="am-img-thumbnail am-radius" />
+                                        </div>
+                                        <div class="am-u-sm-10 am-u-md-11 am-list-item-text richtext">
+                                            {{if empty($goods['fictitious_goods_value'])}}
+                                                <span>{{:MyLang('no_config_data_tips')}}</span>
+                                            {{else /}}
+                                                {{$goods.fictitious_goods_value|raw}}
+                                            {{/if}}
+                                        </div>
+                                    </li>
+                                {{/foreach}}
+                            </ul>
+                        {{else /}}
+                            <div class="table-no">
+                                <i class="am-icon-skyatlas am-icon-lg"></i>
+                                <p>{{:MyLang('order.order_goods_no_data_tips')}}</p>
+                            </div>
+                        {{/if}}
+                    </div>
+                </div>
+            {{/if}}
+
+            <!-- 用户订单详情虚拟信息底部-开始 -->
+            {{if isset($shopxo_is_develop) and $shopxo_is_develop eq true}}
+                <div class="plugins-tag">
+                    <span>plugins_view_user_order_detail_fictitious_bottom</span>
+                </div>
+            {{/if}}
+            {{php}}
+                $hook_name = 'plugins_view_user_order_detail_fictitious_bottom';
+                $hook_data = MyEventTrigger($hook_name, ['hook_name'=>$hook_name, 'is_backend'=>false, 'data'=>$data]);
+                if(!empty($hook_data) && is_array($hook_data))
+                {
+                    foreach($hook_data as $hook)
+                    {
+                        if(is_string($hook) || is_int($hook))
+                        {
+                            echo htmlspecialchars_decode($hook);
+                        }
+                    }
+                }
+            {{/php}}
+            <!-- 用户订单详情虚拟信息底部-结束 -->
+
+            <!-- 商品列表 -->
+            {{if !empty($data.items)}}
+                <div class="order-goods am-margin-top-sm">
+                    <table class="am-table am-table-centered">
+                        <thead>
+                            <tr>
+                                <th>{{:MyLang('order.goods_list_thead_base')}}</th>
+                                <th class="am-hide-sm-only">{{:MyLang('order.goods_list_thead_price')}}</th>
+                                <th class="am-hide-sm-only">{{:MyLang('order.goods_list_thead_number')}}</th>
+                                <th class="am-hide-sm-only">{{:MyLang('order.goods_list_thead_total')}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{foreach $data.items as $goods}}
+                                <tr>
+                                    <td>
+                                        <div class="am-nbfc am-text-left">
+                                            <a href="{{$goods.goods_url}}" target="_blank">
+                                                <img src="{{$goods.images}}" class="am-img-thumbnail am-radius am-margin-right-xs am-fl" width="60" height="60" />
+                                            </a>
+                                            <div class="am-nbfc">
+                                                <a href="{{$goods.goods_url}}" target="_blank" class="am-nowrap-initial">{{$goods.title}}</a>
+                                                {{if !empty($goods.spec_text)}}
+                                                    <div class="am-margin-top-xs am-nowrap-initial">{{$goods.spec_text}}</div>
+                                                {{/if}}
+                                                {{if ($data['is_can_launch_aftersale'] eq 1 or !empty($goods['orderaftersale'])) and !empty($goods['orderaftersale_btn_text'])}}
+                                                    <div class="am-fr">
+                                                        <a href="{{:MyUrl('index/orderaftersale/detail', ['oid'=>$data['id'], 'did'=>$goods['id']])}}" target="_blank" class="am-text-primary">
+                                                            {{if empty($goods['orderaftersale'])}}
+                                                                {{$goods.orderaftersale_btn_text}}
+                                                            {{else /}}
+                                                                <span class="{{if $goods['orderaftersale']['status'] eq 3}}am-text-success{{else /}}am-text-secondary{{/if}}">{{$goods.orderaftersale_btn_text}}</span>
+                                                            {{/if}}
+                                                        </a>
+                                                    </div>
+                                                {{/if}}
+                                            </div>
+                                        </div>
+                                        <div class="wap-base am-show-sm-only">
+                                            {{if $goods['original_price'] gt 0}}
+                                                <span class="original-price">{{$data.currency_data.currency_symbol}}{{$goods.original_price}}</span>
+                                            {{/if}}
+                                            <span class="price">
+                                                <strong>{{$data.currency_data.currency_symbol}}{{$goods.price}}</strong>
+                                            </span>
+                                            <span class="wap-number">x{{$goods.buy_number}}</span>
+                                            {{if isset($goods['returned_quantity']) and $goods['returned_quantity'] gt 0}}
+                                                <span class="am-badge am-round am-badge-warning-plain">{{:MyLang('already_retreat_title')}} {{$goods.returned_quantity}}</span>
+                                            {{/if}}
+                                        </div>
+                                    </td>
+                                    <td class="price am-hide-sm-only">
+                                        {{if $goods['original_price'] gt 0}}
+                                            <p class="original-price">{{$data.currency_data.currency_symbol}}{{$goods.original_price}}</p>
+                                        {{/if}}
+                                        <p class="line-price">{{$data.currency_data.currency_symbol}}{{$goods.price}}</p>
+                                    </td>
+                                    <td class="number am-hide-sm-only">
+                                        <span>x{{$goods.buy_number}}</span>
+                                        {{if isset($goods['returned_quantity']) and $goods['returned_quantity'] gt 0}}
+                                            <br /><span class="am-badge am-round am-badge-warning-plain">{{:MyLang('already_retreat_title')}} {{$goods.returned_quantity}}</span>
+                                        {{/if}}
+                                    </td>
+                                    <td class="price am-hide-sm-only">
+                                        <strong class="total-price-content">{{$data.currency_data.currency_symbol}}{{$goods.total_price}}</strong>
+                                        {{if isset($goods['refund_price']) and $goods['refund_price'] gt 0}}
+                                            <br /><span class="am-badge am-round am-badge-warning-plain">{{:MyLang('already_retreat_title')}} {{$goods.refund_price}}</span>
+                                        {{/if}}
+                                    </td>
+                                </tr>
+                            {{/foreach}}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 用户订单详情商品信息底部-开始 -->
+                {{if isset($shopxo_is_develop) and $shopxo_is_develop eq true}}
+                    <div class="plugins-tag">
+                        <span>plugins_view_user_order_detail_goods_inside_bottom</span>
+                    </div>
+                {{/if}}
+                {{php}}
+                    $hook_name = 'plugins_view_user_order_detail_goods_inside_bottom';
+                    $hook_data = MyEventTrigger($hook_name, ['hook_name'=>$hook_name, 'is_backend'=>false, 'data'=>$data]);
+                    if(!empty($hook_data) && is_array($hook_data))
+                    {
+                        foreach($hook_data as $hook)
+                        {
+                            if(is_string($hook) || is_int($hook))
+                            {
+                                echo htmlspecialchars_decode($hook);
+                            }
+                        }
+                    }
+                {{/php}}
+                <!-- 用户订单详情商品信息底部-结束 -->
+
+                {{if !empty($data['extension_data'])}}
+                    <div class="am-alert am-alert-warning">
+                        {{foreach $data.extension_data as $ertk=>$ext}}
+                            <div class="items am-cf">
+                                <div class="items-title am-fl">{{$ext.name}}：</div>
+                                <div class="items-detail am-fl">{{$ext.tips}}</div>
+                            </div>
+                        {{/foreach}}
+                    </div>
+                {{/if}}
+
+                <div class="am-alert am-alert-secondary">
+                  {{if !empty($data.price)}}
+                        <div class="items am-cf">
+                            <div class="items-title am-fl">{{:MyLang('order.order_base_price_title')}}</div>
+                            <div class="items-detail am-fl">{{$data.currency_data.currency_symbol}}{{$data.price}}</div>
+                        </div>
+                    {{/if}}
+                    {{if !empty($data.increase_price)}}
+                        <div class="items am-cf">
+                            <div class="items-title am-fl">{{:MyLang('order.order_base_increase_price_title')}}</div>
+                            <div class="items-detail am-fl">+{{$data.currency_data.currency_symbol}}{{$data.increase_price}}</div>
+                        </div>
+                    {{/if}}
+                    {{if !empty($data.preferential_price)}}
+                        <div class="items am-cf">
+                            <div class="items-title am-fl">{{:MyLang('order.order_base_preferential_price_title')}}</div>
+                            <div class="items-detail am-fl">-{{$data.currency_data.currency_symbol}}{{$data.preferential_price}}</div>
+                        </div>
+                    {{/if}}
+                    {{if !empty($data.refund_price)}}
+                        <div class="items am-cf">
+                            <div class="items-title am-fl">{{:MyLang('order.order_base_refund_price_title')}}</div>
+                            <div class="items-detail am-fl">
+                                <span class="am-text-danger">-{{$data.currency_data.currency_symbol}}{{$data.refund_price}}</span>
+                            </div>
+                        </div>
+                    {{/if}}
+                    {{if !empty($data.pay_price)}}
+                        <div class="items am-cf">
+                            <div class="items-title am-fl">{{:MyLang('order.order_base_pay_price_title')}}</div>
+                            <div class="items-detail am-fl">
+                                <strong class="total-price-content">{{$data.currency_data.currency_symbol}}{{$data.pay_price}}</strong>
+                            </div>
+                        </div>
+                    {{/if}}
+                    {{if !empty($data.total_price)}}
+                        <div class="items am-cf">
+                            <div class="items-title am-fl">{{:MyLang('order.order_base_total_price_title')}}</div>
+                            <div class="items-detail am-fl line-price">{{$data.currency_data.currency_symbol}}{{$data.total_price}}</div>
+                        </div>
+                    {{/if}}
+                </div>
+            {{/if}}
+
+            <!-- 用户订单详情商品信息底部-开始 -->
+            {{if isset($shopxo_is_develop) and $shopxo_is_develop eq true}}
+                <div class="plugins-tag">
+                    <span>plugins_view_user_order_detail_goods_bottom</span>
+                </div>
+            {{/if}}
+            {{php}}
+                $hook_name = 'plugins_view_user_order_detail_goods_bottom';
+                $hook_data = MyEventTrigger($hook_name, ['hook_name'=>$hook_name, 'is_backend'=>false, 'data'=>$data]);
+                if(!empty($hook_data) && is_array($hook_data))
+                {
+                    foreach($hook_data as $hook)
+                    {
+                        if(is_string($hook) || is_int($hook))
+                        {
+                            echo htmlspecialchars_decode($hook);
+                        }
+                    }
+                }
+            {{/php}}
+            <!-- 用户订单详情商品信息底部-结束 -->
+        </div>
+
+        <!-- 支付弹窗 -->
+        {{include file="order/payment_popup" /}}
+    </div>
+    <!-- content end -->
+</div>
+
+<!-- footer start -->
+{{include file="public/footer" /}}
+<!-- footer end -->

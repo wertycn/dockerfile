@@ -1,0 +1,63 @@
+<!-- 侧边栏 - 模块配置 - 视频 -->
+<div id="offcanvas-module-config-video" class="am-offcanvas module-offcanvas-container" data-default-images="{{$attachment_host}}/static/common/images/default-images-mini.png">
+    <div class="am-offcanvas-bar">
+        <div class="am-offcanvas-content am-padding-0">
+            <form class="am-form form-validation-module-offcanvas-video" request-type="sync" request-value="FormBackModuleConfigVideo">
+                <div class="am-panel am-panel-default">
+                    <div class="am-panel-hd">{{:MyLang('layout.view_content_setup')}}</div>
+                    <div class="am-panel-bd">
+                        <div class="am-form-group am-form-file am-form-group-refreshing">
+                            <label class="am-block">{{:MyLang('video_title')}}<span class="am-form-group-label-tips-must">*</span></label>
+                            <ul class="plug-file-upload-view plug-file-upload-view-video module-video-type-view-video" data-form-name="content_video" data-max-number="1" data-dialog-type="video" data-delete="0">
+                                <li>
+                                    <input type="text" name="content_video" data-validation-message="{{:MyLang('form_upload_video_message')}}" value="" required />
+                                    <video src="" controls>your browser does not support the video tag</video>
+                                </li>
+                            </ul>
+                            <div class="plug-file-upload-submit" data-view-tag="ul.module-video-type-view-video">+ {{:MyLang('form_upload_video_title')}}</div>
+                        </div>
+
+                        <div class="am-form-group am-form-file am-form-group-refreshing">
+                            <label class="am-block">{{:MyLang('layout.view_offcanvas_module_video_images')}}</label>
+                            <ul class="plug-file-upload-view module-video-type-view-images" data-form-name="content_images" data-max-number="1" data-dialog-type="images"></ul>
+                            <div class="plug-file-upload-submit" data-view-tag="ul.module-video-type-view-images">+ {{:MyLang('form_upload_images_title')}}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 样式设置 -->
+                <div class="am-panel am-panel-default">
+                    <div class="am-panel-hd">{{:MyLang('layout.view_style_setup')}}</div>
+                    <div class="am-panel-bd">
+                        <!-- 圆角 -->
+                        {{include file="../../../layout/view/public/style/border_radius" key="" required="" /}}
+
+                        <!-- 边线类型 -->
+                        {{include file="../../../layout/view/public/style/border_style_4" key="" /}}
+
+                        <!-- 边线大小 -->
+                        {{include file="../../../layout/view/public/style/border_width_color_4" key="" /}}
+
+                        <!-- 外边距 -->
+                        {{include file="../../../layout/view/public/style/margin_4" key="" /}}
+
+                        <!-- 内边距 -->
+                        {{include file="../../../layout/view/public/style/padding_4" key="" /}}
+                    </div>
+                </div>
+
+                <!-- 视频固定 -->
+                <div class="am-panel am-panel-default">
+                    <div class="am-panel-hd">{{:MyLang('layout.view_style_content')}}</div>
+                    <div class="am-panel-bd">
+                        {{include file="../../../layout/view/public/content/media_fixed" key="_media_fixed" required="" /}}
+                    </div>
+                </div>
+
+                <div class="form-submit-container">
+                    <button type="submit" class="am-btn am-btn-primary am-radius am-btn-xs am-btn-block" data-am-loading="{loadingText: '{{:MyLang('processing_tips')}}'}">{{:MyLang('confirm_title')}}</button>  
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

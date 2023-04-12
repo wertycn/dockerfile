@@ -1,0 +1,205 @@
+<!-- 继承公共的 form -->
+{{extend name="public/module/detail" /}}
+
+<!-- 重写数据模块 -->
+{{block name="detail_data"}}
+    <!-- 父级内容 -->
+    {__block__}
+
+    <!-- 商品视频 -->
+    <div class="am-panel am-panel-default">
+        <div class="am-panel-hd">{{$goods_nav_list.video.name}}</div>
+        <div class="am-panel-bd">
+            {{if !empty($data['video'])}}
+                <video src="{{$data.video}}" class="am-img-responsive" controls="controls" preload="auto">
+                    your browser does not support the video tag
+                </video>
+            {{else /}}
+                {{include file="public/not_data" /}}
+            {{/if}}
+        </div>
+    </div>
+
+    <!-- 商品相册 -->
+    <div class="am-panel am-panel-default">
+        <div class="am-panel-hd">{{$goods_nav_list.photo.name}}</div>
+        <div class="am-panel-bd">
+            {{if !empty($data['photo']) and is_array($data['photo'])}}
+                <div class="am-scrollable-vertical am-nowrap-initial">
+                    <div data-am-widget="slider" class="am-slider am-slider-default" data-am-slider='{"animation":"slide","animationLoop":false,"itemWidth":200,"itemMargin":5}'>
+                        <ul class="am-slides">
+                            {{foreach $data.photo as $v}}
+                                <li>
+                                    <a href="{{$v.images}}" target="_blank">
+                                        <img src="{{$v.images}}" height="225" />
+                                    </a>
+                                </li>
+                            {{/foreach}}
+                        </ul>
+                    </div>
+                </div>
+            {{else /}}
+                {{include file="public/not_data" /}}
+            {{/if}}
+        </div>
+    </div>
+
+    <!-- 商品规格 -->
+    <div class="am-panel am-panel-default">
+        <div class="am-panel-hd">{{$goods_nav_list.specifications.name}}</div>
+        <div class="am-panel-bd">
+            {{if !empty($specifications) and is_array($specifications)}}
+                <div class="am-scrollable-vertical am-scrollable-horizontal">
+                    <table class="am-table am-table-bordered am-table-striped am-text-nowrap">
+                        <thead>
+                            <tr>
+                                {{foreach $specifications.type as $line_k=>$line_v}}
+                                    <th>{{$line_v.name}}</th>
+                                {{/foreach}}
+                                <th>{{:MyLang('common_service.goods.form_spec_thead_price_title')}}</th>
+                                <th>{{:MyLang('common_service.goods.form_spec_thead_original_price_title')}}</th>
+                                <th>{{:MyLang('common_service.goods.form_spec_thead_inventory_title')}}</th>
+                                <th>{{:MyLang('common_service.goods.form_spec_thead_buy_min_number_title')}}</th>
+                                <th>{{:MyLang('common_service.goods.form_spec_thead_buy_max_number_title')}}</th>
+                                <th>{{:MyLang('common_service.goods.form_spec_thead_weight_title')}}</th>
+                                <th>{{:MyLang('common_service.goods.form_spec_thead_volume_title')}}</th>
+                                <th>{{:MyLang('common_service.goods.form_spec_thead_coding_title')}}</th>
+                                <th>{{:MyLang('common_service.goods.form_spec_thead_barcode_title')}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{foreach $specifications.value as $line_k=>$line_v}}
+                                <tr>
+                                    {{foreach $line_v as $v}}
+                                        {{if isset($v['data_type'])}}
+                                            {{switch v.data_type}}
+                                                {{case spec}}
+                                                    <td class="am-text-middle">{{$v.data.value}}</td>
+                                                {{/case}}
+
+                                                {{case base}}
+                                                    <td class="am-text-middle">{{if isset($v['data']['price'])}}{{$v.data.price}}{{/if}}</td>
+                                                    <td class="am-text-middle">{{if isset($v['data']['original_price']) and $v['data']['original_price'] gt 0}}{{$v.data.original_price}}{{/if}}</td>
+                                                    <td class="am-text-middle">{{if isset($v['data']['inventory'])}}{{$v.data.inventory}}{{/if}}</td>
+                                                    <td class="am-text-middle">{{if isset($v['data']['buy_min_number']) and $v['data']['buy_min_number'] 
+                                                    gt 0}}{{$v.data.buy_min_number}}{{/if}}</td>
+                                                    <td class="am-text-middle">{{if isset($v['data']['buy_max_number']) and $v['data']['buy_max_number'] 
+                                                    gt 0}}{{$v.data.buy_max_number}}{{/if}}</td>
+                                                    <td class="am-text-middle">{{if isset($v['data']['weight']) and $v['data']['weight'] 
+                                                    gt 0}}{{$v.data.weight}}{{/if}}</td>
+                                                    <td class="am-text-middle">{{if isset($v['data']['volume']) and $v['data']['volume'] 
+                                                    gt 0}}{{$v.data.volume}}{{/if}}</td>
+                                                    <td class="am-text-middle">{{if isset($v['data']['coding'])}}{{$v.data.coding}}{{/if}}</td>
+                                                    <td class="am-text-middle">{{if isset($v['data']['barcode'])}}{{$v.data.barcode}}{{/if}}</td>
+                                                {{/case}}
+                                            {{/switch}}
+                                        {{/if}}
+                                    {{/foreach}}
+                                </tr>
+                            {{/foreach}}
+                        </tbody>
+                    </table>
+                </div>
+            {{else /}}
+                {{include file="public/not_data" /}}
+            {{/if}}
+        </div>
+    </div>
+
+    <!-- 商品规格图片 -->
+    <div class="am-panel am-panel-default">
+        <div class="am-panel-hd">{{:MyLang('common_service.goods.form_spec_images_title')}}</div>
+        <div class="am-panel-bd am-padding-xs">
+            {{if !empty($specifications) and is_array($specifications)}}
+                <div class="am-scrollable-vertical">
+                    <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-4 am-avg-lg-6 am-gallery-bordered am-padding-0">
+                        {{foreach $specifications.type as $line_k=>$line_v}}
+                            {{foreach $line_v.value as $v}}
+                                {{if !empty($v['images'])}}
+                                    <li>
+                                        <div class="am-gallery-item">
+                                            <a href="{{$v.images}}" target="_blank">
+                                                <img src="{{$v.images}}" alt="{{$v.name}}"/>
+                                                <h3 class="am-gallery-title am-text-center">{{$v.name}}</h3>
+                                            </a>
+                                        </div>
+                                    </li>
+                                {{/if}}
+                            {{/foreach}}
+                        {{/foreach}}
+                    </ul>
+                </div>
+            {{else /}}
+                {{include file="public/not_data" /}}
+            {{/if}}
+        </div>
+    </div>
+
+    <!-- 商品参数 -->
+    <div class="am-panel am-panel-default">
+        <div class="am-panel-hd">{{$goods_nav_list.parameters.name}}</div>
+        <div class="am-panel-bd">
+            {{include file="public/goodsparamstemplate/detail" /}}
+        </div>
+    </div>
+
+    <!-- 电脑端详情 -->
+    <div class="am-panel am-panel-default">
+        <div class="am-panel-hd">{{$goods_nav_list.web.name}}</div>
+        <div class="am-panel-bd">
+            {{if !empty($data['content_web'])}}
+                <div class="am-scrollable-vertical am-nowrap-initial am-img-responsive">
+                    {{$data.content_web|raw}}
+                </div>
+            {{else /}}
+                {{include file="public/not_data" /}}
+            {{/if}}
+        </div>
+    </div>
+
+    <!-- 手机端详情 -->
+    <div class="am-panel am-panel-default">
+        <div class="am-panel-hd">{{$goods_nav_list.app.name}}</div>
+        <div class="am-panel-bd">
+            {{if !empty($data['content_app']) and is_array($data['content_app'])}}
+                <div class="am-scrollable-vertical am-nowrap-initial am-img-responsive">
+                    <ul>
+                        {{foreach $data.content_app as $v}}
+                            <li class="am-margin-bottom-sm">
+                                <a href="{{$v.images}}" target="_blank">
+                                    <img src="{{$v.images}}" />
+                                </a>
+                                {{if !empty($v['content']) and is_array($v['content'])}}
+                                    <div class="am-margin-top-sm">
+                                        {{foreach $v.content as $text}}
+                                            <p>{{$text}}</p>
+                                        {{/foreach}}
+                                    </div>
+                                {{/if}}
+                            </li>
+                        {{/foreach}}
+                    </ul>
+                </div>
+            {{else /}}
+                {{include file="public/not_data" /}}
+            {{/if}}
+        </div>
+    </div>
+
+    <!-- 虚拟商品展示数据 -->
+    <div class="am-panel am-panel-default">
+        <div class="am-panel-hd">{{$goods_nav_list.fictitious.name}}</div>
+        <div class="am-panel-bd">
+            {{if !empty($data['fictitious_goods_value'])}}
+                <div class="am-scrollable-vertical am-nowrap-initial am-img-responsive">
+                    {{$data.fictitious_goods_value|raw}}
+                </div>
+            {{else /}}
+                {{include file="public/not_data" /}}
+            {{/if}}
+        </div>
+    </div>
+
+    <!-- SEO信息 -->
+    {{include file="lib/seo_data" /}}
+{{/block}}

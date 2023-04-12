@@ -1,0 +1,19 @@
+.tree-list li {
+	list-style-type: none;
+}
+.tree-list li .item-content {
+	border:1px dashed #ceecff;
+	background: #ddf2ff;
+}
+.tree-list li label,
+.tree-list li label input[type="checkbox"] {
+	cursor: pointer;
+	margin: 0;
+}
+.tree-list li label input[type="checkbox"],
+.tree-list li label span {
+	vertical-align: middle;
+}
+.list-find li label span {
+	font-weight: normal;
+}

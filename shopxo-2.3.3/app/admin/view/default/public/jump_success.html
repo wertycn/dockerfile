@@ -1,0 +1,33 @@
+{{include file="public/header" /}}
+
+<!-- right content start  -->
+<div class="content-right">
+    <div class="content">
+        <div class="am-text-center am-margin-top-xl am-padding-xl">
+            <p><i class="am-icon-check-circle am-icon-lg am-text-xl am-text-success"></i></p>
+            <p class="am-margin-top-xs am-text-sm">{{if isset($msg)}}{{$msg}}{{else /}}{{:MyLang('operate_success')}}{{/if}}</p>
+            <p class="am-margin-top-xl">
+                <a href="javascript:history.go(-1)" class="am-text-primary">{{:MyLang('back_prev_page_name')}}</a>
+                <span class="am-margin-left-sm"><span class="wait-time">{{if empty($wait_time)}}5{{else /}}{{$wait_time}}{{/if}}</span>{{:MyLang('back_prev_time_auto_text')}}</span>
+            </p>
+        </div>
+    </div>
+</div>
+<!-- right content end  -->
+
+<!-- footer start -->
+{{include file="public/footer" /}}
+<!-- footer end -->
+<script type="text/javascript">
+    var interval = setInterval(function()
+    {
+        var time = parseInt($('.wait-time').text() || 5)-1;
+        if(time <= 0)
+        {
+            clearInterval(interval);
+            history.go(-1);
+        } else {
+            $('.wait-time').text(time);
+        }
+    }, 1000);
+</script>

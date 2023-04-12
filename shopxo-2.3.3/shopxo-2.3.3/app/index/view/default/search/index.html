@@ -1,0 +1,392 @@
+{{include file="public/header" /}}
+
+<!-- header top nav -->
+{{include file="public/header_top_nav" /}}
+
+<!-- search -->
+{{include file="public/nav_search" /}}
+
+<!-- header nav -->
+{{include file="public/header_nav" /}}
+
+<!-- goods category -->
+{{include file="public/goods_category" /}}
+
+<!-- 搜索页面顶部钩子 -->
+{{if isset($shopxo_is_develop) and $shopxo_is_develop eq true}}
+    <div class="plugins-tag">
+        <span>plugins_view_search_top</span>
+    </div>
+{{/if}}
+{{if !empty($plugins_view_search_top_data) and is_array($plugins_view_search_top_data)}}
+    {{foreach $plugins_view_search_top_data as $hook}}
+        {{if is_string($hook) or is_int($hook)}}
+            {{$hook|raw}}
+        {{/if}}
+    {{/foreach}}
+{{/if}}
+
+<!-- 面包屑导航 -->
+{{include file="public/breadcrumb_data" /}}
+
+<!-- content -->
+<div class="am-container">
+    <!-- 搜索页面顶部内部结构里面钩子 -->
+    {{if isset($shopxo_is_develop) and $shopxo_is_develop eq true}}
+        <div class="plugins-tag">
+            <span>plugins_view_search_inside_top</span>
+        </div>
+    {{/if}}
+    {{if !empty($plugins_view_search_inside_top_data) and is_array($plugins_view_search_inside_top_data)}}
+        {{foreach $plugins_view_search_inside_top_data as $hook}}
+            {{if is_string($hook) or is_int($hook)}}
+                {{$hook|raw}}
+            {{/if}}
+        {{/foreach}}
+    {{/if}}
+
+    <div class="search-container am-u-sm-12 am-u-md-12 am-padding-left-0 am-padding-right-0" data-category-id="{{if !empty($params['category_id'])}}{{$params.category_id}}{{/if}}" data-brand-id="{{if !empty($params['brand_id'])}}{{$params.brand_id}}{{/if}}">
+        <!-- 手机模式下基础信息+搜索条件按钮 -->
+        <div class="map-base-tips am-nbfc am-padding-horizontal-xs am-padding-vertical-sm am-show-sm">
+            <p class="am-fl">
+                <span>{{:MyLang('search.filter_out_first_text')}}</span>
+                <strong class="map-result-count am-text-danger">{{$data_total}}</strong>
+                <span>{{:MyLang('search.filter_out_last_data_text')}}</span>
+            </p>
+            <button class="am-btn am-btn-primary am-btn-xs am-radius am-icon-filter map-offcanvas-submit" data-am-offcanvas="{target: '#search-map'}"></button>
+        </div>
+
+        <!-- 搜索条件顶部钩子 -->
+        {{if isset($shopxo_is_develop) and $shopxo_is_develop eq true}}
+            <div class="plugins-tag">
+                <span>plugins_view_search_map_top</span>
+            </div>
+        {{/if}}
+        {{if !empty($plugins_view_search_map_top_data) and is_array($plugins_view_search_map_top_data)}}
+            {{foreach $plugins_view_search_map_top_data as $hook}}
+                {{if is_string($hook) or is_int($hook)}}
+                    {{$hook|raw}}
+                {{/if}}
+            {{/foreach}}
+        {{/if}}
+
+        <!-- 搜索条件内容、侧边栏内容 -->
+        <div id="search-map" class="am-offcanvas">
+            <div class="am-offcanvas-bar">
+                <div class="am-offcanvas-content">
+                    <ul class="map-item am-list am-list-border am-margin-top-sm am-margin-bottom-0">
+                        <!-- 搜索页面筛选条件内前面钩子 -->
+                        {{if isset($shopxo_is_develop) and $shopxo_is_develop eq true}}
+                            <div class="plugins-tag">
+                                <span>plugins_view_search_map_inside_begin</span>
+                            </div>
+                        {{/if}}
+                        {{if !empty($plugins_view_search_map_inside_begin_data) and is_array($plugins_view_search_map_inside_begin_data)}}
+                            {{foreach $plugins_view_search_map_inside_begin_data as $hook}}
+                                {{if is_string($hook) or is_int($hook)}}
+                                    {{$hook|raw}}
+                                {{/if}}
+                            {{/foreach}}
+                        {{/if}}
+
+                        <!-- 基础数据 -->
+                        <li class="am-nbfc">
+                            <p class="am-fl am-margin-left-sm">
+                                <span>{{:MyLang('search.filter_out_first_text')}}</span>
+                                <strong class="map-result-count am-text-danger">{{$data_total}}</strong>
+                                <span>{{:MyLang('search.filter_out_last_data_text')}}</span>
+                            </p>
+                            {{if isset($is_map) and $is_map eq 1}}
+                                <a href="{{:MyUrl('index/search/index')}}" class="map-remove-submit am-fr am-margin-right-sm">{{:MyLang('clear_title')}}</a>
+                            {{/if}}
+                        </li>
+
+                        <!-- 搜索页面筛选条件内基础底部钩子 -->
+                        {{if isset($shopxo_is_develop) and $shopxo_is_develop eq true}}
+                            <div class="plugins-tag">
+                                <span>plugins_view_search_map_inside_base_bottom</span>
+                            </div>
+                        {{/if}}
+                        {{if !empty($plugins_view_search_map_inside_base_bottom_data) and is_array($plugins_view_search_map_inside_base_bottom_data)}}
+                            {{foreach $plugins_view_search_map_inside_base_bottom_data as $hook}}
+                                {{if is_string($hook) or is_int($hook)}}
+                                    {{$hook|raw}}
+                                {{/if}}
+                            {{/foreach}}
+                        {{/if}}
+
+                        <!-- 品牌 -->
+                        {{if !empty($brand_list)}}
+                            <li class="am-nbfc map-brand-container" data-field="brand_ids">
+                                {{if !empty($search_map_info['brand']) and !empty($params['brand'])}}
+                                    <div class="brand-info">
+                                        <div class="map-left am-text-center am-fl">{{:MyLang('brand_title')}}</div>
+                                        <div class="map-right map-images-text-items am-fr am-nbfc">
+                                            <a {{if empty($search_map_info['brand']['website_url'])}}href="javascript:;"{{else /}}href="{{$search_map_info.brand.website_url}}" target="_blank"{{/if}} title="{{$search_map_info.brand.name}}">
+                                                {{if empty($search_map_info['brand']['logo'])}}
+                                                    <p class="info-logo-empty am-fl am-text-center">{{$search_map_info.brand.name}}</p>
+                                                {{else /}}
+                                                    <img src="{{$search_map_info.brand.logo}}" alt="{{$search_map_info.brand.name}}" class="info-logo am-img-thumbnail am-fl" />
+                                                {{/if}}
+                                            </a>
+                                            <div class="am-fr info-right">
+                                                <!-- logo为空则不显示名称、无logo会使用名称当做logo展示 -->
+                                                {{if !empty($search_map_info['brand']['logo'])}}
+                                                    <p class="info-name am-margin-bottom-xs">{{$search_map_info.brand.name}}</p>
+                                                {{/if}}
+                                                <p class="info-desc am-text-truncate-2">{{$search_map_info.brand.describe}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {{else /}}
+                                    <div class="map-left am-text-center am-fl">{{:MyLang('brand_title')}}</div>
+                                    <div class="map-right map-images-text-items am-fr am-nbfc">
+                                        <ul class="am-nbfc">
+                                            {{foreach $brand_list as $v}}
+                                                <li {{if isset($v['is_active']) and $v['is_active'] eq 1}}class="active"{{/if}}>
+                                                    <a href="{{$v.url}}" title="{{$v.name}}">
+                                                        {{if empty($v['logo'])}}
+                                                            {{$v.name}}
+                                                        {{else /}}
+                                                            <img src="{{$v.logo}}" alt="{{$v.name}}" />
+                                                        {{/if}}
+                                                    </a>
+                                                </li>
+                                            {{/foreach}}
+                                        </ul>
+                                        <div class="map-more-submit am-hide">
+                                            <span>{{:MyLang('more_title')}}</span>
+                                            <i class="am-icon-angle-down"></i>
+                                        </div>
+                                    </div>
+                                {{/if}}
+                            </li>
+                        {{/if}}
+
+                        <!-- 分类 -->
+                        {{if !empty($category_list)}}
+                            <li class="am-nbfc map-category-container" data-field="category_ids">
+                                <div class="map-left am-text-center am-fl">{{:MyLang('category_title')}}</div>
+                                <div class="map-right map-text-items am-fr am-nbfc">
+                                    <ul class="am-nbfc">
+                                        {{foreach $category_list as $v}}
+                                            <li {{if isset($v['is_active']) and $v['is_active'] eq 1}}class="active"{{/if}}>
+                                                <a href="{{$v.url}}" title="{{$v.name}}">{{$v.name}}</a>
+                                            </li>
+                                        {{/foreach}}
+                                    </ul>
+                                    <div class="map-more-submit am-hide">
+                                        <span>{{:MyLang('more_title')}}</span>
+                                        <i class="am-icon-angle-down"></i>
+                                    </div>
+                                </div>
+                            </li>
+                        {{/if}}
+
+                        <!-- 价格 -->
+                        {{if !empty($screening_price_list)}}
+                            <li class="am-nbfc screening-price-container" data-field="screening_price_values">
+                                <div class="map-left am-text-center am-fl">{{:MyLang('price_title')}}</div>
+                                <div class="map-right map-text-items am-fr am-nbfc">
+                                    <ul class="am-nbfc">
+                                        {{foreach $screening_price_list as $v}}
+                                            <li {{if isset($v['is_active']) and $v['is_active'] eq 1}}class="active"{{/if}}>
+                                                <a href="{{$v.url}}" title="{{$v.name}}">{{$v.name}}</a>
+                                            </li>
+                                        {{/foreach}}
+                                    </ul>
+                                    <div class="map-more-submit am-hide">
+                                        <span>{{:MyLang('more_title')}}</span>
+                                        <i class="am-icon-angle-down"></i>
+                                    </div>
+                                </div>
+                            </li>
+                        {{/if}}
+
+                        <!-- 属性 -->
+                        {{if !empty($goods_params_list)}}
+                            <li class="am-nbfc goods-params-container" data-field="goods_params_values">
+                                <div class="map-left am-text-center am-fl">{{:MyLang('attr_title')}}</div>
+                                <div class="map-right map-text-items am-fr am-nbfc">
+                                    <ul class="am-nbfc">
+                                        {{foreach $goods_params_list as $v}}
+                                            <li {{if isset($v['is_active']) and $v['is_active'] eq 1}}class="active"{{/if}}>
+                                                <a href="{{$v.url}}" title="{{$v.value}}">{{$v.value}}</a>
+                                            </li>
+                                        {{/foreach}}
+                                    </ul>
+                                    <div class="map-more-submit am-hide">
+                                        <span>{{:MyLang('more_title')}}</span>
+                                        <i class="am-icon-angle-down"></i>
+                                    </div>
+                                </div>
+                            </li>
+                        {{/if}}
+
+                        <!-- 规格 -->
+                        {{if !empty($goods_spec_list)}}
+                            <li class="am-nbfc goods-spec-container" data-field="goods_spec_values">
+                                <div class="map-left am-text-center am-fl">{{:MyLang('spec_title')}}</div>
+                                <div class="map-right map-text-items am-fr am-nbfc">
+                                    <ul class="am-nbfc">
+                                        {{foreach $goods_spec_list as $v}}
+                                            <li {{if isset($v['is_active']) and $v['is_active'] eq 1}}class="active"{{/if}}>
+                                                <a href="{{$v.url}}" title="{{$v.value}}">{{$v.value}}</a>
+                                            </li>
+                                        {{/foreach}}
+                                    </ul>
+                                    <div class="map-more-submit am-hide">
+                                        <span>{{:MyLang('more_title')}}</span>
+                                        <i class="am-icon-angle-down"></i>
+                                    </div>
+                                </div>
+                            </li>
+                        {{/if}}
+
+                        <!-- 搜索页面筛选条件内尾部钩子 -->
+                        {{if isset($shopxo_is_develop) and $shopxo_is_develop eq true}}
+                            <div class="plugins-tag">
+                                <span>plugins_view_search_map_inside_end</span>
+                            </div>
+                        {{/if}}
+                        {{if !empty($plugins_view_search_map_inside_end_data) and is_array($plugins_view_search_map_inside_end_data)}}
+                            {{foreach $plugins_view_search_map_inside_end_data as $hook}}
+                                {{if is_string($hook) or is_int($hook)}}
+                                    {{$hook|raw}}
+                                {{/if}}
+                            {{/foreach}}
+                        {{/if}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 搜索页面搜索导航条顶部钩子 -->
+        {{if isset($shopxo_is_develop) and $shopxo_is_develop eq true}}
+            <div class="plugins-tag">
+                <span>plugins_view_search_nav_top</span>
+            </div>
+        {{/if}}
+        {{if !empty($plugins_view_search_nav_top_data) and is_array($plugins_view_search_nav_top_data)}}
+            {{foreach $plugins_view_search_nav_top_data as $hook}}
+                {{if is_string($hook) or is_int($hook)}}
+                    {{$hook|raw}}
+                {{/if}}
+            {{/foreach}}
+        {{/if}}
+
+        <!-- 排序方式 -->
+        <div class="search-nav am-margin-top-sm">
+            <ul class="sort-nav" data-am-sticky="{animation: 'slide-top'}">
+                <!-- 搜索页面搜索导航条内前面钩子 -->
+                {{if isset($shopxo_is_develop) and $shopxo_is_develop eq true}}
+                    <div class="plugins-tag">
+                        <span>plugins_view_search_nav_inside_begin</span>
+                    </div>
+                {{/if}}
+                {{if !empty($plugins_view_search_nav_inside_begin_data) and is_array($plugins_view_search_nav_inside_begin_data)}}
+                    {{foreach $plugins_view_search_nav_inside_begin_data as $hook}}
+                        {{if is_string($hook) or is_int($hook)}}
+                            {{$hook|raw}}
+                        {{/if}}
+                    {{/foreach}}
+                {{/if}}
+
+                <!-- 排序列表 -->
+                {{if !empty($map_order_by_list)}}
+                    {{foreach $map_order_by_list as $k=>$v}}
+                        <li class="{{if $v['is_active'] eq 1}}active{{/if}}">
+                            <a href="{{$v.url}}" title="{{$v.name}}">
+                                <span>{{$v.name}}</span>
+                                {{if $v['type'] neq 'default'}}
+                                    <i class="am-icon-long-arrow-{{if $v['value'] eq 'asc' or $v['is_active'] eq 0}}down{{else /}}up{{/if}}"></i>
+                                {{/if}}
+                            </a>
+                        </li>
+                    {{/foreach}}
+                {{/if}}
+
+                <!-- 搜索页面排序导航条内尾部钩子 -->
+                {{if isset($shopxo_is_develop) and $shopxo_is_develop eq true}}
+                    <div class="plugins-tag">
+                        <span>plugins_view_search_nav_inside_end</span>
+                    </div>
+                {{/if}}
+                {{if !empty($plugins_view_search_nav_inside_end_data) and is_array($plugins_view_search_nav_inside_end_data)}}
+                    {{foreach $plugins_view_search_nav_inside_end_data as $hook}}
+                        {{if is_string($hook) or is_int($hook)}}
+                            {{$hook|raw}}
+                        {{/if}}
+                    {{/foreach}}
+                {{/if}}
+            </ul>
+        </div>
+
+        <!-- 搜索页面数据容器顶部钩子 -->
+        {{if isset($shopxo_is_develop) and $shopxo_is_develop eq true}}
+            <div class="plugins-tag">
+                <span>plugins_view_search_data_top</span>
+            </div>
+        {{/if}}
+        {{if !empty($plugins_view_search_data_top_data) and is_array($plugins_view_search_data_top_data)}}
+            {{foreach $plugins_view_search_data_top_data as $hook}}
+                {{if is_string($hook) or is_int($hook)}}
+                    {{$hook|raw}}
+                {{/if}}
+            {{/foreach}}
+        {{/if}}
+
+        <!-- 数据列表 -->
+        {{include file="search/content" /}}
+
+        <!-- 搜索页面数据容器底部钩子 -->
+        {{if isset($shopxo_is_develop) and $shopxo_is_develop eq true}}
+            <div class="plugins-tag">
+                <span>plugins_view_search_data_bottom</span>
+            </div>
+        {{/if}}
+        {{if !empty($plugins_view_search_data_bottom_data) and is_array($plugins_view_search_data_bottom_data)}}
+            {{foreach $plugins_view_search_data_bottom_data as $hook}}
+                {{if is_string($hook) or is_int($hook)}}
+                    {{$hook|raw}}
+                {{/if}}
+            {{/foreach}}
+        {{/if}}
+
+        <!-- 分页 -->
+        <div class="am-nbfc am-margin-top-sm">
+            {{$page_html|raw}}
+        </div>
+    </div>
+
+    <!-- 搜索页面顶部内部结构里面钩子 -->
+    {{if isset($shopxo_is_develop) and $shopxo_is_develop eq true}}
+        <div class="plugins-tag">
+            <span>plugins_view_search_inside_bottom</span>
+        </div>
+    {{/if}}
+    {{if !empty($plugins_view_search_inside_bottom_data) and is_array($plugins_view_search_inside_bottom_data)}}
+        {{foreach $plugins_view_search_inside_bottom_data as $hook}}
+            {{if is_string($hook) or is_int($hook)}}
+                {{$hook|raw}}
+            {{/if}}
+        {{/foreach}}
+    {{/if}}
+</div>
+
+<!-- 搜索页面底部钩子 -->
+{{if isset($shopxo_is_develop) and $shopxo_is_develop eq true}}
+    <div class="plugins-tag">
+        <span>plugins_view_search_bottom</span>
+    </div>
+{{/if}}
+{{if !empty($plugins_view_search_bottom_data) and is_array($plugins_view_search_bottom_data)}}
+    {{foreach $plugins_view_search_bottom_data as $hook}}
+        {{if is_string($hook) or is_int($hook)}}
+            {{$hook|raw}}
+        {{/if}}
+    {{/foreach}}
+{{/if}}
+
+<!-- footer -->
+{{include file="public/footer" /}}

@@ -1,0 +1,117 @@
+{{include file="public/header" /}}
+
+<!-- header top nav -->
+{{include file="public/header_top_nav" /}}
+
+<!-- search -->
+{{include file="public/nav_search" /}}
+
+<!-- header nav -->
+{{include file="public/header_nav" /}}
+
+<!-- goods category -->
+{{include file="public/goods_category" /}}
+
+<!-- content -->
+<div class="am-container user-main">
+    <!-- user menu start -->
+    {{include file="public/user_menu" /}}
+    <!-- user menu end -->
+
+    <!-- content start -->
+    <div class="user-content">
+        <div class="user-content-body">
+            {{if $data['user_is_comments'] eq 0}}
+                <form class="am-form form-validation" method="post" action="{{:MyUrl('index/order/commentssave')}}" request-type="ajax-url" request-value="{{$referer_url}}">
+                    <!-- 商品列表 -->
+                    {{if !empty($data.items)}}
+                        <div class="order-goods business-form-block">
+                            <table class="am-table">
+                                <thead>
+                                    <tr>
+                                        <th>{{:MyLang('order.comments_goods_list_thead_base')}}</th>
+                                        <th class="am-hide-sm-only">{{:MyLang('order.comments_goods_list_thead_price')}}</th>
+                                        <th>{{:MyLang('order.comments_goods_list_thead_content')}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{foreach $data.items as $key=>$goods}}
+                                        <tr id="data-list-{{$goods.id}}" data-id="{{$goods.id}}" data-goods-id="{{$goods.goods_id}}" class="am-form-group business-form-block">
+                                            <td class="base">
+                                                <div class="goods-detail">
+                                                    <a href="{{$goods.goods_url}}" target="_blank">
+                                                        <img src="{{$goods.images}}">
+                                                    </a>
+                                                    <div class="goods-base">
+                                                        <a href="{{$goods.goods_url}}" target="_blank" class="goods-title">{{$goods.title}}</a>
+                                                        {{if !empty($goods.spec)}}
+                                                            <ul class="goods-attr">
+                                                                {{foreach $goods.spec as $spec}}
+                                                                    <li>{{$spec.type}}：{{$spec.value}}</li>
+                                                                {{/foreach}}
+                                                            </ul>
+                                                        {{/if}}
+                                                    </div>
+                                                </div>
+                                                <div class="wap-base am-show-sm-only">
+                                                    {{if $goods['original_price'] gt 0}}
+                                                        <span class="original-price">{{$currency_symbol}}{{$goods.original_price}}</span>
+                                                    {{/if}}
+                                                    <strong class="total-price-content">{{$currency_symbol}}{{$goods.price}}</strong>
+                                                    <span class="wap-number">x{{$goods.buy_number}}</span>
+                                                </div>
+                                            </td>
+                                            <td class="price am-hide-sm-only">
+                                                {{if $goods['original_price'] gt 0}}
+                                                    <p class="original-price">{{$currency_symbol}}{{$goods.original_price}}</p>
+                                                {{/if}}
+                                                <p class="line-price">{{$currency_symbol}}{{$goods.price}} x {{$goods.buy_number}}</p>
+                                            </td>
+                                            <td>
+                                                <div class="rating-items">
+                                                    <ul class="rating not-selected">
+                                                        <li><i class="am-icon-star-o am-icon-md"></i></li>
+                                                        <li><i class="am-icon-star-o am-icon-md"></i></li>
+                                                        <li><i class="am-icon-star-o am-icon-md"></i></li>
+                                                        <li><i class="am-icon-star-o am-icon-md"></i></li>
+                                                        <li><i class="am-icon-star-o am-icon-md"></i></li>
+                                                        <li class="tips-text"></li>
+                                                    </ul>
+                                                    <input type="text" name="rating[]" value="" class="input-rating" data-validation-message="{{:MyLang('common_service.goodscomments.form_item_rating_message')}}" required />
+                                                </div>
+                                                <textarea name="content[]" class="am-radius" placeholder="{{:MyLang('common_service.goodscomments.form_item_content_placeholder')}}" rows="4" minlength="6" maxlength="230" data-validation-message="{{:MyLang('common_service.goodscomments.form_item_content_message')}}" required></textarea>
+                                                <input type="hidden" name="goods_id[]" value="{{$goods.goods_id}}" />
+
+                                                <ul class="plug-file-upload-view goods-images-view-{{$key}}" data-form-name="images[{{$key}}][]" data-max-number="3" data-dialog-type="images">
+                                                </ul>
+                                                <div class="plug-file-upload-submit" data-view-tag="ul.goods-images-view-{{$key}}">+ {{:MyLang('form_upload_images_title')}}</div>
+                                                <span class="am-form-group-label-tips">{{:MyLang('common_service.goodscomments.form_item_images_message')}}</span>
+                                            </td>
+                                        </tr>
+                                    {{/foreach}}
+                                </tbody>
+                            </table>
+                        </div>
+                    {{/if}}
+
+                    <div class="am-form-group business-form-block">
+                        <label class="am-block">{{:MyLang('form_is_anonymous_title')}}<span class="am-form-group-label-tips">{{:MyLang('common_service.goodscomments.form_item_anonymous_tips')}}</span></label>
+                        <input name="is_anonymous" value="1" type="checkbox" data-off-text="{{:MyLang('no_title')}}" data-on-text="{{:MyLang('yes_title')}}" data-size="xs" data-on-color="success" data-off-color="default" data-handle-width="50" data-am-switch />
+                    </div>
+
+                    <div class="am-form-group am-form-group-refreshing business-form-block">
+                        <input type="hidden" name="id" value="{{$data.id}}" />
+                        <button type="submit" class="am-btn am-btn-primary am-radius btn-loading-example am-btn-sm" data-am-loading="{loadingText:'{{:MyLang('processing_tips')}}'}">{{:MyLang('submit_title')}}</button>
+                    </div>
+                </form>
+            {{else /}}
+                <div class="table-no"><i class="am-icon-warning"></i> {{:MyLang('order.form_you_have_commented_tips')}}</div>
+            {{/if}}
+        </div>
+    </div>
+    <!-- content end -->
+</div>
+
+<!-- footer start -->
+{{include file="public/footer" /}}
+<!-- footer end -->

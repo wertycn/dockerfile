@@ -1,0 +1,270 @@
+<!-- 应用商店账户绑定 -->
+<div class="am-popup popup-not-title" id="store-accounts-popup">
+    <div class="am-popup-inner">
+        {{if empty($site_store_info) or empty($site_store_info['base']) or !isset($site_store_info['base']['is_user_not_cloae_accounts_popup']) or $site_store_info['base']['is_user_not_cloae_accounts_popup'] eq 0}}
+            <span data-am-modal-close class="am-close am-close-alt am-icon-times"></span>
+        {{/if}}
+        <div class="am-popup-bd">
+            <!-- form start -->
+            <form class="am-form form-validation-store-accounts" action="{{:MyUrl('admin/index/storeaccountsbind')}}" method="POST" request-type="ajax-reload">
+                <div class="am-form-group am-form-group-refreshing business-form-block am-margin-top-xs">
+                    <label>{{:MyLang('store_bind_form_accounts')}}<span class="am-form-group-label-tips-must">*</span></label>
+                    <input type="text" name="common_store_accounts" placeholder="{{:MyLang('store_bind_form_accounts_placeholder')}}" data-validation-message="{{:MyLang('store_bind_form_accounts_message')}}" class="am-radius" value="" autocomplete="off" required />
+                </div>
+                <div class="am-form-group am-form-group-refreshing business-form-block am-margin-top-xs">
+                    <label>{{:MyLang('store_bind_form_password')}}<span class="am-form-group-label-tips-must">*</span></label>
+                    <input type="password" name="common_store_password" placeholder="{{:MyLang('store_bind_form_password_placeholder')}}" data-validation-message="{{:MyLang('store_bind_form_password_message')}}" class="am-radius" value="" autocomplete="off" required />
+                </div>
+                
+                <div class="am-form-group am-form-group-refreshing am-margin-top-sm">
+                    <button type="submit" class="am-btn am-btn-primary am-radius btn-loading-example am-btn-sm am-btn-block" data-am-loading="{loadingText:'{{:MyLang('bind_tips')}}'}">{{:MyLang('bind_title')}}</button>
+                </div>
+                <div class="am-margin-top-xr am-text-right am-padding-right-xs">
+                    <a href="{{:MyConfig('shopxo.store_regster_url')}}" target="_blank">{{:MyLang('store_bind_form_regster_name')}}</a>
+                </div>
+                <p class="am-text-warning am-text-center am-margin-top-sm">{{:MyLang('store_bind_form_tips')}}</p>
+            </form>
+            <!-- form end -->
+        </div>
+    </div>
+</div>
+
+<!-- 插件包更新弹窗 -->
+<div class="am-modal am-modal-no-btn" tabindex="-1" id="package-upgrade-modal">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">
+            <a href="javascript: void(0)" class="am-close" data-am-modal-close>&times;</a>
+        </div>
+        <div class="am-modal-bd">
+            <p class="am-margin-bottom-sm"><strong class="upgrade-name">...</strong></p>
+            <div class="am-scrollable-vertical am-text-left"></div>
+            <div class="am-text-left am-nbfc am-margin-top-sm">
+                <span class="am-icon-calendar-check-o upgrade-date"> ...</span>
+                <span class="am-icon-vimeo am-margin-left-sm upgrade-version"> ...</span>
+                <div class="am-fr">
+                    <button type="button" class="am-btn am-btn-default am-radius am-btn-xs" data-am-modal-close>{{:MyLang('cancel_title')}}</button>
+                    <button type="button" class="am-btn am-btn-success am-radius am-btn-xs am-margin-left-sm package-upgrade-submit" data-type="" data-value="" data-url="{{:MyUrl('admin/packageupgrade/upgrade')}}">{{:MyLang('update_title')}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 公共上传组件初始化 -->
+<textarea id="upload-editor-view" data-url="{{if isset($is_load_upload_editor) and $is_load_upload_editor eq 1}}{{:MyUrl('admin/ueditor/index', ['path_type'=>empty($editor_path_type) ? 'common' : $editor_path_type])}}{{/if}}" style="display: none;"></textarea>
+
+<!-- 公共视频扫码组件初始化 -->     
+<div class="am-popup am-radius popup-iframe popup-not-title" id="common-video-scan-popup">
+    <div class="am-popup-inner am-radius">
+        <span data-am-modal-close class="am-close am-close-alt am-icon-times"></span>
+        <div class="scanner">
+            <div class="scan-area">
+                <div class="mark top-left"></div>
+                <div class="mark top-right"></div>
+                <div class="mark bottom-left"></div>
+                <div class="mark bottom-right"></div>
+            </div>
+            <video id="video"></video>
+            <i class="am-icon-refresh am-icon-md video-scan-switch-camera-submit"></i>
+            <button type="button" class="am-btn am-btn-primary am-radius am-btn-xs video-scan-continue-submit am-hide">{{:MyLang('continue_scan_title')}}</button>
+            <div class="video-scan-audio-container"></div>
+        </div>
+    </div>
+</div>
+
+<!-- 公共底部钩子 -->
+{{if !empty($plugins_admin_view_common_bottom_data) and is_array($plugins_admin_view_common_bottom_data)}}
+    {{foreach $plugins_admin_view_common_bottom_data as $hook}}
+        {{if is_string($hook) or is_int($hook)}}
+            {{$hook|raw}}
+        {{/if}}
+    {{/foreach}}
+{{/if}}
+</body>
+</html>
+
+<!-- 类库 -->
+<script type='text/javascript' src="{{$public_host}}static/common/lib/jquery/jquery-2.2.4.min.js?v={{:MyC('home_static_cache_version')}}"></script>
+<script type='text/javascript' src="{{$public_host}}static/common/lib/assets/js/amazeui.min.js?v={{:MyC('home_static_cache_version')}}"></script>
+
+<!-- jshash -->
+<script type='text/javascript' src="{{$public_host}}static/common/lib/jshash/md5-min.js?v={{:MyC('home_static_cache_version')}}"></script>
+
+<!-- echarts 图表 -->
+{{if isset($is_load_echarts) and $is_load_echarts eq 1}}
+    <script type='text/javascript' src="{{$public_host}}static/common/lib/echarts/echarts.min.js?v={{:MyC('home_static_cache_version')}}"></script>
+    <script type='text/javascript' src="{{$public_host}}static/common/lib/echarts/macarons.js?v={{:MyC('home_static_cache_version')}}"></script>
+    <script type='text/javascript' src="{{$public_host}}static/common/lib/echarts/shine.js?v={{:MyC('home_static_cache_version')}}"></script>
+{{/if}}
+
+<!-- ueditor 编辑器 -->
+<script type='text/javascript' src="{{$my_public_url}}static/common/lib/ueditor/ueditor.config.js?v={{:MyC('home_static_cache_version')}}"></script>
+<script type='text/javascript' src="{{$public_host}}static/common/lib/ueditor/ueditor.all.js?v={{:MyC('home_static_cache_version')}}"></script>
+
+<!-- 颜色选择器 -->
+<script type='text/javascript' src="{{$public_host}}static/common/lib/colorpicker/jquery.colorpicker.js?v={{:MyC('home_static_cache_version')}}"></script>
+
+<!-- 元素拖拽排序插件 -->
+<script type='text/javascript' src="{{$public_host}}static/common/lib/dragsort/jquery.dragsort-0.5.2.min.js?v={{:MyC('home_static_cache_version')}}"></script>
+
+<!-- 动画数数 -->
+{{if isset($is_load_animation_count) and $is_load_animation_count eq 1}}
+    <script type='text/javascript' src="{{$public_host}}static/common/lib/animation-count-to/animation.count.to.js?v={{:MyC('home_static_cache_version')}}"></script>
+{{/if}}
+
+<!-- amazeui插件 -->
+<script type='text/javascript' src="{{$public_host}}static/common/lib/amazeui-switch/amazeui.switch.min.js?v={{:MyC('home_static_cache_version')}}"></script>
+<script type='text/javascript' src="{{$public_host}}static/common/lib/amazeui-chosen/amazeui.chosen.js?v={{:MyC('home_static_cache_version')}}"></script>
+<script type='text/javascript' src="{{$public_host}}static/common/lib/amazeui-dialog/amazeui.dialog.js?v={{:MyC('home_static_cache_version')}}"></script>
+<script type='text/javascript' src="{{$public_host}}static/common/lib/amazeui-tagsinput/amazeui.tagsinput.min.js?v={{:MyC('home_static_cache_version')}}"></script>
+
+<!-- 日期组件 -->
+<script type='text/javascript' src="{{$public_host}}static/common/lib/My97DatePicker/WdatePicker.js?v={{:MyC('home_static_cache_version')}}"></script>
+
+<!-- 元素拖动 -->
+<script type='text/javascript' src="{{$public_host}}static/common/lib/tdrag/tdrag.min.js?v={{:MyC('home_static_cache_version')}}"></script>
+
+<!-- 复制插件 -->
+<script type='text/javascript' src="{{$public_host}}static/common/lib/clipboard/clipboard.min.js?v={{:MyC('home_static_cache_version')}}"></script>
+
+<!-- base64 -->
+<script type='text/javascript' src="{{$public_host}}static/common/lib/base64/base64csvtojson.js?v={{:MyC('home_static_cache_version')}}"></script>
+
+<!-- ckplayer播放器 -->
+{{if isset($is_load_ckplayer) and $is_load_ckplayer eq 1}}
+    <script type='text/javascript' src="{{$public_host}}static/common/lib/ckplayer/js/ckplayer.min.js?v={{:MyC('home_static_cache_version')}}"></script>
+{{/if}}
+
+<!-- 条形码 -->
+{{if isset($is_load_barcode) and $is_load_barcode eq 1}}
+    <script type='text/javascript' src="{{$public_host}}static/common/lib/JsBarcode/JsBarcode.all.min.js?v={{:MyC('home_static_cache_version')}}"></script>
+{{/if}}
+
+<!-- map -->
+{{if isset($is_load_map_api) and $is_load_map_api eq 1 and !empty($load_map_type)}}
+    {{switch $load_map_type}}
+        {{case baidu}}
+            <script type="text/javascript" src="{{$my_http}}://api.map.baidu.com/api?v=2.0&ak={{:MyC('common_baidu_map_ak')}}"></script>
+        {{/case}}
+        {{case amap}}
+            <script type="text/javascript">
+                window._AMapSecurityConfig = {
+                    securityJsCode: '{{:MyC("common_amap_map_safety_ak")}}',
+                }
+            </script>
+            <script type="text/javascript" src="{{$my_http}}://webapi.amap.com/maps?v=2.0&key={{:MyC('common_amap_map_ak')}}"></script>
+        {{/case}}
+        {{case tencent}}
+            <script type="text/javascript" src="{{$my_http}}://map.qq.com/api/js?v=2.exp&key={{:MyC('common_tencent_map_ak')}}"></script>
+            <script type="text/javascript" src="{{$my_http}}://map.qq.com/api/gljs?libraries=service&v=1.exp&key={{:MyC('common_tencent_map_ak')}}"></script>
+        {{/case}}
+        {{case tianditu}}
+            <script type="text/javascript" src="{{$my_http}}://api.tianditu.gov.cn/api?v=4.0&tk={{:MyC('common_tianditu_map_ak')}}"></script>
+        {{/case}}
+    {{/switch}}
+{{/if}}
+
+<!-- 打印js -->
+{{if isset($is_load_hiprint) and $is_load_hiprint eq 1}}
+    <script type="text/javascript" src="{{$public_host}}static/common/lib/hiprint/hiprint.bundle.js"></script>
+    <script type="text/javascript" src="{{$public_host}}static/common/lib/hiprint/polyfill.min.js"></script>
+    <script type="text/javascript" src="{{$public_host}}static/common/lib/hiprint/plugins/jquery.hiwprint.js"></script>
+    <script type="text/javascript" src="{{$public_host}}static/common/lib/hiprint/plugins/JsBarcode.all.min.js"></script>
+    <script type="text/javascript" src="{{$public_host}}static/common/lib/hiprint/plugins/qrcode.js"></script>
+    <script type="text/javascript" src="{{$public_host}}static/common/lib/hiprint/plugins/jquery.minicolors.min.js"></script>
+    <script type="text/javascript" src="{{$public_host}}static/common/lib/hiprint/plugins/jspdf/canvas2image.js"></script>
+    <script type="text/javascript" src="{{$public_host}}static/common/lib/hiprint/plugins/jspdf/canvg.min.js"></script>
+    <script type="text/javascript" src="{{$public_host}}static/common/lib/hiprint/plugins/jspdf/html2canvas.min.js"></script>
+    <script type="text/javascript" src="{{$public_host}}static/common/lib/hiprint/plugins/jspdf/jspdf.min.js"></script>
+    <script type="text/javascript" src="{{$public_host}}static/common/lib/hiprint/hiprint.config.js"></script>
+{{/if}}
+
+<!-- 调用摄像头扫码js -->
+{{if isset($is_load_video_scan) and $is_load_video_scan eq 1}}
+    <script type="text/javascript" src="{{$public_host}}static/common/lib/ZXing/ZXing.min.js"></script>
+{{/if}}
+
+<!-- 代码编辑器js -->
+{{if isset($is_load_ace_builds) and $is_load_ace_builds eq 1}}
+    <script type="text/javascript" src="{{$public_host}}static/common/lib/ace-builds/src-min/ace.js"></script>
+{{/if}}
+
+<!-- 隐藏编辑器初始化 -->
+<script type="text/javascript">
+    var upload_editor = UE.getEditor("upload-editor-view", {
+        isShow: false,
+        focus: false,
+        enableAutoSave: false,
+        autoSyncData: false,
+        autoFloatEnabled:false,
+        wordCount: false,
+        sourceEditor: null,
+        scaleEnabled:true,
+        toolbars: [["insertimage", "insertvideo", "attachment"]]
+    });
+
+    // 关闭弹窗
+    function CommonPopupClose()
+    {
+        $('.am-popup').modal('close');
+    }
+</script>
+
+<!-- 项目公共 -->
+<script type='text/javascript' src="{{$public_host}}static/common/js/common.js?v={{:MyC('home_static_cache_version')}}"></script>
+<script type='text/javascript' src="{{$public_host}}static/admin/{{$default_theme}}/js/common.js?v={{:MyC('home_static_cache_version')}}"></script>
+{{if isset($is_load_layout_admin) and $is_load_layout_admin eq 1}}
+    <script type='text/javascript' src="{{$public_host}}static/common/js/layout.admin.js?v={{:MyC('home_static_cache_version')}}"></script>
+{{/if}}
+
+<!-- 应用插件公共js -->
+{{if !empty($plugins_js)}}
+    <script type='text/javascript' src="{{$public_host}}static/{{$plugins_js}}?v={{:MyC('home_static_cache_version')}}"></script>
+{{/if}}
+
+<!-- 当前控制器js -->
+{{if !empty($module_js)}}
+    <script type='text/javascript' src="{{$public_host}}static/{{$module_js}}?v={{:MyC('home_static_cache_version')}}"></script>
+{{/if}}
+
+<!-- js钩子 -->
+{{if !empty($plugins_admin_js_data) and is_array($plugins_admin_js_data)}}
+    {{foreach $plugins_admin_js_data as $hook}}
+        {{if !empty($hook) and is_string($hook)}}
+            {{if substr($hook, 0, 4) eq 'http'}}
+                <script type='text/javascript' src="{{$hook}}?v={{:MyC('home_static_cache_version')}}"></script>
+            {{else /}}
+                <script type='text/javascript' src="{{$public_host}}{{$hook}}?v={{:MyC('home_static_cache_version')}}"></script>
+            {{/if}}
+        {{elseif is_array($hook) /}}
+            {{foreach $hook as $hook_js}}
+                {{if !empty($hook_js) and is_string($hook_js)}}
+                    {{if substr($hook_js, 0, 4) eq 'http'}}
+                        <script type='text/javascript' src="{{$hook_js}}?v={{:MyC('home_static_cache_version')}}"></script>
+                    {{else /}}
+                        <script type='text/javascript' src="{{$public_host}}{{$hook_js}}?v={{:MyC('home_static_cache_version')}}"></script>
+                    {{/if}}
+                {{/if}}
+            {{/foreach}}
+        {{/if}}
+    {{/foreach}}
+{{/if}}
+
+<!-- 公共页面底部钩子 -->
+{{if !empty($plugins_admin_common_page_bottom_data) and is_array($plugins_admin_common_page_bottom_data)}}
+    {{foreach $plugins_admin_common_page_bottom_data as $hook}}
+        {{if is_string($hook) or is_int($hook)}}
+            {{$hook|raw}}
+        {{/if}}
+    {{/foreach}}
+{{/if}}
+
+<script type="text/javascript">
+$(function()
+{
+    // 绑定商店帐号
+    {{if !empty($site_store_info) and !empty($site_store_info['base']) and isset($site_store_info['base']['is_user_force_bind_accounts']) and $site_store_info['base']['is_user_force_bind_accounts'] eq 1 and !in_array($module_name.$controller_name.$action_name, ['adminindexindex', 'adminadminlogininfo']) and empty($site_store_info['user'])}}
+        StoreAccountsPopupOpen();
+    {{/if}}
+});
+</script>

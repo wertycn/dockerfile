@@ -1,0 +1,35 @@
+{{include file="public/header" /}}
+
+<!-- 自定义css -->
+{{if !empty($data['css_content'])}}
+<style type="text/css">{{$data.css_content|raw}}</style>
+{{/if}}
+
+<!-- header nav start -->
+{{if isset($is_header) and $is_header eq 1}}
+    <!-- header top nav -->
+    {{include file="public/header_top_nav" /}}
+
+    <!-- search -->
+    {{include file="public/nav_search" /}}
+
+    <!-- header nav -->
+    {{include file="public/header_nav" /}}
+
+    <!-- goods category -->
+    {{include file="public/goods_category" /}}
+{{/if}}
+<!-- header nav end -->
+
+<!-- content start -->
+<div class="customview-content am-scrollable-horizontal {{if !isset($data['is_full_screen']) or $data['is_full_screen'] eq 0}}am-container{{/if}}">{{$data.html_content|raw}}</div>
+<!-- content end -->
+
+<!-- footer start -->
+{{include file="public/footer" /}}
+<!-- footer end -->
+
+<!-- 自定义js -->
+{{if !empty($data['js_content'])}}
+<script type="text/javascript">{{$data.js_content|raw}}</script>
+{{/if}}

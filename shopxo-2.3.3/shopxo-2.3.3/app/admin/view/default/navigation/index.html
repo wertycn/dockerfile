@@ -1,0 +1,282 @@
+<!-- content nav start -->
+{{block name="form_content_top"}}
+	{{include file="navigation/nav" /}}
+{{/block}}
+<!-- content nav end -->
+
+<!-- 继承公共的 form -->
+{{extend name="public/module/form" /}}
+
+<!-- 表单顶部操作栏 -->
+{{block name="form_operate_top"}}
+	<div class="am-dropdown am-margin-right-sm" data-am-dropdown>
+		<button type="button" class="am-btn am-btn-secondary am-radius am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle>{{:MyLang('add_title')}} <span class="am-icon-caret-down"></span></button>
+		<ul class="am-dropdown-content">
+            {{foreach $add_type_list as $k=>$v}}
+    			<li>
+                    <a href="javascript:;" class="am-padding-0">
+        				<button type="button" class="am-btn am-btn-link am-btn-xs am-btn-block am-text-left am-padding-horizontal-sm am-icon-plus submit-add" data-am-modal="{target: '#nav-{{$k}}-save-win'}" data-tag="nav-{{$k}}-save-win"> {{$v}}</button>
+                    </a>
+    			</li>
+            {{/foreach}}
+		</ul>
+	</div>
+
+    <!-- 父级内容 -->
+    {__block__}
+{{/block}}
+
+<!-- 扩展 -->
+{{block name="form_extend"}}
+    <!-- custom save win start -->
+    <div class="am-popup am-radius" id="nav-custom-save-win">
+        <div class="am-popup-inner">
+            <div class="am-popup-hd">
+                <h4 class="am-popup-title" data-add-title="{{$add_type_list.custom}}{{:MyLang('add_title')}}" data-edit-title="{{$add_type_list.custom}}{{:MyLang('edit_title')}}">{{$add_type_list.custom}}{{:MyLang('add_title')}}</h4>
+                <span data-am-modal-close class="am-close">&times;</span>
+            </div>
+            <div class="am-popup-bd">
+                <!-- form start -->
+                <form class="am-form form-validation am-form-popup-fixed" action="{{:MyUrl('admin/navigation/save')}}" method="POST" request-type="ajax-reload" request-value="">
+                    <div class="am-form-group">
+                        <label>{{:MyLang('common_service.navigation.form_item_pid')}}</label>
+                        <select class="am-radius chosen-select" name="pid" data-placeholder="{{:MyLang('common_service.navigation.form_item_pid_placeholder')}}" data-validation-message="{{:MyLang('common_service.navigation.form_item_pid_message')}}">
+                            <option value="">{{:MyLang('common_service.navigation.form_item_pid_placeholder')}}</option>
+                            {{foreach $nav_header_pid_list as $v}}
+                                <option value="{{$v.id}}">{{$v.name}}</option>
+                            {{/foreach}}
+                        </select>
+                    </div>
+                    <div class="am-form-group">
+                        <label>{{:MyLang('common_service.navigation.form_item_name')}}<span class="am-form-group-label-tips-must">*</span></label>
+                        <input type="text" placeholder="{{:MyLang('common_service.navigation.form_item_name_message')}}" name="name" minlength="2" maxlength="16" data-validation-message="{{:MyLang('common_service.navigation.form_item_name_message')}}" class="am-radius" required />
+                    </div>
+                    <div class="am-form-group">
+                        <label>{{:MyLang('common_service.navigation.form_item_url')}}<span class="am-form-group-label-tips-must">*</span></label>
+                        <input type="url" placeholder="{{:MyLang('common_service.navigation.form_item_url_placeholder')}}" name="url" data-validation-message="{{:MyLang('common_service.navigation.form_item_url_message')}}" class="am-radius" required />
+                    </div>
+                    {{include file="lib/sort" /}}
+                    {{include file="lib/is_show" /}}
+                    {{include file="lib/is_new_window_open" /}}
+                    <div class="am-form-popup-submit">
+                        <input type="hidden" name="id" />
+                        <input type="hidden" name="data_type" value="custom" />
+                        <input type="hidden" name="nav_type" value="{{$nav_type}}" />
+                        <button type="submit" class="am-btn am-btn-primary am-radius btn-loading-example am-btn-sm am-btn-block" data-am-loading="{loadingText:'{{:MyLang('processing_tips')}}'}">{{:MyLang('save_title')}}</button>
+                    </div>
+                </form>
+                <!-- form end -->
+            </div>
+        </div>
+    </div>
+    <!-- custom save win end -->
+
+    <!-- article save win start -->
+    <div class="am-popup am-radius" id="nav-article-save-win">
+        <div class="am-popup-inner">
+            <div class="am-popup-hd">
+                <h4 class="am-popup-title" data-add-title="{{$add_type_list.article}}{{:MyLang('add_title')}}" data-edit-title="{{$add_type_list.article}}{{:MyLang('edit_title')}}">{{$add_type_list.article}}{{:MyLang('add_title')}}</h4>
+                <span data-am-modal-close class="am-close">&times;</span>
+            </div>
+            <div class="am-popup-bd">
+                <!-- form start -->
+                <form class="am-form form-validation-article am-form-popup-fixed" action="{{:MyUrl('admin/navigation/save')}}" method="POST" request-type="ajax-reload" request-value="">
+                    <div class="am-form-group">
+                        <label>{{:MyLang('common_service.navigation.form_item_pid')}}</label>
+                        <select class="am-radius chosen-select" name="pid" data-placeholder="{{:MyLang('common_service.navigation.form_item_pid_placeholder')}}" data-validation-message="{{:MyLang('common_service.navigation.form_item_pid_message')}}">
+                            <option value="">{{:MyLang('common_service.navigation.form_item_pid_placeholder')}}</option>
+                            {{foreach $nav_header_pid_list as $v}}
+                                <option value="{{$v.id}}">{{$v.name}}</option>
+                            {{/foreach}}
+                        </select>
+                    </div>
+                    <div class="am-form-group">
+                        <label>{{$add_type_list.article}}<span class="am-form-group-label-tips-must">*</span></label>
+                        <select class="am-radius chosen-select" name="value" data-placeholder="{{:MyLang('please_select_tips')}}" data-validation-message="{{:MyLang('common_service.navigation.form_item_value_article_message')}}" required>
+                            <option value="">{{:MyLang('please_select_tips')}}</option>
+                            {{foreach $article_list as $v}}
+                                <optgroup label="{{$v.name}}">
+                                    {{if !empty($v['items'])}}
+                                        {{foreach $v.items as $vs}}
+                                            <option value="{{$vs.id}}">{{$vs.title}}</option>
+                                        {{/foreach}}
+                                    {{/if}}
+                                </optgroup>
+                            {{/foreach}}
+                        </select>
+                    </div>
+                    <div class="am-form-group">
+                        <label>{{:MyLang('common_service.navigation.form_item_name')}}<span class="am-form-group-label-tips">{{:MyLang('common_service.navigation.form_item_name_tips', ['type'=>$add_type_list['article']])}}</span></label>
+                        <input type="text" placeholder="{{:MyLang('common_service.navigation.form_item_name_message')}}" name="name" maxlength="16" data-validation-message="{{:MyLang('common_service.navigation.form_item_name_message')}}" class="am-radius" />
+                    </div>
+                    {{include file="lib/sort" /}}
+                    {{include file="lib/is_show" /}}
+                    {{include file="lib/is_new_window_open" /}}
+                    <div class="am-form-popup-submit">
+                        <input type="hidden" name="id" />
+                        <input type="hidden" name="data_type" value="article" />
+                        <input type="hidden" name="nav_type" value="{{$nav_type}}" />
+                        <button type="submit" class="am-btn am-btn-primary am-radius btn-loading-example am-btn-sm am-btn-block" data-am-loading="{loadingText:'{{:MyLang('processing_tips')}}'}">{{:MyLang('save_title')}}</button>
+                    </div>
+                </form>
+                <!-- form end -->
+            </div>
+        </div>
+    </div>
+    <!-- article save win end -->
+
+    <!-- customview save win start -->
+    <div class="am-popup am-radius" id="nav-customview-save-win">
+        <div class="am-popup-inner">
+            <div class="am-popup-hd">
+                <h4 class="am-popup-title" data-add-title="{{$add_type_list.customview}}{{:MyLang('add_title')}}" data-edit-title="{{$add_type_list.customview}}{{:MyLang('edit_title')}}">{{$add_type_list.customview}}{{:MyLang('add_title')}}</h4>
+                <span data-am-modal-close
+                class="am-close">&times;</span>
+                </div>
+            <div class="am-popup-bd">
+                <!-- form start -->
+                <form class="am-form form-validation-customview am-form-popup-fixed" action="{{:MyUrl('admin/navigation/save')}}" method="POST" request-type="ajax-reload" request-value="">
+                    <div class="am-form-group">
+                        <label>{{:MyLang('common_service.navigation.form_item_pid')}}</label>
+                        <select class="am-radius chosen-select" name="pid" data-placeholder="{{:MyLang('common_service.navigation.form_item_pid_placeholder')}}" data-validation-message="{{:MyLang('common_service.navigation.form_item_pid_message')}}">
+                            <option value="">{{:MyLang('common_service.navigation.form_item_pid_placeholder')}}</option>
+                            {{foreach $nav_header_pid_list as $v}}
+                                <option value="{{$v.id}}">{{$v.name}}</option>
+                            {{/foreach}}
+                        </select>
+                    </div>
+                    <div class="am-form-group">
+                        <label>{{$add_type_list.customview}}<span class="am-form-group-label-tips-must">*</span></label>
+                        <select class="am-radius chosen-select" name="value" data-placeholder="{{:MyLang('please_select_tips')}}" data-validation-message="{{:MyLang('common_service.navigation.form_item_value_customview_message')}}" required>
+                            <option value="">{{:MyLang('please_select_tips')}}</option>
+                            {{foreach $customview_list as $v}}
+                                <option value="{{$v.id}}">{{$v.name}}</option>
+                            {{/foreach}}
+                        </select>
+                    </div>
+                    <div class="am-form-group">
+                        <label>{{:MyLang('common_service.navigation.form_item_name')}}<span class="am-form-group-label-tips">{{:MyLang('common_service.navigation.form_item_name_tips', ['type'=>$add_type_list['customview']])}}</span></label>
+                        <input type="text" placeholder="{{:MyLang('common_service.navigation.form_item_name_message')}}" name="name" maxlength="16" data-validation-message="{{:MyLang('common_service.navigation.form_item_name_message')}}" class="am-radius" />
+                    </div>
+                    {{include file="lib/sort" /}}
+                    {{include file="lib/is_show" /}}
+                    {{include file="lib/is_new_window_open" /}}
+                    <div class="am-form-popup-submit">
+                        <input type="hidden" name="id" />
+                        <input type="hidden" name="data_type" value="customview" />
+                        <input type="hidden" name="nav_type" value="{{$nav_type}}" />
+                        <button type="submit" class="am-btn am-btn-primary am-radius btn-loading-example am-btn-sm am-btn-block" data-am-loading="{loadingText:'{{:MyLang('processing_tips')}}'}">{{:MyLang('save_title')}}</button>
+                    </div>
+                </form>
+                <!-- form end -->
+            </div>
+        </div>
+    </div>
+    <!-- customview save win end -->
+
+    <!-- goods_category save win start -->
+    <div class="am-popup am-radius" id="nav-goods_category-save-win">
+        <div class="am-popup-inner">
+            <div class="am-popup-hd">
+                <h4 class="am-popup-title" data-add-title="{{$add_type_list.goods_category}}{{:MyLang('add_title')}}" data-edit-title="{{$add_type_list.goods_category}}{{:MyLang('edit_title')}}">{{$add_type_list.goods_category}}{{:MyLang('add_title')}}</h4>
+                <span data-am-modal-close class="am-close">&times;</span>
+            </div>
+            <div class="am-popup-bd">
+                <!-- form start -->
+                <form class="am-form form-validation-goods_category am-form-popup-fixed" action="{{:MyUrl('admin/navigation/save')}}" method="POST" request-type="ajax-reload" request-value="">
+                    <div class="am-form-group">
+                        <label>{{:MyLang('common_service.navigation.form_item_pid')}}</label>
+                        <select class="am-radius chosen-select" name="pid" data-placeholder="{{:MyLang('common_service.navigation.form_item_pid_placeholder')}}" data-validation-message="{{:MyLang('common_service.navigation.form_item_pid_message')}}">
+                            <option value="">{{:MyLang('common_service.navigation.form_item_pid_placeholder')}}</option>
+                            {{foreach $nav_header_pid_list as $v}}
+                                <option value="{{$v.id}}">{{$v.name}}</option>
+                            {{/foreach}}
+                        </select>
+                    </div>
+                    <div class="am-form-group">
+                        <label>{{$add_type_list.goods_category}}<span class="am-form-group-label-tips-must">*</span></label>
+                        <select class="am-radius chosen-select" name="value" data-placeholder="{{:MyLang('please_select_tips')}}" data-validation-message="{{:MyLang('common_service.navigation.form_item_value_goods_category_message')}}" required>
+                            <option value="">{{:MyLang('please_select_tips')}}</option>
+                            {{foreach $goods_category_list as $v}}
+                                <option value="{{$v.id}}" {{if !empty($data['category_ids']) and in_array($v['id'], $data['category_ids'])}}selected{{/if}}>{{$v.name}}</option>
+                                {{if !empty($v['items'])}}
+                                    {{foreach $v.items as $vs}}
+                                        <option style="padding-left: 20px;" value="{{$vs.id}}" {{if !empty($data['category_ids']) and in_array($vs['id'], $data['category_ids'])}}selected{{/if}}>{{if empty($vs['items'])}}├{{else /}}└{{/if}}² {{$vs.name}}</option>
+                                        {{if !empty($vs['items'])}}
+                                            {{foreach $vs.items as $kss=>$vss}}
+                                                <option style="padding-left: 40px;" value="{{$vss.id}}" {{if !empty($data['category_ids']) and in_array($vss['id'], $data['category_ids'])}}selected{{/if}}>{{if $kss eq count($vs['items'])-1}}└{{else /}}├{{/if}}³ {{$vss.name}}</option>
+                                            {{/foreach}}
+                                        {{/if}}
+                                    {{/foreach}}
+                                {{/if}}
+                            {{/foreach}}
+                        </select>
+                    </div>
+                    <div class="am-form-group">
+                        <label>{{:MyLang('common_service.navigation.form_item_name')}}<span class="am-form-group-label-tips">{{:MyLang('common_service.navigation.form_item_name_tips', ['type'=>$add_type_list['goods_category']])}}</span></label>
+                        <input type="text" placeholder="{{:MyLang('common_service.navigation.form_item_name_message')}}" name="name" maxlength="16" data-validation-message="{{:MyLang('common_service.navigation.form_item_name_message')}}" class="am-radius" />
+                    </div>
+                    {{include file="lib/sort" /}}
+                    {{include file="lib/is_show" /}}
+                    {{include file="lib/is_new_window_open" /}}
+                    <div class="am-form-popup-submit">
+                        <input type="hidden" name="id" />
+                        <input type="hidden" name="data_type" value="goods_category" />
+                        <input type="hidden" name="nav_type" value="{{$nav_type}}" />
+                        <button type="submit" class="am-btn am-btn-primary am-radius btn-loading-example am-btn-sm am-btn-block" data-am-loading="{loadingText:'{{:MyLang('processing_tips')}}'}">{{:MyLang('save_title')}}</button>
+                    </div>
+                </form>
+                <!-- form end -->
+            </div>
+        </div>
+    </div>
+    <!-- goods_category save win end -->
+
+    <!-- design save win start -->
+    <div class="am-popup am-radius" id="nav-design-save-win">
+        <div class="am-popup-inner">
+            <div class="am-popup-hd">
+                <h4 class="am-popup-title" data-add-title="{{$add_type_list.design}}{{:MyLang('add_title')}}" data-edit-title="{{$add_type_list.design}}{{:MyLang('edit_title')}}">{{$add_type_list.design}}{{:MyLang('add_title')}}</h4>
+                <span data-am-modal-close class="am-close">&times;</span>
+            </div>
+            <div class="am-popup-bd">
+                <!-- form start -->
+                <form class="am-form form-validation-design am-form-popup-fixed" action="{{:MyUrl('admin/navigation/save')}}" method="POST" request-type="ajax-reload" request-value="">
+                    <div class="am-form-group">
+                        <label>{{:MyLang('common_service.navigation.form_item_pid')}}</label>
+                        <select class="am-radius chosen-select" name="pid" data-placeholder="{{:MyLang('common_service.navigation.form_item_pid_placeholder')}}" data-validation-message="{{:MyLang('common_service.navigation.form_item_pid_message')}}">
+                            <option value="">{{:MyLang('common_service.navigation.form_item_pid_placeholder')}}</option>
+                            {{foreach $nav_header_pid_list as $v}}
+                                <option value="{{$v.id}}">{{$v.name}}</option>
+                            {{/foreach}}
+                        </select>
+                    </div>
+                    <div class="am-form-group">
+                        <label>{{$add_type_list.design}}<span class="am-form-group-label-tips-must">*</span></label>
+                        <select class="am-radius chosen-select" name="value" data-placeholder="{{:MyLang('please_select_tips')}}" data-validation-message="{{:MyLang('common_service.navigation.form_item_value_design_message')}}" required>
+                            <option value="">{{:MyLang('please_select_tips')}}</option>
+                            {{foreach $design_list as $v}}
+                                <option value="{{$v.id}}">{{$v.name}}</option>
+                            {{/foreach}}
+                        </select>
+                    </div>
+                    <div class="am-form-group">
+                        <label>{{:MyLang('common_service.navigation.form_item_name')}}<span class="am-form-group-label-tips">{{:MyLang('common_service.navigation.form_item_name_tips', ['type'=>$add_type_list['design']])}}</span></label>
+                        <input type="text" placeholder="{{:MyLang('common_service.navigation.form_item_name_message')}}" name="name" maxlength="16" data-validation-message="{{:MyLang('common_service.navigation.form_item_name_message')}}" class="am-radius" />
+                    </div>
+                    {{include file="lib/sort" /}}
+                    {{include file="lib/is_show" /}}
+                    {{include file="lib/is_new_window_open" /}}
+                    <div class="am-form-popup-submit">
+                        <input type="hidden" name="id" />
+                        <input type="hidden" name="data_type" value="design" />
+                        <input type="hidden" name="nav_type" value="{{$nav_type}}" />
+                        <button type="submit" class="am-btn am-btn-primary am-radius btn-loading-example am-btn-sm am-btn-block" data-am-loading="{loadingText:'{{:MyLang('processing_tips')}}'}">{{:MyLang('save_title')}}</button>
+                    </div>
+                </form>
+                <!-- form end -->
+            </div>
+        </div>
+    </div>
+    <!-- design save win end -->
+{{/block}}

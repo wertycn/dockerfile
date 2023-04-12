@@ -1,0 +1,63 @@
+{{include file="public/header" /}}
+
+<!-- right content start  -->
+<div class="content-right">
+    <!-- second nav start -->
+    {{include file="appmini/nav" /}}
+    <!-- second nav end -->
+    <div class="content">
+        <!-- nav start -->
+        {{include file="appmini/base_nav" /}}
+        <!-- nav end -->
+
+        <!-- list start -->
+        {{if !empty($data_list)}}
+            <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-bordered data-list" data-am-gallery="{}" data-select-url="{{:MyUrl('admin/appmini/themesave')}}" data-nav-type="{{$nav_type}}">
+                {{foreach $data_list as $v}}
+                    <li id="data-list-{{$v.theme}}">
+                        <div class="am-gallery-item am-radius am-padding-0 {{if $v['theme'] eq $theme}}theme-active{{/if}}">
+                            <a href="javascript:;" class="select-theme am-block" data-theme="{{$v.theme}}">
+                                <img src="{{$v.preview}}" alt="{{$v.name}}" class="am-block" />
+                            </a>
+                            <div class="am-gallery-item-bottom am-padding-sm">
+                                <h3 class="am-gallery-title am-margin-top-0">
+                                    {{$v.name}}
+                                    <div class="am-fr am-text-right">
+                                        {{if !empty($upgrade_info) and isset($upgrade_info[$v['theme']]) and $upgrade_info[$v['theme']]['version_new'] neq $v['ver']}}
+                                            <a href="javascript:;" class="am-icon-refresh am-text-danger package-upgrade-event" title="{{:MyLang('update_title')}}" data-type="minitheme" data-name="{{$v.name}}" data-value="{{$v.theme}}" data-terminal="{{$nav_type}}" data-json="{{:urlencode(json_encode($upgrade_info[$v['theme']]))}}"></a>
+                                        {{/if}}
+                                        {{if isset($shopxo_is_develop) and $shopxo_is_develop eq true}}
+                                            <a href="{{:MyUrl('admin/appmini/themedownload', ['id'=>$v['theme'], 'nav_type'=>$nav_type])}}" class="am-icon-trash-o am-icon-download am-margin-left-sm" title="{{:MyLang('download_title')}}"></a>
+                                        {{/if}}
+                                        {{if $v.is_delete eq 1}}
+                                            <a href="javascript:;" class="am-icon-trash-o submit-delete am-margin-left-sm am-text-warning" title="{{:MyLang('delete_title')}}" data-url="{{:MyUrl('admin/appmini/themedelete', ['nav_type'=>$nav_type])}}" data-id="{{$v.theme}}"></a>
+                                        {{/if}}
+                                    </div>
+                                </h3>
+                                <div class="am-gallery-desc">{{:MyLang('appmini.list_author_title')}}：
+                                    {{if empty($v['home'])}}
+                                        {{$v.author}}
+                                    {{else /}}
+                                        <a href="{{$v.home}}" target="_blank">{{$v.author}}</a>
+                                    {{/if}}
+                                </div>
+                                <div class="am-gallery-desc">{{:MyLang('appmini.list_version_title')}}：{{$v.ver}}</div>
+                            </div>
+                        </div>
+                    </li>
+                {{/foreach}}
+            <ul>
+        {{else /}}
+            <div class="table-no">
+                <i class="am-icon-skyatlas am-icon-lg"></i>
+                <p>{{:MyLang('appmini.list_no_data_tips')}}</p>
+            </div>
+        {{/if}}
+        <!-- lis end -->
+    </div>
+</div>
+<!-- right content end  -->
+
+<!-- footer start -->
+{{include file="public/footer" /}}
+<!-- footer end -->

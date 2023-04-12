@@ -1,0 +1,57 @@
+<!-- 继承公共的 form -->
+{{extend name="public/module/form" /}}
+
+<!-- 表单顶部操作栏 -->
+{{block name="form_operate_top"}}
+    <button type="button" class="am-btn am-btn-success am-btn-xs am-icon-cloud-upload am-radius" data-am-modal="{target: '#payment-upload-win'}"> {{:MyLang('upload_title')}}</button>
+    {{if $is_system_show_base eq 1 and !empty($store_payment_url)}}
+        <a class="am-margin-left-sm" href="{{$store_payment_url}}" target="_blank">{{:MyLang('payment.nav_store_payment_name')}} <i class="am-icon-external-link"></i></a>
+    {{/if}}
+    <!-- 父级内容 -->
+    {__block__}
+{{/block}}
+
+<!-- 扩展 -->
+{{block name="form_extend"}}
+    <!-- upload start -->
+    <div class="am-popup am-radius" id="payment-upload-win">
+        <div class="am-popup-inner">
+            <div class="am-popup-hd">
+                <h4 class="am-popup-title">{{:MyLang('upload_title')}}</h4>
+                <span data-am-modal-close class="am-close">&times;</span>
+            </div>
+            <div class="am-popup-bd">
+                <!-- win form start -->
+                <form class="am-form form-validation am-form-popup-fixed" action="{{:MyUrl('admin/payment/upload')}}" method="POST" request-type="ajax-reload" enctype="multipart/form-data">
+                    {{if is_array(MyLang('payment.upload_top_list_tips'))}}
+                        <div class="am-alert am-radius am-alert-tips">
+                            {{foreach :MyLang('payment.upload_top_list_tips') as $v}}
+                                <p>{{$v.name}}</p>
+                                {{if !empty($v['item']) and is_array($v['item'])}}
+                                    <div class="am-margin-left-lg">
+                                        {{foreach $v.item as $vs}}
+                                            <p>{{$vs}}</p>
+                                        {{/foreach}}
+                                    </div>
+                                {{/if}}
+                            {{/foreach}}
+                            <p class="am-margin-top-xs am-text-danger">{{:MyLang('payment.upload_top_tips_ps')}}</p>
+                        </div>
+                    {{/if}}
+                    <div class="am-form-group am-form-group-refreshing">
+                        <div class="am-form-file">
+                            <button type="button" class="am-btn am-btn-default am-btn-sm am-radius"><i class="am-icon-cloud-upload"></i> {{:MyLang('form_choice_images_title')}}</button>
+                            <input type="file" name="file" class="file-event" data-tips-tag="#form-payment-tips" data-validation-message="{{:MyLang('form_upload_file_message')}}" accept=".zip" multiple required />
+                            <div id="form-payment-tips" class="am-margin-top-xs"></div>
+                        </div>
+                    </div>
+                    <div class="am-form-popup-submit">
+                        <button type="submit" class="am-btn am-btn-primary am-radius btn-loading-example am-btn-sm am-btn-block" data-am-loading="{loadingText:'{{:MyLang('processing_tips')}}'}">{{:MyLang('confirm_title')}}</button>
+                    </div>
+                </form>
+                <!-- win form end -->
+            </div>
+        </div>
+    </div>
+    <!-- upload end -->
+{{/block}}

@@ -1,0 +1,24 @@
+{{include file="public/header" /}}
+
+<!-- nav -->
+{{include file="public/nav" /}}
+		
+<!-- content -->
+<div class="admin">
+	<!-- left menu -->
+	{{include file="public/menu" /}}
+
+	<!-- right content  -->
+	<div id="ifcontent">
+		<div class="window-layer">
+	    	<iframe src="{{$to_url}}" width="100%" height="100%"></iframe>
+	    </div>
+	</div>
+	<!-- right content end  -->
+</div>
+
+<!-- navbar -->
+{{include file="public/nav_bar" /}}
+		
+<!-- footer -->
+{{include file="public/footer" /}}

@@ -1,0 +1,20 @@
+<!-- 继承公共的 form -->
+{{extend name="public/module/user_form" /}}
+
+<!-- 顶部导航内容 -->
+{{block name="form_navigation"}}
+    <div class="am-alert am-alert-secondary" data-am-alert>
+        <div class="available">
+            <span>{{:MyLang('userintegral.base_normal_title')}}</span>
+            <span class="panel-value">{{$user_integral_data.integral}}</span>
+            <em>{{:MyLang('userintegral.base_integral_unit')}}</em>
+            <span class="panel-tips">{{:MyLang('userintegral.base_normal_tips')}}</span>
+        </div>
+        <div class="locking">
+            <span>{{:MyLang('userintegral.base_locking_title')}}</span>
+            <span class="panel-value">{{$user_integral_data.locking_integral}}</span>
+            <em>{{:MyLang('userintegral.base_integral_unit')}}</em>
+            <span class="panel-tips">{{:MyLang('userintegral.base_locking_tips')}}</span>
+        </div>
+    </div>
+{{/block}}

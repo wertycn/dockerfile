@@ -1,0 +1,8 @@
+<!-- 最新售后信息 -->
+{{if !empty($module_data) and !empty($module_data['aftersale_first'])}}
+    <p>{{:MyLang('order.detail_aftersale_status')}}：{{$module_data.aftersale_first.status_text}}</p>
+    <p>{{:MyLang('order.detail_aftersale_type')}}：{{$module_data.aftersale_first.type_text}}</p>
+    <p>{{:MyLang('order.detail_aftersale_price')}}：<strong class="am-text-danger">{{$module_data.aftersale_first.price}}</strong></p>
+    <p>{{:MyLang('order.detail_aftersale_number')}}：{{$module_data.aftersale_first.number}}</p>
+    <p>{{:MyLang('order.detail_aftersale_reason')}}：{{$module_data.aftersale_first.reason}}</p>
+{{/if}}

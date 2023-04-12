@@ -1,0 +1,48 @@
+<!-- 继承公共的 form -->
+{{extend name="public/module/form" /}}
+
+<!-- 表单顶部操作栏 -->
+{{block name="form_operate_top"}}
+    <button type="button" class="am-btn am-btn-secondary am-radius am-btn-xs am-icon-plus submit-add" data-am-modal="{target: '#data-save-win'}"> {{:MyLang('add_title')}}</button>
+    <!-- 父级内容 -->
+    {__block__}
+{{/block}}
+
+<!-- 扩展 -->
+{{block name="form_extend"}}
+	<!-- save win start -->
+	<div class="am-popup am-radius" id="data-save-win">
+		<div class="am-popup-inner">
+			<div class="am-popup-hd">
+				<h4 class="am-popup-title" data-add-title="{{:MyLang('link.base_nav_title')}}{{:MyLang('add_title')}}" data-edit-title="{{:MyLang('link.base_nav_title')}}{{:MyLang('edit_title')}}">{{:MyLang('link.base_nav_title')}}{{:MyLang('add_title')}}</h4>
+				<span data-am-modal-close class="am-close">&times;</span>
+			</div>
+			<div class="am-popup-bd">
+				<!-- form start -->
+				<form class="am-form form-validation am-form-popup-fixed" action="{{:MyUrl('admin/link/Save')}}" method="POST" request-type="ajax-reload" request-value="">
+					<div class="am-form-group">
+						<label>{{:MyLang('common_service.link.form_item_name')}}<span class="am-form-group-label-tips-must">*</span></label>
+						<input type="text" placeholder="{{:MyLang('common_service.link.form_item_name_message')}}" name="name" minlength="2" maxlength="16" data-validation-message="{{:MyLang('common_service.link.form_item_name_message')}}" class="am-radius" required />
+					</div>
+					<div class="am-form-group">
+						<label>{{:MyLang('common_service.link.form_item_url')}}<span class="am-form-group-label-tips-must">*</span></label>
+						<input type="url" placeholder="{{:MyLang('common_service.link.form_item_url_placeholder')}}" name="url" data-validation-message="{{:MyLang('common_service.link.form_item_url_message')}}" class="am-radius" required />
+					</div>
+					{{include file="lib/sort" /}}
+					{{include file="lib/is_new_window_open" /}}
+					{{include file="lib/is_enable" /}}
+					<div class="am-form-group am-form-success">
+						<label>{{:MyLang('common_service.link.form_item_desc')}}</label>
+						<textarea rows="3" maxlength="60" name="describe" class="am-radius" placeholder="{{:MyLang('common_service.link.form_item_desc_message')}}" data-validation-message="{{:MyLang('common_service.link.form_item_desc_message')}}"></textarea>
+					</div>
+					<div class="am-form-popup-submit">
+						<input type="hidden" name="id" />
+						<button type="submit" class="am-btn am-btn-primary am-radius btn-loading-example am-btn-sm am-btn-block" data-am-loading="{loadingText:'{{:MyLang('processing_tips')}}'}">{{:MyLang('save_title')}}</button>
+					</div>
+				</form>
+				<!-- form end -->
+			</div>
+		</div>
+	</div>
+	<!-- save win end -->
+{{/block}}

@@ -1,0 +1,216 @@
+{{include file="public/header" /}}
+
+<!-- right content start  -->
+<div class="content-right">
+    <!-- second nav start -->
+    {{include file="site/public/nav" /}}
+    <!-- second nav end -->
+
+    <div class="content">
+        <!-- nav start -->
+        {{include file="site/public/siteset_nav" /}}
+        <!-- nav end -->
+
+        <!-- form start -->
+        <form class="am-form form-validation" action="{{:MyUrl('admin/site/save')}}" method="POST" request-type="ajax-url" request-value="{{:MyUrl('admin/site/index', ['nav_type'=>$nav_type, 'view_type'=>$view_type])}}" enctype="multipart/form-data">
+            <!-- 基础配置 -->
+            <div class="am-panel am-panel-default am-margin-top-sm">
+                <div class="am-panel-hd">
+                    <h3 class="am-panel-title">{{:MyLang('base_config_title')}}</h3>
+                </div>
+                <div class="am-panel-bd am-padding-vertical-xs">
+                    <div class="am-form-group">
+                        <label>{{$data.home_main_header_status.name}}<span class="am-form-group-label-tips">{{$data.home_main_header_status.describe}}</span></label>
+                        <select name="{{$data.home_main_header_status.only_tag}}" class="am-radius chosen-select" data-validation-message="{{$data.home_main_header_status.error_tips}}" required>
+                            {{foreach $common_close_open_list as $v}}
+                                <option value="{{$v.value}}" {{if isset($data['home_main_header_status']['value']) and $data['home_main_header_status']['value'] eq $v['value']}}selected{{/if}}>{{$v.name}}</option>
+                            {{/foreach}}
+                        </select>
+                    </div>
+                    <div class="am-form-group">
+                        <label>{{$data.home_main_top_header_status.name}}<span class="am-form-group-label-tips">{{$data.home_main_top_header_status.describe}}</span></label>
+                        <select name="{{$data.home_main_top_header_status.only_tag}}" class="am-radius chosen-select" data-validation-message="{{$data.home_main_top_header_status.error_tips}}" required>
+                            {{foreach $common_close_open_list as $v}}
+                                <option value="{{$v.value}}" {{if isset($data['home_main_top_header_status']['value']) and $data['home_main_top_header_status']['value'] eq $v['value']}}selected{{/if}}>{{$v.name}}</option>
+                            {{/foreach}}
+                        </select>
+                    </div>
+                    <div class="am-form-group">
+                        <label>{{$data.home_main_logo_search_status.name}}<span class="am-form-group-label-tips">{{$data.home_main_logo_search_status.describe}}</span></label>
+                        <select name="{{$data.home_main_logo_search_status.only_tag}}" class="am-radius chosen-select" data-validation-message="{{$data.home_main_logo_search_status.error_tips}}" required>
+                            {{foreach $common_close_open_list as $v}}
+                                <option value="{{$v.value}}" {{if isset($data['home_main_logo_search_status']['value']) and $data['home_main_logo_search_status']['value'] eq $v['value']}}selected{{/if}}>{{$v.name}}</option>
+                            {{/foreach}}
+                        </select>
+                    </div>
+                    <div class="am-form-group">
+                        <label>{{$data.home_main_breadcrumb_header_status.name}}<span class="am-form-group-label-tips">{{$data.home_main_breadcrumb_header_status.describe}}</span></label>
+                        <select name="{{$data.home_main_breadcrumb_header_status.only_tag}}" class="am-radius chosen-select" data-validation-message="{{$data.home_main_breadcrumb_header_status.error_tips}}" required>
+                            {{foreach $common_close_open_list as $v}}
+                                <option value="{{$v.value}}" {{if isset($data['home_main_breadcrumb_header_status']['value']) and $data['home_main_breadcrumb_header_status']['value'] eq $v['value']}}selected{{/if}}>{{$v.name}}</option>
+                            {{/foreach}}
+                        </select>
+                    </div>
+                    <div class="am-form-group">
+                        <label>{{$data.home_main_footer_content_status.name}}<span class="am-form-group-label-tips">{{$data.home_main_footer_content_status.describe}}</span></label>
+                        <select name="{{$data.home_main_footer_content_status.only_tag}}" class="am-radius chosen-select" data-validation-message="{{$data.home_main_footer_content_status.error_tips}}" required>
+                            {{foreach $common_close_open_list as $v}}
+                                <option value="{{$v.value}}" {{if isset($data['home_main_footer_content_status']['value']) and $data['home_main_footer_content_status']['value'] eq $v['value']}}selected{{/if}}>{{$v.name}}</option>
+                            {{/foreach}}
+                        </select>
+                    </div>
+
+                    <div class="am-form-group">
+                        <label>{{$data.home_index_friendship_link_status.name}}<span class="am-form-group-label-tips">{{$data.home_index_friendship_link_status.describe}}</span></label>
+                        <select name="{{$data.home_index_friendship_link_status.only_tag}}" class="am-radius chosen-select" data-validation-message="{{$data.home_index_friendship_link_status.error_tips}}" required>
+                            {{foreach $common_close_open_list as $v}}
+                                <option value="{{$v.value}}" {{if isset($data['home_index_friendship_link_status']['value']) and $data['home_index_friendship_link_status']['value'] eq $v['value']}}selected{{/if}}>{{$v.name}}</option>
+                            {{/foreach}}
+                        </select>
+                    </div>
+
+                    <div class="am-form-group">
+                        <label>{{$data.home_header_top_is_home.name}}<span class="am-form-group-label-tips">{{$data.home_header_top_is_home.describe}}</span></label>
+                        <select name="{{$data.home_header_top_is_home.only_tag}}" class="am-radius chosen-select" data-validation-message="{{$data.home_header_top_is_home.error_tips}}" required>
+                            {{foreach $common_close_open_list as $v}}
+                                <option value="{{$v.value}}" {{if isset($data['home_header_top_is_home']['value']) and $data['home_header_top_is_home']['value'] eq $v['value']}}selected{{/if}}>{{$v.name}}</option>
+                            {{/foreach}}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 快捷导航 -->
+            <div class="am-panel am-panel-default am-margin-top-sm">
+                <div class="am-panel-hd">
+                    <h3 class="am-panel-title">{{:MyLang('site.base_item_quick_nav_title')}}</h3>
+                </div>
+                <div class="am-panel-bd am-padding-vertical-xs">
+                    <div class="am-form-group">
+                        <label>{{$data.home_navigation_main_quick_status.name}}<span class="am-form-group-label-tips">{{$data.home_navigation_main_quick_status.describe}}</span></label>
+                        <select name="{{$data.home_navigation_main_quick_status.only_tag}}" class="am-radius chosen-select" data-validation-message="{{$data.home_navigation_main_quick_status.error_tips}}" required>
+                            {{foreach $common_close_open_list as $v}}
+                                <option value="{{$v.value}}" {{if isset($data['home_navigation_main_quick_status']['value']) and $data['home_navigation_main_quick_status']['value'] eq $v['value']}}selected{{/if}}>{{$v.name}}</option>
+                            {{/foreach}}
+                        </select>
+                    </div>
+                    <div class="am-form-group">
+                        <label>{{$data.home_navigation_main_quick_name.name}}<span class="am-form-group-label-tips">{{$data.home_navigation_main_quick_name.describe}}</span></label>
+                        <input type="text" maxlength="4" name="{{$data.home_navigation_main_quick_name.only_tag}}" placeholder="{{$data.home_navigation_main_quick_name.name}}" data-validation-message="{{$data.home_navigation_main_quick_name.error_tips}}" class="am-radius" {{if !empty($data)}}value="{{$data.home_navigation_main_quick_name.value}}"{{/if}} />
+                    </div>
+                </div>
+            </div>
+
+            <!-- 用户基础 -->
+            <div class="am-panel am-panel-default am-margin-top-sm">
+                <div class="am-panel-hd">
+                    <h3 class="am-panel-title">{{:MyLang('site.base_item_user_base_title')}}</h3>
+                </div>
+                <div class="am-panel-bd am-padding-vertical-xs">
+                    <div class="am-form-group">
+                        <label>{{$data.common_user_unique_system_type_model.name}}<span class="am-form-group-label-tips">{{$data.common_user_unique_system_type_model.describe}}</span></label>
+                        <select name="{{$data.common_user_unique_system_type_model.only_tag}}" class="am-radius chosen-select" data-validation-message="{{$data.common_user_unique_system_type_model.error_tips}}" required>
+                            {{foreach $common_close_open_list as $v}}
+                                <option value="{{$v.value}}" {{if isset($data['common_user_unique_system_type_model']['value']) and $data['common_user_unique_system_type_model']['value'] eq $v['value']}}selected{{/if}}>{{$v.name}}</option>
+                            {{/foreach}}
+                        </select>
+                        {{if is_array(MyLang('site.user_unique_system_type_model_tips_list'))}}
+                            <div class="am-alert am-alert-warning" data-am-alert>
+                                <button type="button" class="am-close">&times;</button>
+                                <p>{{:implode('</p><p>', MyLang('site.user_unique_system_type_model_tips_list'))}}</p>
+                            </div>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+
+            <!-- 用户地址 -->
+            <div class="am-panel am-panel-default am-margin-top-sm">
+                <div class="am-panel-hd">
+                    <h3 class="am-panel-title">{{:MyLang('site.base_item_user_address_title')}}</h3>
+                </div>
+                <div class="am-panel-bd am-padding-vertical-xs">
+                    <div class="am-form-group">
+                        <label>{{$data.home_user_address_map_status.name}}<span class="am-form-group-label-tips">{{$data.home_user_address_map_status.describe}}</span></label>
+                        <select name="{{$data.home_user_address_map_status.only_tag}}" class="am-radius chosen-select" data-validation-message="{{$data.home_user_address_map_status.error_tips}}" required>
+                            {{foreach $common_close_open_list as $v}}
+                                <option value="{{$v.value}}" {{if isset($data['home_user_address_map_status']['value']) and $data['home_user_address_map_status']['value'] eq $v['value']}}selected{{/if}}>{{$v.name}}</option>
+                            {{/foreach}}
+                        </select>
+                    </div>
+                    <div class="am-form-group">
+                        <label>{{$data.home_user_address_idcard_status.name}}<span class="am-form-group-label-tips">{{$data.home_user_address_idcard_status.describe}}</span></label>
+                        <select name="{{$data.home_user_address_idcard_status.only_tag}}" class="am-radius chosen-select" data-validation-message="{{$data.home_user_address_idcard_status.error_tips}}" required>
+                            {{foreach $common_close_open_list as $v}}
+                                <option value="{{$v.value}}" {{if isset($data['home_user_address_idcard_status']['value']) and $data['home_user_address_idcard_status']['value'] eq $v['value']}}selected{{/if}}>{{$v.name}}</option>
+                            {{/foreach}}
+                        </select>
+                    </div>
+                    <div class="am-form-group">
+                        <label>{{$data.home_extraction_address_position.name}}<span class="am-form-group-label-tips">{{$data.home_extraction_address_position.describe}}</span></label>
+                        <select name="{{$data.home_extraction_address_position.only_tag}}" class="am-radius chosen-select" data-validation-message="{{$data.home_extraction_address_position.error_tips}}" required>
+                            {{foreach $common_close_open_list as $v}}
+                                <option value="{{$v.value}}" {{if isset($data['home_extraction_address_position']['value']) and $data['home_extraction_address_position']['value'] eq $v['value']}}selected{{/if}}>{{$v.name}}</option>
+                            {{/foreach}}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 多语言 -->
+            <div class="am-panel am-panel-default am-margin-top-sm">
+                <div class="am-panel-hd">
+                    <h3 class="am-panel-title">{{:MyLang('site.base_item_multilingual_title')}}</h3>
+                </div>
+                <div class="am-panel-bd am-padding-vertical-xs">
+                    <div class="am-form-group">
+                        <label>{{$data.common_multilingual_choose_list.name}}<span class="am-form-group-label-tips">{{$data.common_multilingual_choose_list.describe}}</span></label>
+                        <div>
+                            {{foreach $common_multilingual_list as $k=>$v}}
+                                <label class="am-checkbox-inline">
+                                    <input type="checkbox" name="{{$data.common_multilingual_choose_list.only_tag}}" value="{{$k}}" data-am-ucheck {{if !empty($data['common_multilingual_choose_list']['value']) and is_array($data['common_multilingual_choose_list']['value']) and in_array($k, $data['common_multilingual_choose_list']['value'])}}checked{{/if}} /> {{$v}}
+                                </label>
+                            {{/foreach}}
+                        </div>
+                    </div>
+                    <div class="am-form-group">
+                        <label>{{$data.common_multilingual_auto_status.name}}<span class="am-form-group-label-tips">{{$data.common_multilingual_auto_status.describe}}</span></label>
+                        <select name="{{$data.common_multilingual_auto_status.only_tag}}" class="am-radius chosen-select" data-validation-message="{{$data.common_multilingual_auto_status.error_tips}}" required>
+                            {{foreach $common_close_open_list as $v}}
+                                <option value="{{$v.value}}" {{if isset($data['common_multilingual_auto_status']['value']) and $data['common_multilingual_auto_status']['value'] eq $v['value']}}selected{{/if}}>{{$v.name}}</option>
+                            {{/foreach}}
+                        </select>
+                    </div>
+                    <div class="am-form-group">
+                        <label>{{$data.admin_use_multilingual_status.name}}<span class="am-form-group-label-tips">{{$data.admin_use_multilingual_status.describe}}</span></label>
+                        <select name="{{$data.admin_use_multilingual_status.only_tag}}" class="am-radius chosen-select" data-validation-message="{{$data.admin_use_multilingual_status.error_tips}}" required>
+                            {{foreach $common_close_open_list as $v}}
+                                <option value="{{$v.value}}" {{if isset($data['admin_use_multilingual_status']['value']) and $data['admin_use_multilingual_status']['value'] eq $v['value']}}selected{{/if}}>{{$v.name}}</option>
+                            {{/foreach}}
+                        </select>
+                    </div>
+                    <div class="am-form-group">
+                        <label>{{$data.home_use_multilingual_status.name}}<span class="am-form-group-label-tips">{{$data.home_use_multilingual_status.describe}}</span></label>
+                        <select name="{{$data.home_use_multilingual_status.only_tag}}" class="am-radius chosen-select" data-validation-message="{{$data.home_use_multilingual_status.error_tips}}" required>
+                            {{foreach $common_close_open_list as $v}}
+                                <option value="{{$v.value}}" {{if isset($data['home_use_multilingual_status']['value']) and $data['home_use_multilingual_status']['value'] eq $v['value']}}selected{{/if}}>{{$v.name}}</option>
+                            {{/foreach}}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="am-form-group am-form-group-refreshing am-margin-top-lg am-padding-left-0">
+                <input type="hidden" name="nav_type" value="{{$nav_type}}" />
+                <input type="hidden" name="view_type" value="{{$view_type}}" />
+                <button type="submit" class="am-btn am-btn-primary am-radius btn-loading-example am-btn-sm am-btn-block" data-am-loading="{loadingText:'{{:MyLang('processing_tips')}}'}">{{:MyLang('save_title')}}</button>
+            </div>
+        </form>
+        <!-- form end -->
+    </div>
+</div>
+<!-- right content end  -->
+
+<!-- footer start -->
+{{include file="public/footer" /}}
+<!-- footer end -->

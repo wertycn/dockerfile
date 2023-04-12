@@ -1,0 +1,6 @@
+<!-- 是否包含尾部 开始 -->
+<div class="am-form-group">
+	<label class="am-block">{{:MyLang('form_is_footer_title')}}</label>
+	<input name="is_footer" value="1" type="checkbox" data-off-text="{{:MyLang('no_title')}}" data-on-text="{{:MyLang('yes_title')}}" data-size="xs" data-on-color="success" data-off-color="default" data-handle-width="50" data-am-switch {{if (isset($data['is_footer']) and $data['is_footer'] eq 1) or !isset($data['is_footer'])}}checked="true"{{/if}} />
+</div>
+<!-- 是否包含尾部 结束 -->
