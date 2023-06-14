@@ -1,4 +1,4 @@
-name: custom_tag_push
+name: issue_git_push
 on:
   issue_comment:
     types: [created]
@@ -19,15 +19,13 @@ jobs:
             const commentId = issueComment.id;
             const issueUrl = issue.html_url;
             const expectedIssueId = 123; // Replace with your expected issue ID
-
-            if (issue.number !== expectedIssueId) {
-              console.log(`Comment is not from the expected issue. Expected: ${expectedIssueId}, but got: ${issue.number}`);
-              return;
-            }
-
+            console.log(`Comment is not from the expected issue. Expected: ${expectedIssueId}, but got: ${issue.number}`);
             const regex = /(https?:\/\/github\.com\/.*?\/.*?)(\.git)?/;
             const match = regex.exec(issueComment.body);
             const gitRepo = match ? match[1] : '';
+            if (!gitRepo) {
+              core.setFailed("No git repository parsed from the comment.");
+            }
             const gitBranch = 'main'; // 默认使用主分支
             const imageName = gitRepo.split('/').pop();
 
@@ -46,8 +44,13 @@ jobs:
           ref: ${{ steps.parse_git_repo.outputs.branch }}
           path: 'target' # 替换为您要克隆到的特定目录
 
-      - name: Debug
-        run: echo "start build image debugicu/$GITHUB_REF_NAME:${{ github.event.inputs.tags }}"
+      - name: Check Dockerfile
+        id: check_dockerfile
+        run: |
+          if [ ! -f ./target/Dockerfile ]; then
+            echo "Dockerfile does not exist."
+            exit 1
+          fi
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
