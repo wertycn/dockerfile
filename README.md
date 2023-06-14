@@ -1,42 +1,160 @@
-# Docker Hub ¾µÏñ×Ô¶¯¹¹½¨¼°ÉÏ´«¹¤¾ß
+<!-- markdownlint-disable MD030 -->
 
-[![image_auth_push](https://github.com/wertycn/dockerfile/actions/workflows/auto_push.yml/badge.svg)](https://github.com/wertycn/dockerfile/actions/workflows/auto_push.yml)  [![custom_tag_push](https://github.com/wertycn/dockerfile/actions/workflows/custom_tag_push.yml/badge.svg)](https://github.com/wertycn/dockerfile/actions/workflows/custom_tag_push.yml)
+# Flowise - LangchainJS UI
 
-## ¹¦ÄÜ½éÉÜ
+<a href="https://github.com/FlowiseAI/Flowise">
+<img width="100%" src="https://github.com/FlowiseAI/Flowise/blob/main/images/flowise.gif?raw=true"></a>
 
-»ùÓÚGithub Action ¹¦ÄÜÊµÏÖµÄ¾µÏñ×Ô¶¯¹¹½¨¼°ÉÏ´«¹¤¾ß£¬ÓÃÓÚ±àĞ´Dockerfile ÎÄ¼ş£¬´úÂëÌá½»ºó£¬×Ô¶¯¹¹½¨²¢ÉÏ´«µ½Docker Hub ²Ö¿â debugicuÓÃ»§ÏÂ
+Drag & drop UI to build your customized LLM flow using [LangchainJS](https://github.com/hwchase17/langchainjs)
 
-## Ê¹ÓÃ·½Ê½
+## âš¡Quick Start
 
-### ×Ô¶¯¹¹½¨
+Download and Install [NodeJS](https://nodejs.org/en/download) >= 18.15.0
 
-1. À­È¡²Ö¿âµ½±¾µØ
+1. Install Flowise
+    ```bash
+    npm install -g flowise
+    ```
+2. Start Flowise
 
-2. »ùÓÚmaster ·ÖÖ§ÇĞ³öĞÂ·ÖÖ§£¬·ÖÖ§ÃûÎªĞèÒª±àÒëµÄ¾µÏñÃû
+    ```bash
+    npx flowise start
+    ```
 
-3. ĞŞ¸ÄDockerfile Îª×Ô¼ºĞèÒªµÄ¾µÏñ
+    With username & password
 
-4. Ìá½»´úÂëµ½Ô¶³Ì£¬µÈ´ıGithub Action ×Ô¶¯¹¹½¨£¨¿Éµã»÷Github Action Tab²é¿´½ø¶È£©
+    ```bash
+    npx flowise start --FLOWISE_USERNAME=user --FLOWISE_PASSWORD=1234
+    ```
 
-   ![](http://image.werty.cn/source_blog/freeApi/a0ab7fbf785506cf561f9401627027be.png)
+3. Open [http://localhost:3000](http://localhost:3000)
 
-5. ¹¹½¨³É¹¦£¬Ê¹ÓÃ¾µÏñ
+## ğŸ³ Docker
 
-   ![image-20220112130241171](http://image.werty.cn/source_blog/freeApi/bac9e713dcbd30db3272387bafcced2a.png)
+### Docker Compose
 
-### ÊÖ¶¯Ö¸¶¨tag
+1. Go to `docker` folder at the root of the project
+2. Create `.env` file and specify the `PORT` (refer to `.env.example`)
+3. `docker-compose up -d`
+4. Open [http://localhost:3000](http://localhost:3000)
+5. You can bring the containers down by `docker-compose stop`
 
-Íê³É×Ô¶¯±àÒëºó£¬Ñ¡Ôñ`custom_tag_push` workflow£¬ µã»÷`Run workflow`ÏÂÀ­²Ëµ¥ ,ÊäÈëtagĞÅÏ¢£¬µã»÷Run°´Å¥¼´¿É
+### Docker Image
 
-![](http://image.werty.cn/source_blog/freeApi/019fe21b72f325d9d63874a8b0affa0c.png)
+1. Build the image locally:
+    ```bash
+    docker build --no-cache -t flowise .
+    ```
+2. Run image:
 
-¾µÏñÃûÄ£°å
+    ```bash
+    docker run -d --name flowise -p 3000:3000 flowise
+    ```
 
+3. Stop image:
+    ```bash
+    docker stop flowise
+    ```
 
-```dockerfile
-debugicu/${BRANCH_NAME}:latest
+## ğŸ‘¨â€ğŸ’» Developers
+
+Flowise has 3 different modules in a single mono repository.
+
+-   `server`: Node backend to serve API logics
+-   `ui`: React frontend
+-   `components`: Langchain components
+
+### Prerequisite
+
+-   Install Yarn
+    ```bash
+    npm i -g yarn
+    ```
+
+### Setup
+
+1. Clone the repository
+
+    ```bash
+    git clone https://github.com/FlowiseAI/Flowise.git
+    ```
+
+2. Go into repository folder
+
+    ```bash
+    cd Flowise
+    ```
+
+3. Install all dependencies of all modules:
+
+    ```bash
+    yarn install
+    ```
+
+4. Build all the code:
+
+    ```bash
+    yarn build
+    ```
+
+5. Start the app:
+
+    ```bash
+    yarn start
+    ```
+
+    You can now access the app on [http://localhost:3000](http://localhost:3000)
+
+6. For development build:
+
+    ```bash
+    yarn dev
+    ```
+
+    Any code changes will reload the app automatically on [http://localhost:8080](http://localhost:8080)
+
+## ğŸ”’ Authentication
+
+To enable app level authentication, add `FLOWISE_USERNAME` and `FLOWISE_PASSWORD` to the `.env` file in `packages/server`:
+
+```
+FLOWISE_USERNAME=user
+FLOWISE_PASSWORD=1234
 ```
 
-## ×¢ÒâÊÂÏî
+## ğŸ“– Documentation
 
-1. `.github/workflows/` Ä¿Â¼ÏÂÎÄ¼ş²»ÄÜÉ¾³ı£¬¸ÃÎÄ¼şÎªgithub action ÅäÖÃÎÄ¼ş
+[Flowise Docs](https://docs.flowiseai.com/)
+
+## ğŸŒ Self Host
+
+### [Railway](https://docs.flowiseai.com/deployment/railway)
+
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/YK7J0v)
+
+### [Render](https://docs.flowiseai.com/deployment/render)
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://docs.flowiseai.com/deployment/render)
+
+### [AWS](https://docs.flowiseai.com/deployment/aws)
+
+### [DigitalOcean](https://docs.flowiseai.com/deployment/digital-ocean)
+
+### [GCP](https://docs.flowiseai.com/deployment/gcp)
+
+## ğŸ’» Cloud Hosted
+
+Coming soon
+
+## ğŸ™‹ Support
+
+Feel free to ask any questions, raise problems, and request new features in [discussion](https://github.com/FlowiseAI/Flowise/discussions)
+
+## ğŸ™Œ Contributing
+
+See [contributing guide](CONTRIBUTING.md). Reach out to us at [Discord](https://discord.gg/jbaHfsRVBW) if you have any questions or issues.
+[![Star History Chart](https://api.star-history.com/svg?repos=FlowiseAI/Flowise&type=Timeline)](https://star-history.com/#FlowiseAI/Flowise&Date)
+
+## ğŸ“„ License
+
+Source code in this repository is made available under the [MIT License](LICENSE.md).
