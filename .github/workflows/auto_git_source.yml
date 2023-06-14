@@ -27,15 +27,19 @@ jobs:
               core.setFailed("No git repository parsed from the comment.");
             }
             const gitBranch = 'main'; // 默认使用主分支
-            const imageName = gitRepo.split('/').pop();
+            let imageName = gitRepo.split('/').pop();
+            // Replace any characters not allowed in Docker image names
+            imageName = imageName.replace(/[^a-z0-9_.-]/g, '_').toLowerCase();
 
-            return {
+            let res = {
               repo: gitRepo,
               branch: gitBranch,
               image: imageName,
               commentId: commentId,
               issueUrl: issueUrl
             }
+            console.log(res)
+            return res
 
       - name: Checkout
         uses: actions/checkout@v2
