@@ -16,6 +16,8 @@ jobs:
           script: |
             const issueComment = context.payload.comment;
             const issueUrl = issueComment.html_url;
+            const commentId = issueComment.id;
+
 
             const regex = /(https?:\/\/github\.com\/[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+)/;
             const match = regex.exec(issueComment.body);
