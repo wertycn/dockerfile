@@ -47,7 +47,16 @@ jobs:
             }
             console.log(res)
             return res
-
+      - name: Set output as env vars
+        run: |
+          echo "REPO=${{ steps.parse_git_repo.outputs.repo }}" >> $GITHUB_ENV
+          echo "BRANCH=${{ steps.parse_git_repo.outputs.branch }}" >> $GITHUB_ENV
+          echo "IMAGE=${{ steps.parse_git_repo.outputs.image }}" >> $GITHUB_ENV
+          echo "ISSUE_URL=${{ steps.parse_git_repo.outputs.issueUrl }}" >> $GITHUB_ENV
+          echo "REPO=${{ steps.parse_git_repo.outputs.repo }}"
+          echo "BRANCH=${{ steps.parse_git_repo.outputs.branch }}" 
+          echo "IMAGE=${{ steps.parse_git_repo.outputs.image }}"
+          echo "ISSUE_URL=${{ steps.parse_git_repo.outputs.issueUrl }}"      
       - name: Checkout
         uses: actions/checkout@v2
         with:
@@ -82,7 +91,7 @@ jobs:
           file: './target/Dockerfile' # 替换为您的Dockerfile的路径
           platforms: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64
           push: true
-          tags: debugicu/${{ steps.parse_git_repo.outputs.image }}:latest
+          tags: debugicu/${{ env.IMAGE }}:latest
 
       - name: Post comment
         uses: actions/github-script@v4
