@@ -15,21 +15,26 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const issueComment = context.payload.comment;
-            const issue = context.payload.issue;
-            const commentId = issueComment.id;
-            const issueUrl = issue.html_url;
-            const expectedIssueId = 123; // Replace with your expected issue ID
-            console.log(`Comment is not from the expected issue. Expected: ${expectedIssueId}, but got: ${issue.number}`);
-            const regex = /(https?:\/\/github\.com\/.*?\/.*?)(\.git)?/;
+            const issueUrl = issueComment.html_url;
+
+            const regex = /(https?:\/\/github\.com\/[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+)/;
             const match = regex.exec(issueComment.body);
             const gitRepo = match ? match[1] : '';
             if (!gitRepo) {
               core.setFailed("No git repository parsed from the comment.");
+              return;
             }
             const gitBranch = 'main'; // 默认使用主分支
             let imageName = gitRepo.split('/').pop();
             // Replace any characters not allowed in Docker image names
             imageName = imageName.replace(/[^a-z0-9_.-]/g, '_').toLowerCase();
+            
+            // Sanity check for imageName
+            if (imageName.length === 0) {
+              core.setFailed("Parsed imageName is invalid.");
+              return;
+            }
+
 
             let res = {
               repo: gitRepo,
