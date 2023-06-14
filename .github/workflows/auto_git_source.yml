@@ -1,0 +1,88 @@
+name: custom_tag_push
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.comment.user.login == 'wertycn' }}
+    steps:
+      - name: Parse Git Repository
+        id: parse_git_repo
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const issueComment = context.payload.comment;
+            const issue = context.payload.issue;
+            const commentId = issueComment.id;
+            const issueUrl = issue.html_url;
+            const expectedIssueId = 123; // Replace with your expected issue ID
+
+            if (issue.number !== expectedIssueId) {
+              console.log(`Comment is not from the expected issue. Expected: ${expectedIssueId}, but got: ${issue.number}`);
+              return;
+            }
+
+            const regex = /(https?:\/\/github\.com\/.*?\/.*?)(\.git)?/;
+            const match = regex.exec(issueComment.body);
+            const gitRepo = match ? match[1] : '';
+            const gitBranch = 'main'; // 默认使用主分支
+            const imageName = gitRepo.split('/').pop();
+
+            return {
+              repo: gitRepo,
+              branch: gitBranch,
+              image: imageName,
+              commentId: commentId,
+              issueUrl: issueUrl
+            }
+
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ steps.parse_git_repo.outputs.repo }}
+          ref: ${{ steps.parse_git_repo.outputs.branch }}
+          path: 'target' # 替换为您要克隆到的特定目录
+
+      - name: Debug
+        run: echo "start build image debugicu/$GITHUB_REF_NAME:${{ github.event.inputs.tags }}"
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: 构建并推送到 Dockerhub 镜像仓库
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: './target/Dockerfile' # 替换为您的Dockerfile的路径
+          platforms: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64
+          push: true
+          tags: debugicu/${{ steps.parse_git_repo.outputs.image }}:latest
+
+      - name: Post comment
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const issueUrl = '${{ steps.parse_git_repo.outputs.issueUrl }}';
+            const commentId = '${{ steps.parse_git_repo.outputs.commentId }}';
+            const imageTag = 'debugicu/${{ steps.parse_git_repo.outputs.image }}:latest';
+            const commentBody = `The Docker image has been successfully built and pushed: ${imageTag}`;
+
+            github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: commentBody
+            });
