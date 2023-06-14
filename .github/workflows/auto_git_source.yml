@@ -46,7 +46,12 @@ jobs:
               issueUrl: issueUrl
             }
             console.log(res)
-            return res
+            core.setOutput('repo', gitRepo);
+            core.setOutput('branch',gitBranch);
+            core.setOutput('image', imageName);
+            core.setOutput('commentId', commentId);
+            core.setOutput('issueUrl', issueUrl);
+
       - name: Set output as env vars
         run: |
           echo "REPO=${{ steps.parse_git_repo.outputs.repo }}" >> $GITHUB_ENV
