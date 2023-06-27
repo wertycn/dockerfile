@@ -1,8 +1,4 @@
-FROM centos:7
-RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm -O /google-chrome-stable_current_x86_64.rpm
-RUN yum -y install fontconfig
-RUN yum -y localinstall /google-chrome-stable_current_x86_64.rpm
-ADD WeiRuanYaHei.ttf /usr/share/fonts
+FROM debugicu/chromedp:latest
 RUN fc-cache -vf
 RUN yum -y groupinstall "Development tools"
 RUN yum install -y ncurses-devel gdbm-devel xz-devel sqlite-devel tk-devel uuid-devel readline-devel bzip2-devel libffi-devel
