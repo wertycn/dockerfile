@@ -1,4 +1,4 @@
-FROM debugicu/chromedp:latest
+FROM debugicu/chromedp-zh:latest
 RUN fc-cache -vf
 RUN yum -y groupinstall "Development tools"
 RUN yum install -y ncurses-devel gdbm-devel xz-devel sqlite-devel tk-devel uuid-devel readline-devel bzip2-devel libffi-devel
