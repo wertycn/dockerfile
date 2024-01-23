@@ -1,2 +1,1 @@
-FROM alpine:latest
-
+FROM ghcr.io/langfuse/langfuse:latest
