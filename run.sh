@@ -10,6 +10,9 @@ if [ -f /tcdata/question_c.json ]; then
   # 将测试集内容写入结果文件
   cat /tcdata/question_c.json > /app/result.json
 else
+  ls -la 
+  ls -la /
+  ls -la /tcdata
   echo "测试集文件不存在: /tcdata/question_c.json"
 fi
 
