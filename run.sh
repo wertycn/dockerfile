@@ -5,8 +5,9 @@ if [ -f /tcdata/question_c.json ]; then
   echo "测试集文件存在: /tcdata/question_c.json"
   
   # 读取测试集并打印
-  cat /tcdata/question_c.json
-
+  cat /tcdata/question_c.json | head -n 100
+  sleep 300
+  cat /tcdata/question_c.json | tail -n 100
   # 将测试集内容写入结果文件
   cat /tcdata/question_c.json > /app/result.json
 else
