@@ -6,7 +6,7 @@ if [ -f /tcdata/question_c.json ]; then
   
   # 读取测试集并打印
   cat /tcdata/question_c.json | head -n 100
-  sleep 300
+  sleep 60
   cat /tcdata/question_c.json | tail -n 100
   # 将测试集内容写入结果文件
   cat /tcdata/question_c.json > /app/result.json
@@ -16,7 +16,7 @@ else
   ls -la /tcdata
   echo "测试集文件不存在: /tcdata/question_c.json"
 fi
-sleep 1000
+sleep 60
 # 检查结果文件是否存在
 if [ -f /app/result.json ]; then
   echo "结果文件已创建: /app/result.json"
