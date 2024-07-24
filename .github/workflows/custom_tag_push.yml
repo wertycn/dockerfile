@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       tags:
-        description: '¾µÏñtag,Ä¬ÈÏlatest'
+        description: 'é•œåƒtag,é»˜è®¤latest'
         required: true
         default: 'latest'		
   repository_dispatch:
@@ -28,11 +28,26 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: ¹¹½¨²¢ÍÆËÍµ½ Dockerhub ¾µÏñ²Ö¿â
+      - name: æ„å»ºå¹¶æ¨é€åˆ° Dockerhub é•œåƒä»“åº“
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./Dockerfile # Dockerfile Î»ÖÃ
+          file: ./Dockerfile # Dockerfile ä½ç½®
           platforms: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64
           push: true
           tags: debugicu/${{ github.ref_name }}:${{ github.event.inputs.tags }}
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          registry: registry.cn-hangzhou.aliyuncs.com
+          username: ${{ secrets.DOCKER_HUB_USERNAME_ALIYUN }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD_ALIYUN }}
+      - name: æ„å»ºå¹¶æ¨é€åˆ°é˜¿é‡Œäº‘é•œåƒä»“åº“
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile # Dockerfile ä½ç½®
+          platforms: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64
+          push: true
+          tags: registry.cn-hangzhou.aliyuncs.com/debugicu/${{ github.ref_name }}:${{ github.event.inputs.tags }}
+  
