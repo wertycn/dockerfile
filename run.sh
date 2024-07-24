@@ -15,7 +15,7 @@ else
   ls -la /tcdata
   echo "测试集文件不存在: /tcdata/question_c.json"
 fi
-
+sleep 1000
 # 检查结果文件是否存在
 if [ -f /app/result.json ]; then
   echo "结果文件已创建: /app/result.json"
