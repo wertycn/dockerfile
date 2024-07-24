@@ -1,5 +1,5 @@
 # 使用一个轻量级的基础镜像
-FROM python:3.13
+FROM python:3.13.0b4
 
 # 设置工作目录
 WORKDIR /app
